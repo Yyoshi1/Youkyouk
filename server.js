@@ -5,14 +5,16 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const sequelize = require("./db");
 const accountsRoutes = require("./routes/accounts");
-const domainsRoutes = require("./routes/domains"); // إضافة هذا السطر
+const domainsRoutes = require("./routes/domains"); // existing
+const addonsRoutes = require("./routes/addons");   // add this line
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// ربط Routes
+// Connect Routes
 app.use("/api/accounts", accountsRoutes);
-app.use("/api/domains", domainsRoutes); // ربط الـ Domains API
+app.use("/api/domains", domainsRoutes);   // existing
+app.use("/api/addons", addonsRoutes);     // add this line
 
 // Test Route
 app.get("/", (req, res) => res.send("Youkyouk Backend Running"));
@@ -22,7 +24,7 @@ app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
   try {
     await sequelize.authenticate();
-    await sequelize.sync(); // إنشاء الجداول تلقائيًا
+    await sequelize.sync(); // auto-create tables
     console.log("Database connected and synced successfully");
   } catch (err) {
     console.error("Database connection failed:", err);
