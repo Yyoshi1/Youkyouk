@@ -1,95 +1,116 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function DomainsPage() {
+export default function ManageDomains() {
   const [domains, setDomains] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [newDomain, setNewDomain] = useState({ domain_name: "", model_type: "b2c" });
+  const [domainName, setDomainName] = useState("");
+  const [modelType, setModelType] = useState("b2c");
+  const [loading, setLoading] = useState(false);
+
+  // 
+  const fetchDomains = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("/api/domains");
+      setDomains(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchDomains();
   }, []);
 
-  const fetchDomains = async () => {
-    setLoading(true);
+  // 
+  const addDomain = async () => {
+    if (!domainName) return alert("Please enter domain name");
     try {
-      const res = await axios.get("/api/domains");
-      setDomains(res.data.domains);
-    } catch (err) {
-      console.error(err);
-    }
-    setLoading(false);
-  };
-
-  const handleCreate = async () => {
-    try {
-      await axios.post("/api/domains", newDomain);
-      setNewDomain({ domain_name: "", model_type: "b2c" });
+      setLoading(true);
+      await axios.post("/api/domains", { domain_name: domainName, model_type: modelType });
+      setDomainName("");
       fetchDomains();
     } catch (err) {
       console.error(err);
+      setLoading(false);
     }
   };
 
-  const handleDelete = async (id) => {
+  // 
+  const deleteDomain = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this domain?")) return;
     try {
+      setLoading(true);
       await axios.delete(`/api/domains/${id}`);
       fetchDomains();
     } catch (err) {
       console.error(err);
+      setLoading(false);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Manage Domains</h1>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+      <h1 style={{ marginBottom: "20px" }}>Manage Domains</h1>
 
-      <div style={{ marginBottom: 20 }}>
+      {/* Form لإضافة نطاق */}
+      <div style={{ marginBottom: "30px" }}>
         <input
           type="text"
           placeholder="Domain Name"
-          value={newDomain.domain_name}
-          onChange={(e) => setNewDomain({ ...newDomain, domain_name: e.target.value })}
-          style={{ marginRight: 10 }}
+          value={domainName}
+          onChange={(e) => setDomainName(e.target.value)}
+          style={{ padding: "8px", marginRight: "10px", width: "250px" }}
         />
-        <select
-          value={newDomain.model_type}
-          onChange={(e) => setNewDomain({ ...newDomain, model_type: e.target.value })}
-          style={{ marginRight: 10 }}
-        >
+        <select value={modelType} onChange={(e) => setModelType(e.target.value)} style={{ padding: "8px", marginRight: "10px" }}>
           <option value="b2c">B2C</option>
           <option value="b2b">B2B</option>
           <option value="c2c">C2C</option>
         </select>
-        <button onClick={handleCreate}>Add Domain</button>
+        <button
+          onClick={addDomain}
+          style={{ padding: "8px 16px", backgroundColor: "#007bff", color: "white", border: "none", cursor: "pointer" }}
+        >
+          Add Domain
+        </button>
       </div>
 
-      <table border="1" cellPadding="10" cellSpacing="0">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Domain</th>
-            <th>Model</th>
-            <th>Active</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {domains.map((d) => (
-            <tr key={d.id}>
-              <td>{d.id}</td>
-              <td>{d.domain_name}</td>
-              <td>{d.model_type}</td>
-              <td>{d.is_active ? "Yes" : "No"}</td>
-              <td>
-                <button onClick={() => handleDelete(d.id)}>Delete</button>
-              </td>
+      {/* */}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ backgroundColor: "#f0f0f0" }}>
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>ID</th>
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>Domain</th>
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>Model Type</th>
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>Active</th>
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {domains.map((d) => (
+              <tr key={d.id}>
+                <td style={{ padding: "10px", border: "1px solid #ccc" }}>{d.id}</td>
+                <td style={{ padding: "10px", border: "1px solid #ccc" }}>{d.domain_name}</td>
+                <td style={{ padding: "10px", border: "1px solid #ccc" }}>{d.model_type}</td>
+                <td style={{ padding: "10px", border: "1px solid #ccc" }}>{d.is_active ? "Yes" : "No"}</td>
+                <td style={{ padding: "10px", border: "1px solid #ccc" }}>
+                  <button
+                    onClick={() => deleteDomain(d.id)}
+                    style={{ padding: "6px 12px", backgroundColor: "#dc3545", color: "white", border: "none", cursor: "pointer" }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
