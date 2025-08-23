@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# اسم مجلد المشروع
-PROJECT_DIR=~/youkyouk
+# استخدام المجلد الحالي كمشروع
+PROJECT_DIR="./"
 
 # التأكد من وجود المجلد
 if [ ! -d "$PROJECT_DIR" ]; then
-    echo "❌ مجلد المشروع $PROJECT_DIR غير موجود"
+    echo "❌ مجلد المشروع غير موجود"
     exit 1
 fi
 
@@ -26,4 +26,4 @@ for ext in "${EXTENSIONS[@]}"; do
     done
 done
 
-echo "✅ تم استخراج كل الأكواد من المشروع في الملف $OUTPUT_FILE"
+echo "✅ تم استخراج كل الأكواد في الملف $OUTPUT_FILE"
