@@ -1,5 +1,15 @@
+const { DataSource } = require("typeorm");
+const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const path = require("path");
+const { Domain } = require("../models/domain");
+
+const dataSource = new DataSource();
+
+// 
+async function getAllDomains() {
+  return await dataSource.getRepository(Domain).find();
+}
 
 // 
 async function createSellerPage(domain) {
@@ -31,6 +41,7 @@ async function createDomain(domainData) {
   domain.domain_name = domainData.domain_name;
   domain.model_type = domainData.model_type || "b2c";
   domain.is_active = true;
+
   const saved = await dataSource.getRepository(Domain).save(domain);
 
   // 
@@ -38,3 +49,14 @@ async function createDomain(domainData) {
 
   return saved;
 }
+
+// 
+async function deleteDomain(id) {
+  return await dataSource.getRepository(Domain).delete({ id });
+}
+
+module.exports = {
+  getAllDomains,
+  createDomain,
+  deleteDomain,
+};
