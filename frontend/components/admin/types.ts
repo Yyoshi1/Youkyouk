@@ -5,6 +5,7 @@ export interface Addon {
   name: string;
   enabled: boolean;
   subSections?: string[];
+  rolesAllowed?: Role[]; // Roles allowed to see this addon
 }
 
 export interface SidebarItem {
@@ -13,4 +14,5 @@ export interface SidebarItem {
   link?: string;
   addons?: Addon[];
   subItems?: SidebarItem[];
+  rolesAllowed?: Role[]; // Roles allowed to see this sidebar item
 }
