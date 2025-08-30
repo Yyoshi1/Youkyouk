@@ -1,0 +1,2 @@
+logger = Logger.new("Logs/security.log")
+logger.warn("Unauthorized access attempt by user_id: #{user.id}")
