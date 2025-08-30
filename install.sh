@@ -1,28 +1,18 @@
-
 #!/bin/bash
-echo "Starting Youkyouk installation..."
+echo "Starting Youkyouk setup..."
 
-# Backend (Rails)
-cd backend/core
-echo "Installing Ruby gems..."
+# 1. Install Ruby gems
 bundle install
-echo "Installing JS packages..."
-yarn install || npm install
-echo "Database setup..."
-rails db:create db:migrate db:seed
-cd ../../
 
-# WebApp (Next.js)
-cd frontend/WebApp
-echo "Installing WebApp dependencies..."
+# 2. Install Node modules
 npm install
-cd ../..
 
-# MobileApp (Vue.js + Quasar/Capacitor)
-cd frontend/MobileApp
-echo "Installing MobileApp dependencies..."
-npm install
-quasar mode add capacitor
-cd ../../
+# 3. Setup database
+rails db:create
+rails db:migrate
+rails db:seed
+
+# 4. Create initial admin
+rails runner "Admin.create!(email: 'admin@youkyouk.com', password: 'ChangeMe123!', role: 'super_admin')"
 
 echo "Youkyouk installation completed!"
