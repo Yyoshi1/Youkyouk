@@ -1,0 +1,4 @@
+#  Ruby Logger
+logger = Logger.new("Logs/app.log")
+logger.info("Application started")
+logger.info("User logged in: #{user.id}")
