@@ -1,5 +1,0 @@
-features:
-  ai: <%= ENV['ENABLE_AI'] %>
-  dynamic_pricing: <%= ENV['ENABLE_DYNAMIC_PRICING'] %>
-  trip_scheduler: <%= ENV['ENABLE_TRIP_SCHEDULER'] %>
-  editor_sync: <%= ENV['ENABLE_EDITOR_SYNC'] %>
