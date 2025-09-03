@@ -1,40 +1,53 @@
 <template>
-  <div class="admin-settings">
-    <Header :user="admin" @toggle-theme="toggleTheme" @toggle-sidebar="toggleSidebar"/>
-    <Sidebar :collapsed="sidebarCollapsed" @toggle="sidebarCollapsed = !sidebarCollapsed"/>
-    <main>
-      <h1>Settings</h1>
-      <form @submit.prevent="saveSettings">
-        <label>Site Name:</label>
-        <input v-model="settings.siteName"/>
-        <label>Admin Email:</label>
-        <input v-model="settings.email"/>
-        <button type="submit">Save</button>
-      </form>
-    </main>
-    <Footer/>
-  </div>
+  <Layout :admin="admin" :addons="addons">
+    <h2>Settings</h2>
+    <form @submit.prevent="saveSettings">
+      <div v-for="(value, key) in settings" :key="key" class="form-group">
+        <label :for="key">{{ key }}</label>
+        <input :id="key" v-model="settings[key]" type="text"/>
+      </div>
+      <button type="submit"><i class="linear-icon-check"></i> Save</button>
+    </form>
+  </Layout>
 </template>
 
 <script setup>
-import Header from '../layout/Header.vue'
-import Sidebar from '../layout/Sidebar.vue'
-import Footer from '../layout/Footer.vue'
-import { ref } from 'vue'
+import Layout from './Layout.vue'
+import { reactive, onMounted } from 'vue'
+import axios from 'axios'
 
 const admin = { name: 'Admin User', avatar: '/avatars/admin.png' }
-const sidebarCollapsed = ref(false)
-const settings = ref({ siteName: 'Youkyouk', email: 'admin@youkyouk.com' })
+const addons = ref([
+  { id: 1, name: 'Dashboard', enabled: true },
+  { id: 2, name: 'Products', enabled: true },
+  { id: 3, name: 'Categories', enabled: true },
+  { id: 4, name: 'Orders', enabled: true },
+  { id: 5, name: 'Users', enabled: true },
+  { id: 6, name: 'Vendors', enabled: true },
+  { id: 7, name: 'Marketing', enabled: true },
+  { id: 8, name: 'Reports', enabled: true },
+  { id: 9, name: 'Settings', enabled: true },
+])
 
-const toggleSidebar = () => sidebarCollapsed.value = !sidebarCollapsed.value
-const toggleTheme = () => console.log('Toggle theme')
-const saveSettings = () => console.log('Settings saved', settings.value)
+const settings = reactive({ siteName: '', defaultCurrency: '', supportEmail: '' })
+
+const fetchSettings = async () => {
+  const res = await axios.get('/api/admin/settings')
+  Object.assign(settings, res.data)
+}
+
+const saveSettings = async () => {
+  await axios.post('/api/admin/settings', settings)
+  alert('Settings saved!')
+}
+
+onMounted(() => fetchSettings())
 </script>
 
 <style scoped>
-main { padding: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; }
-label { font-weight: bold; }
-input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100%; }
-button { padding: 10px 15px; background: #1f2937; color: white; border: none; border-radius: 4px; cursor: pointer; }
-button:hover { background: #111827; }
+.form-group { margin-bottom: 10px; }
+label { display: block; margin-bottom: 5px; }
+input { width: 100%; padding: 8px; box-sizing: border-box; }
+button { margin-top: 10px; }
+.linear-icon-check::before { content: "\e903"; font-family: 'LinearIcons'; margin-right: 5px; }
 </style>
