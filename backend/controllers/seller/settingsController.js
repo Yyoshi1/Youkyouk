@@ -1,18 +1,15 @@
-import Settings from "../../models/seller/settings.model.js";
+import { Settings } from "../../models/seller/Settings.js"
 
-export default {
-  async get(req, res) {
-    const settings = await Settings.findOne({ where: { seller_id: req.params.sellerId } });
-    res.json(settings);
-  },
-
-  async update(req, res) {
-    let settings = await Settings.findOne({ where: { seller_id: req.params.sellerId } });
-    if (settings) {
-      await settings.update(req.body);
-    } else {
-      settings = await Settings.create({ ...req.body, seller_id: req.params.sellerId });
-    }
-    res.json(settings);
+export class SettingsController {
+  static async get(req, res) {
+    const sellerId = req.params.sellerId
+    const settings = await Settings.query().findOne({ seller_id: sellerId })
+    res.json(settings)
   }
-};
+
+  static async update(req, res) {
+    const sellerId = req.params.sellerId
+    const updated = await Settings.query().patchAndFetchById(req.params.id, req.body)
+    res.json(updated)
+  }
+}
