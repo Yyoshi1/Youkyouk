@@ -1,27 +1,26 @@
-// backend/controllers/seller/MessageController.js
-import { Message } from "../../models/seller/Message"
+import Message from "../../models/seller/message.model.js";
 
 export default {
   async index(req, res) {
-    const messages = await Message.query()
-      .where({ seller_id: req.params.sellerId })
-      .withGraphFetched("customer")
-    res.json(messages)
+    const messages = await Message.findAll({ where: { seller_id: req.params.sellerId } });
+    res.json(messages);
   },
 
   async show(req, res) {
-    const message = await Message.query().findById(req.params.id).withGraphFetched("customer")
-    if (!message) return res.status(404).json({ error: "Message not found" })
-    res.json(message)
+    const message = await Message.findByPk(req.params.id);
+    if (!message) return res.status(404).json({ error: "Message not found" });
+    res.json(message);
   },
 
   async send(req, res) {
-    const message = await Message.query().insert(req.body)
-    res.status(201).json(message)
+    const message = await Message.create({ ...req.body, seller_id: req.params.sellerId });
+    res.status(201).json(message);
   },
 
-  async delete(req, res) {
-    await Message.query().deleteById(req.params.id)
-    res.status(204).end()
+  async markAsRead(req, res) {
+    const message = await Message.findByPk(req.params.id);
+    if (!message) return res.status(404).json({ error: "Message not found" });
+    await message.update({ is_read: true });
+    res.json(message);
   }
-}
+};
