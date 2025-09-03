@@ -1,24 +1,27 @@
-// backend/controllers/seller/PromotionController.js
-import { Promotion } from "../../models/seller/Promotion"
+import Promotion from "../../models/seller/promotion.model.js";
 
 export default {
   async index(req, res) {
-    const promotions = await Promotion.query().where({ seller_id: req.params.sellerId })
-    res.json(promotions)
+    const promotions = await Promotion.findAll({ where: { seller_id: req.params.sellerId } });
+    res.json(promotions);
   },
 
   async create(req, res) {
-    const promotion = await Promotion.query().insert(req.body)
-    res.status(201).json(promotion)
+    const promotion = await Promotion.create({ ...req.body, seller_id: req.params.sellerId });
+    res.status(201).json(promotion);
   },
 
   async update(req, res) {
-    const promotion = await Promotion.query().patchAndFetchById(req.params.id, req.body)
-    res.json(promotion)
+    const promotion = await Promotion.findByPk(req.params.id);
+    if (!promotion) return res.status(404).json({ error: "Promotion not found" });
+    await promotion.update(req.body);
+    res.json(promotion);
   },
 
   async delete(req, res) {
-    await Promotion.query().deleteById(req.params.id)
-    res.status(204).end()
+    const promotion = await Promotion.findByPk(req.params.id);
+    if (!promotion) return res.status(404).json({ error: "Promotion not found" });
+    await promotion.destroy();
+    res.status(204).end();
   }
-}
+};
