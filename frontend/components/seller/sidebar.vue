@@ -1,16 +1,13 @@
 <template>
   <aside :class="['sidebar', { collapsed }]">
     <ul>
-      <li v-for="addon in addons" v-if="addon.enabled" :key="addon.id">
-        <router-link :to="'/seller/' + addon.name.toLowerCase()">
-          <i class="linear-icon" :class="`linear-icon-${addon.name.toLowerCase()}`"></i>
-          {{ addon.name }}
+      <li v-for="item in addons" :key="item.id" v-if="item.enabled">
+        <router-link :to="item.route">
+          <i :class="item.icon"></i> {{ item.name }}
         </router-link>
       </li>
     </ul>
-    <button @click="$emit('toggle')">
-      <i class="linear-icon-menu"></i>
-    </button>
+    <button @click="$emit('toggle')"><i class="linear-icon-menu"></i></button>
   </aside>
 </template>
 
@@ -25,8 +22,8 @@ const props = defineProps({
 <style scoped>
 .sidebar { width: 250px; background: #1f2937; color: white; transition: width 0.3s; }
 .sidebar.collapsed { width: 60px; }
-.sidebar ul { list-style: none; padding: 0; margin-top: 20px; }
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
 .sidebar li { padding: 15px; }
-.sidebar li a { color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.sidebar button { margin-top: 20px; background: none; border: none; color: white; cursor: pointer; }
+.sidebar li i { margin-right: 8px; }
+button { width: 100%; padding: 10px; background: #111827; color: white; border: none; cursor: pointer; }
 </style>
