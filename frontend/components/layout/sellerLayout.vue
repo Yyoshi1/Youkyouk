@@ -17,12 +17,16 @@ import { ref } from 'vue'
 
 const user = ref({ name: 'Seller Name', avatar: '' })
 const menu = ref([
-  { name: 'Dashboard', icon: 'home', route: '/seller' },
-  { name: 'Products', icon: 'box', route: '/seller/products' },
-  { name: 'Orders', icon: 'shopping-cart', route: '/seller/orders' },
-  { name: 'Statistics', icon: 'bar-chart', route: '/seller/statistics' },
-  { name: 'Notifications', icon: 'bell', route: '/seller/notifications' },
-  { name: 'Settings', icon: 'settings', route: '/seller/settings' }
+  { name:'Dashboard', icon:'home', route:'/seller/dashboard' },
+  { name:'Products', icon:'box', route:'/seller/products' },
+  { name:'Orders', icon:'shopping-cart', route:'/seller/orders' },
+  { name:'Customers', icon:'users', route:'/seller/customers' },
+  { name:'Promotions', icon:'tag', route:'/seller/promotions' },
+  { name:'Reviews', icon:'star', route:'/seller/reviews' },
+  { name:'Statistics', icon:'bar-chart', route:'/seller/statistics' },
+  { name:'Notifications', icon:'bell', route:'/seller/notifications' },
+  { name:'Settings', icon:'settings', route:'/seller/settings' },
+  { name:'Messages', icon:'message-circle', route:'/seller/messages' }
 ])
 </script>
 
