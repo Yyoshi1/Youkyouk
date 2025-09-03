@@ -1,66 +1,48 @@
 <template>
-  <div class="settings">
-    <Header :title="'Settings'" :user="seller" @toggle-theme="toggleTheme" @toggle-sidebar="toggleSidebar"/>
-    
-    <h2>Store Settings</h2>
-    <div class="field">
+  <div class="settings-page">
+    <Header :title="'Settings'" :user="seller" @toggle-sidebar="toggleSidebar" />
+
+    <form @submit.prevent="updateSettings">
       <label>Store Name:</label>
-      <input v-model="settings.name" />
-    </div>
-    <div class="field">
+      <input v-model="settings.storeName" type="text" />
+
       <label>Email:</label>
-      <input v-model="settings.email" />
-    </div>
+      <input v-model="settings.email" type="email" />
 
-    <h3>Activated Plugins</h3>
-    <ul>
-      <li v-for="plugin in plugins" :key="plugin.id">
-        <input type="checkbox" v-model="plugin.active" @change="togglePlugin(plugin)"/>
-        {{ plugin.name }}
-      </li>
-    </ul>
+      <label>Phone:</label>
+      <input v-model="settings.phone" type="text" />
 
-    <button @click="saveSettings">Save</button>
+      <button type="submit">Save</button>
+    </form>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
 import Header from '../layout/Header.vue'
+import { useSellerStore } from '@/stores/seller'
+import axios from 'axios'
 
-const seller = ref({ name:'Seller', avatar:'/avatar.png' })
-const settings = ref({ name:'My Store', email:'store@example.com' })
-const plugins = ref([])
-const toggleTheme = () => document.body.classList.toggle('dark-mode')
-const toggleSidebar = () => {}
+const sellerStore = useSellerStore()
+const seller = sellerStore.seller
+const settings = ref({ storeName: '', email: '', phone: '' })
 
 const fetchSettings = async () => {
-  try {
-    const res = await axios.get('/api/seller/1/settings')
-    settings.value = res.data.settings
-    plugins.value = res.data.plugins
-  } catch(err){ console.error(err) }
+  const res = await axios.get(`/api/seller/${seller.id}/settings`)
+  settings.value = res.data
 }
 
-const togglePlugin = async (plugin) => {
-  plugin.active = !plugin.active
-  await axios.put(`/api/plugins/${plugin.id}`, { active: plugin.active })
-}
-
-const saveSettings = async () => {
-  await axios.put(`/api/seller/1/settings`, settings.value)
-  alert('Settings saved!')
+const updateSettings = async () => {
+  await axios.patch(`/api/seller/settings/${settings.value.id}`, settings.value)
+  alert('Settings updated!')
 }
 
 onMounted(fetchSettings)
 </script>
 
 <style scoped>
-.settings { padding:20px; margin-left:250px; }
-.field { margin-bottom:10px; }
-input { padding:6px; border-radius:4px; border:1px solid #d1d5db; width:300px; }
-button { padding:6px 12px; border:none; border-radius:6px; background-color:#3b82f6; color:white; cursor:pointer; margin-top:10px; }
-button:hover { opacity:0.9; }
-body.dark-mode input { background:#374151; color:white; border:1px solid #6b7280; }
+.settings-page form { display: flex; flex-direction: column; width: 300px; }
+.settings-page label { margin-top: 10px; }
+.settings-page input { padding: 5px; }
+.settings-page button { margin-top: 15px; padding: 8px; }
 </style>
