@@ -1,9 +1,7 @@
 <template>
   <div class="orders">
-    <!-- Header -->
     <Header :title="'Orders'" :user="seller" @toggle-theme="toggleTheme" @toggle-sidebar="toggleSidebar"/>
     
-    <!-- Filters -->
     <div class="filters">
       <label>Status:</label>
       <select v-model="filter.status">
@@ -16,7 +14,6 @@
       <button @click="fetchOrders">Apply</button>
     </div>
 
-    <!-- -->
     <table class="orders-table">
       <thead>
         <tr>
@@ -50,22 +47,12 @@ import { ref, reactive, onMounted } from 'vue'
 import axios from 'axios'
 import Header from '../layout/Header.vue'
 
-/* */
 const seller = ref({ name:'Seller', avatar:'/avatar.png' })
-
-/* */
 const orders = ref([])
-
-/* */
 const filter = reactive({ status:'' })
-
-/* */
 const toggleTheme = () => document.body.classList.toggle('dark-mode')
-
-/* */
 const toggleSidebar = () => {}
 
-/* */
 const fetchOrders = async () => {
   try {
     const res = await axios.get('/api/seller/1/orders', { params: filter })
@@ -73,10 +60,7 @@ const fetchOrders = async () => {
   } catch(err){ console.error(err) }
 }
 
-/* */
 const viewOrder = (order) => { alert(JSON.stringify(order,null,2)) }
-
-/* */
 const updateStatus = async (order) => {
   const status = prompt('Enter new status', order.status)
   if(status){ 
@@ -85,7 +69,6 @@ const updateStatus = async (order) => {
   }
 }
 
-/* ع*/
 onMounted(fetchOrders)
 </script>
 
