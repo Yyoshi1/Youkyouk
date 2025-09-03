@@ -1,25 +1,35 @@
 <template>
   <header class="header">
-    <div class="left">
+    <div class="logo">Linear Admin</div>
+    <div class="actions">
       <button @click="$emit('toggle-sidebar')">
         <i class="linear-icon-menu"></i>
       </button>
-      <h1>{{ title }}</h1>
-    </div>
-    <div class="right">
-      <div class="notifications" @click="toggleDropdown">
-        <i class="linear-icon-bell"></i>
-        <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
-        <ul v-if="dropdownOpen">
-          <li v-for="note in notifications" :key="note.id" :class="{ unread: !note.read }">
-            {{ note.message }}
-          </li>
-        </ul>
+      <button @click="$emit('toggle-theme')">
+        <i class="linear-icon-sun"></i>
+      </button>
+      <div class="user-menu">
+        <img :src="user.avatar" class="avatar"/>
+        <span>{{ user.name }}</span>
       </div>
-      <span>{{ user.name }}</span>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref, computed, on
+import { defineProps } from 'vue'
+const props = defineProps({ user: Object })
+</script>
+
+<style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1f2937;
+  color: white;
+  padding: 10px 20px;
+}
+.avatar { width: 32px; border-radius: 50%; }
+.actions button { background: none; border: none; color: white; margin-right: 10px; font-size: 18px; }
+</style>
