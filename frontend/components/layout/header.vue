@@ -1,12 +1,12 @@
 <template>
   <header class="header">
-    <div class="logo">Linear Admin</div>
+    <div class="logo">Youkyouk</div>
     <div class="actions">
       <button @click="$emit('toggle-sidebar')">
-        <i class="linear-icon-menu"></i>
+        <i class="youkyouk-icon-menu"></i>
       </button>
       <button @click="$emit('toggle-theme')">
-        <i class="linear-icon-sun"></i>
+        <i class="youkyouk-icon-sun"></i>
       </button>
       <div class="user-menu">
         <img :src="user.avatar" class="avatar"/>
