@@ -1,7 +1,0 @@
-logger = Logger.new("Logs/errors.log")
-begin
-  # some code
-rescue => e
-  logger.error("Error: #{e.message}")
-  logger.error(e.backtrace.join("\n"))
-end

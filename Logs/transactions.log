@@ -1,2 +1,0 @@
-logger = Logger.new("Logs/transactions.log")
-logger.info("Payment received: investor_id=#{investor.id} amount=#{amount_cents}")
