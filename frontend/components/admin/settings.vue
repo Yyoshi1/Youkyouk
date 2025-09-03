@@ -32,4 +32,9 @@ const saveSettings = () => console.log('Settings saved', settings.value)
 </script>
 
 <style scoped>
-main { padding: 20px; display: flex; flex-direction: column; gap:
+main { padding: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; }
+label { font-weight: bold; }
+input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100%; }
+button { padding: 10px 15px; background: #1f2937; color: white; border: none; border-radius: 4px; cursor: pointer; }
+button:hover { background: #111827; }
+</style>
