@@ -3,9 +3,13 @@
     <ul>
       <li><router-link to="/admin/dashboard">Dashboard</router-link></li>
       <li><router-link to="/admin/products">Products</router-link></li>
+      <li><router-link to="/admin/categories">Categories</router-link></li>
       <li><router-link to="/admin/orders">Orders</router-link></li>
       <li><router-link to="/admin/users">Users</router-link></li>
+      <li><router-link to="/admin/vendors">Vendors</router-link></li>
+      <li><router-link to="/admin/marketing">Marketing</router-link></li>
       <li><router-link to="/admin/settings">Settings</router-link></li>
+      <li><router-link to="/admin/reports">Reports</router-link></li>
     </ul>
     <button @click="$emit('toggle')">Toggle</button>
   </aside>
@@ -13,10 +17,7 @@
 
 <script setup>
 import { defineProps } from 'vue'
-
-const props = defineProps({
-  collapsed: Boolean
-})
+const props = defineProps({ collapsed: Boolean })
 </script>
 
 <style scoped>
@@ -26,14 +27,7 @@ const props = defineProps({
   color: white;
   transition: width 0.3s;
 }
-.sidebar.collapsed {
-  width: 60px;
-}
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-.sidebar li {
-  padding: 15px;
-}
+.sidebar.collapsed { width: 60px; }
+.sidebar ul { list-style: none; padding: 0; }
+.sidebar li { padding: 15px; }
 </style>
