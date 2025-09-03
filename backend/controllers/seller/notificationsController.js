@@ -1,15 +1,13 @@
 import { Notification } from "../../models/seller/Notification.js"
 
-export class NotificationsController {
-  static async list(req, res) {
-    const sellerId = req.params.sellerId
-    const notifications = await Notification.query().where("seller_id", sellerId)
-    res.json(notifications)
-  }
+export const getNotifications = async (req, res) => {
+  const sellerId = req.params.sellerId
+  const notifications = await Notification.query().where("seller_id", sellerId).orderBy("created_at", "desc")
+  res.json(notifications)
+}
 
-  static async markAsRead(req, res) {
-    const id = req.params.id
-    await Notification.query().findById(id).patch({ read: true })
-    res.json({ success: true })
-  }
+export const markAsRead = async (req, res) => {
+  const notificationId = req.params.id
+  await Notification.query().findById(notificationId).patch({ read: true })
+  res.json({ success: true })
 }
