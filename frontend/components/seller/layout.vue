@@ -1,7 +1,7 @@
 <template>
-  <div class="seller-dashboard">
+  <div :class="['seller-dashboard', { collapsed: sidebarCollapsed }]">
     <Header :user="seller" @toggle-theme="toggleTheme" @toggle-sidebar="toggleSidebar"/>
-    <Sidebar :collapsed="sidebarCollapsed" :addons="addons" @toggle="sidebarCollapsed = !sidebarCollapsed"/>
+    <Sidebar :collapsed="sidebarCollapsed" :addons="addons" @toggle="toggleSidebar"/>
     <main>
       <slot/>
     </main>
@@ -18,8 +18,8 @@ import { ref } from 'vue'
 const seller = { name: 'Seller User', avatar: '/avatars/seller.png' }
 const sidebarCollapsed = ref(false)
 const addons = ref([
-  { id: 1, name: 'Products', enabled: true },
-  { id: 2, name: 'Orders', enabled: true },
+  { id: 1, name: 'Orders', enabled: true },
+  { id: 2, name: 'Products', enabled: true },
   { id: 3, name: 'Promotions', enabled: false },
   { id: 4, name: 'Messages', enabled: true },
   { id: 5, name: 'Settings', enabled: true },
@@ -31,5 +31,5 @@ const toggleTheme = () => console.log('Toggle theme')
 
 <style scoped>
 main { padding: 20px; margin-left: 250px; transition: margin-left 0.3s; }
-.seller-dashboard .collapsed main { margin-left: 60px; }
+.seller-dashboard.collapsed main { margin-left: 60px; }
 </style>
