@@ -1,19 +1,18 @@
-// backend/controllers/seller/SettingsController.js
-import { Settings } from "../../models/seller/Settings"
+import Settings from "../../models/seller/settings.model.js";
 
 export default {
   async get(req, res) {
-    const settings = await Settings.query().findOne({ seller_id: req.params.sellerId })
-    res.json(settings)
+    const settings = await Settings.findOne({ where: { seller_id: req.params.sellerId } });
+    res.json(settings);
   },
 
   async update(req, res) {
-    let settings = await Settings.query().findOne({ seller_id: req.params.sellerId })
+    let settings = await Settings.findOne({ where: { seller_id: req.params.sellerId } });
     if (settings) {
-      settings = await Settings.query().patchAndFetchById(settings.id, req.body)
+      await settings.update(req.body);
     } else {
-      settings = await Settings.query().insert({ ...req.body, seller_id: req.params.sellerId })
+      settings = await Settings.create({ ...req.body, seller_id: req.params.sellerId });
     }
-    res.json(settings)
+    res.json(settings);
   }
-}
+};
