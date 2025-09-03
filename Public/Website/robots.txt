@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /admin/
-Disallow: /investor/
-Allow: /
-Sitemap: /sitemap.xml
