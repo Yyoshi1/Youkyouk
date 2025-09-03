@@ -1,29 +1,33 @@
-// backend/controllers/seller/ProductController.js
-import { Product } from "../../models/seller/Product"
-import { Module } from "../../models/seller/Module"
+import Product from "../../models/seller/product.model.js";
 
 export default {
   async index(req, res) {
-    const { sellerId } = req.params
-    const modules = await Module.query().where({ seller_id: sellerId, active: true })
-    const products = await Product.query().where({ seller_id: sellerId })
+    const products = await Product.findAll({ where: { seller_id: req.params.sellerId } });
+    res.json(products);
+  },
 
-    // 
-    res.json({ modules, products })
+  async show(req, res) {
+    const product = await Product.findByPk(req.params.id);
+    if (!product) return res.status(404).json({ error: "Product not found" });
+    res.json(product);
   },
 
   async create(req, res) {
-    const product = await Product.query().insert(req.body)
-    res.status(201).json(product)
+    const product = await Product.create({ ...req.body, seller_id: req.params.sellerId });
+    res.status(201).json(product);
   },
 
   async update(req, res) {
-    const product = await Product.query().patchAndFetchById(req.params.id, req.body)
-    res.json(product)
+    const product = await Product.findByPk(req.params.id);
+    if (!product) return res.status(404).json({ error: "Product not found" });
+    await product.update(req.body);
+    res.json(product);
   },
 
   async delete(req, res) {
-    await Product.query().deleteById(req.params.id)
-    res.status(204).end()
+    const product = await Product.findByPk(req.params.id);
+    if (!product) return res.status(404).json({ error: "Product not found" });
+    await product.destroy();
+    res.status(204).end();
   }
-}
+};
