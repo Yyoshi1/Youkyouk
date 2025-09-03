@@ -1,30 +1,39 @@
-// backend/controllers/seller/SellerController.js
-import { Seller } from "../../models/seller/Seller"
+import Seller from "../../models/seller/seller.model.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export default {
-  async index(req, res) {
-    const sellers = await Seller.query().withGraphFetched("[products, orders, promotions]")
-    res.json(sellers)
+  // 
+  async register(req, res) {
+    const { name, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const seller = await Seller.create({ name, email, password: hashedPassword });
+    res.status(201).json(seller);
   },
 
-  async show(req, res) {
-    const seller = await Seller.query().findById(req.params.id).withGraphFetched("[products, orders, promotions, notifications]")
-    if (!seller) return res.status(404).json({ error: "Seller not found" })
-    res.json(seller)
+  // 
+  async login(req, res) {
+    const { email, password } = req.body;
+    const seller = await Seller.findOne({ where: { email } });
+    if (!seller) return res.status(404).json({ error: "Seller not found" });
+    const valid = await bcrypt.compare(password, seller.password);
+    if (!valid) return res.status(401).json({ error: "Invalid password" });
+    const token = jwt.sign({ id: seller.id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    res.json({ seller, token });
   },
 
-  async create(req, res) {
-    const seller = await Seller.query().insert(req.body)
-    res.status(201).json(seller)
+  // 
+  async updateProfile(req, res) {
+    const seller = await Seller.findByPk(req.params.id);
+    if (!seller) return res.status(404).json({ error: "Seller not found" });
+    await seller.update(req.body);
+    res.json(seller);
   },
 
-  async update(req, res) {
-    const seller = await Seller.query().patchAndFetchById(req.params.id, req.body)
-    res.json(seller)
-  },
-
-  async delete(req, res) {
-    await Seller.query().deleteById(req.params.id)
-    res.status(204).end()
+  // 
+  async getProfile(req, res) {
+    const seller = await Seller.findByPk(req.params.id);
+    if (!seller) return res.status(404).json({ error: "Seller not found" });
+    res.json(seller);
   }
-}
+};
