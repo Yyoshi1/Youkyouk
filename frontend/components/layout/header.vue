@@ -12,10 +12,7 @@
 
 <script setup>
 import { defineProps } from 'vue'
-
-const props = defineProps({
-  user: Object
-})
+const props = defineProps({ user: Object })
 </script>
 
 <style scoped>
@@ -26,8 +23,5 @@ const props = defineProps({
   background: #f3f4f6;
   border-bottom: 1px solid #e5e7eb;
 }
-.dark .header {
-  background: #111827;
-  color: white;
-}
+.dark .header { background: #111827; color: white; }
 </style>
