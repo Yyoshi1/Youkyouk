@@ -13,6 +13,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { io } from 'socket.io-client'
 import Header from '../layout/Header.vue'
 import { useSellerStore } from '@/stores/seller'
 import axios from 'axios'
@@ -20,6 +21,21 @@ import axios from 'axios'
 const sellerStore = useSellerStore()
 const seller = sellerStore.seller
 const notifications = ref([])
+
+const socket = io('http://localhost:3000')
+
+onMounted(() => {
+  // 
+  socket.emit('joinSellerRoom', seller.id)
+
+  // 
+  socket.on('newNotification', (notification) => {
+    notifications.value.unshift(notification)
+  })
+
+  // 
+  fetchNotifications()
+})
 
 const fetchNotifications = async () => {
   const res = await axios.get(`/api/seller/${seller.id}/notifications`)
@@ -31,12 +47,6 @@ const markRead = async (id) => {
   const index = notifications.value.findIndex(n => n.id === id)
   if(index !== -1) notifications.value[index].read = true
 }
-
-// 
-onMounted(() => {
-  fetchNotifications()
-  setInterval(fetchNotifications, 10000)
-})
 </script>
 
 <style scoped>
