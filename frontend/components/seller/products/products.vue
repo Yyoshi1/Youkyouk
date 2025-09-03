@@ -1,11 +1,9 @@
 <template>
   <div class="products">
     <Header :title="'Products'" :user="seller" @toggle-theme="toggleTheme" @toggle-sidebar="toggleSidebar"/>
-
     <div class="controls">
       <button @click="showAddProduct = true">Add Product</button>
     </div>
-
     <table class="product-table">
       <thead>
         <tr>
@@ -31,7 +29,6 @@
         </tr>
       </tbody>
     </table>
-
     <ProductModal v-if="showAddProduct || editingProduct" 
                   :product="editingProduct" 
                   @close="closeModal" 
@@ -49,7 +46,6 @@ const seller = ref({ name:'Seller', avatar:'/avatar.png' })
 const products = ref([])
 const showAddProduct = ref(false)
 const editingProduct = ref(null)
-
 const toggleTheme = () => document.body.classList.toggle('dark-mode')
 const toggleSidebar = () => {}
 
