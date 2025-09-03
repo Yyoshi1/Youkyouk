@@ -1,69 +1,80 @@
 <template>
-  <Layout :admin="admin" :addons="addons">
-    <h2>Orders</h2>
-    <div class="filters">
-      <label>Status:</label>
-      <select v-model="filter.status">
-        <option value="">All</option>
-        <option value="pending">Pending</option>
-        <option value="shipped">Shipped</option>
-        <option value="delivered">Delivered</option>
-        <option value="cancelled">Cancelled</option>
-      </select>
-      <button @click="fetchOrders"><i class="linear-icon-refresh"></i> Apply</button>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <td>{{ order.id }}</td>
-          <td>{{ order.customer.name }}</td>
-          <td>{{ order.total }}</td>
-          <td>{{ order.status }}</td>
-          <td>{{ order.date }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </Layout>
+  <div class="admin-orders">
+    <Header :title="'Orders'" :user="adminUser" @toggle-sidebar="toggleSidebar" />
+    <Sidebar :collapsed="sidebarCollapsed" :addons="addons" @toggle="toggleSidebar" />
+    <main>
+      <div class="toolbar">
+        <h2>Orders</h2>
+        <div class="filters">
+          <label>Status:</label>
+          <select v-model="filter.status">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="paid">Paid</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button @click="fetchOrders"><i class="linear-icon-refresh"></i> Apply</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>#</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr v-for="o in orders" :key="o.id">
+            <td>{{ o.id }}</td>
+            <td>{{ o.customer?.name || '-' }}</td>
+            <td>{{ o.total }}</td>
+            <td>{{ o.status }}</td>
+            <td>{{ o.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
 </template>
 
 <script setup>
-import Layout from './Layout.vue'
+import Header from './Header.vue'
+import Sidebar from './Sidebar.vue'
 import { ref, reactive, onMounted } from 'vue'
 import axios from 'axios'
 
-const admin = { name: 'Admin User', avatar: '/avatars/admin.png' }
+const adminUser = { id: 1, name: 'Admin', avatar: '/avatars/admin.png' }
+const sidebarCollapsed = ref(false)
+const toggleSidebar = () => (sidebarCollapsed.value = !sidebarCollapsed.value)
 const addons = ref([
-  { id: 1, name: 'Dashboard', enabled: true },
-  { id: 2, name: 'Products', enabled: true },
-  { id: 3, name: 'Categories', enabled: true },
-  { id: 4, name: 'Orders', enabled: true },
-  { id: 5, name: 'Users', enabled: true },
-  { id: 6, name: 'Vendors', enabled: true },
-  { id: 7, name: 'Marketing', enabled: true },
-  { id: 8, name: 'Reports', enabled: true },
-  { id: 9, name: 'Settings', enabled: true },
+  { id: 1, name: 'Dashboard', route: '/admin/dashboard', enabled: true, icon: 'linear-icon-speedometer' },
+  { id: 2, name: 'Products', route: '/admin/products', enabled: true, icon: 'linear-icon-box' },
+  { id: 3, name: 'Categories', route: '/admin/categories', enabled: true, icon: 'linear-icon-tag' },
+  { id: 4, name: 'Orders', route: '/admin/orders', enabled: true, icon: 'linear-icon-basket' },
+  { id: 5, name: 'Users', route: '/admin/users', enabled: true, icon: 'linear-icon-people' },
+  { id: 6, name: 'Vendors', route: '/admin/vendors', enabled: true, icon: 'linear-icon-store' },
+  { id: 7, name: 'Marketing', route: '/admin/marketing', enabled: true, icon: 'linear-icon-megaphone' },
+  { id: 8, name: 'Settings', route: '/admin/settings', enabled: true, icon: 'linear-icon-cog' },
+  { id: 9, name: 'Reports', route: '/admin/reports', enabled: true, icon: 'linear-icon-doc-text' },
 ])
 
 const filter = reactive({ status: '' })
 const orders = ref([])
 
 const fetchOrders = async () => {
-  const res = await axios.get(`/api/admin/orders?status=${filter.status}`)
-  orders.value = res.data
+  const { data } = await axios.get('/api/admin/orders', { params: { status: filter.status } })
+  orders.value = data
 }
 
-onMounted(() => fetchOrders())
+onMounted(fetchOrders)
 </script>
 
 <style scoped>
-.filters { margin-bottom: 15px; }
+main { padding: 20px; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.filters { display: flex; align-items: center; gap: 8px; }
+.filters select { padding: 6px; border-radius: 6px; border: 1px solid #ccc; }
+.filters button { padding: 8px 12px; border: none; border-radius: 6px; background: #2563eb; color: #fff; cursor: pointer; }
 table { width: 100%; border-collapse: collapse; }
-th, td { border: 1px solid #ccc; padding: 10px; }
-.linear-icon-refresh::before { content: "\e92b"; font-family: 'LinearIcons'; margin-right: 5px; }
-button { margin-left: 5px; }
+th, td { padding: 10px; border: 1px solid #e5e7eb; text-align: left; }
 </style>
