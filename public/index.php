@@ -1,33 +1,33 @@
 <?php
-/**
- * Youkyouk Public Entry
- * Main page loader
- */
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youkyouk Dashboard</title>
-    <link rel="stylesheet" href="assets/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/styles/main.css">
-    <link rel="icon" href="logo.png">
-</head>
-<body>
-    <?php include_once '../frontend/components/layout/Header.php'; ?>
-    
-    <main id="app">
-        <!--  -->
-        <h1>Welcome to Youkyouk</h1>
-    </main>
-    
-    <?php include_once '../frontend/components/layout/Footer.php'; ?>
+// index.php - الملف الرئيسي للواجهة
 
-    <script src="assets/vendor/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap.min.js"></script>
-    <script src="assets/js/helpers.js"></script>
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/main.js"></script>
-</body>
-</html>
+// تفعيل عرض الأخطاء أثناء التطوير
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// تضمين الهيدر
+$headerPath = __DIR__ . '/../frontend/components/layout/Header.php';
+if (file_exists($headerPath)) {
+    include_once $headerPath;
+} else {
+    echo "<p style='color:red;'>Header file not found: $headerPath</p>";
+}
+
+// --- محتوى الصفحة الرئيسي ---
+?>
+
+<div style="text-align:center; margin-top:50px;">
+    <h1>Welcome to Youkyouk</h1>
+    <p>Your platform is up and running!</p>
+</div>
+
+<?php
+// تضمين الفوتر
+$footerPath = __DIR__ . '/../frontend/components/layout/Footer.php';
+if (file_exists($footerPath)) {
+    include_once $footerPath;
+} else {
+    echo "<p style='color:red;'>Footer file not found: $footerPath</p>";
+}
+?>
