@@ -1,7 +1,8 @@
 <template>
-  <div class="seller-dashboard">
-    <Header :title="'Orders'" :user="sellerUser" @toggle-sidebar="toggleSidebar"/>
-    <Sidebar :collapsed="sidebarCollapsed" @toggle="toggleSidebar"/>
+  <div class="seller-orders">
+    <YoukyoukHeader :title="'Orders'" :user="sellerUser" @toggle-sidebar="toggleSidebar" />
+    <YoukyoukSidebar :collapsed="sidebarCollapsed" @toggle="toggleSidebar" />
+
     <main>
       <h2>Orders</h2>
       <div class="filters">
@@ -13,7 +14,7 @@
           <option value="delivered">Delivered</option>
           <option value="cancelled">Cancelled</option>
         </select>
-        <button @click="fetchOrders"><i class="linear-icon-refresh"></i> Apply</button>
+        <button @click="fetchOrders"><i class="youkyouk-icon-refresh"></i> Apply</button>
       </div>
 
       <table class="orders-table">
@@ -41,8 +42,8 @@
 </template>
 
 <script setup>
-import Header from '../../components/layout/Header.vue'
-import Sidebar from '../../components/layout/Sidebar.vue'
+import YoukyoukHeader from '../../components/layout/YoukyoukHeader.vue'
+import YoukyoukSidebar from '../../components/layout/YoukyoukSidebar.vue'
 import { ref, reactive, onMounted } from 'vue'
 import axios from 'axios'
 
@@ -54,7 +55,7 @@ const filter = reactive({ status: '' })
 const orders = ref([])
 
 const fetchOrders = async () => {
-  const res = await axios.get(`/api/seller/1/orders?status=${filter.status}`)
+  const res = await axios.get(`/api/seller/orders?status=${filter.status}`)
   orders.value = res.data
 }
 
@@ -62,12 +63,9 @@ onMounted(() => fetchOrders())
 </script>
 
 <style scoped>
-.seller-dashboard { display: flex; }
+.seller-orders { display: flex; }
 main { flex: 1; padding: 20px; }
 .filters { margin-bottom: 15px; }
 .orders-table { width: 100%; border-collapse: collapse; }
 .orders-table th, .orders-table td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-
-/* Linear Icons */
-.linear-icon-refresh::before { content: "\e92b"; font-family: 'LinearIcons'; margin-right: 5px; }
 </style>
