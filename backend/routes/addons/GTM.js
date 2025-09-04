@@ -1,8 +1,6 @@
 import express from "express"
-import { GTMController } from "../../controllers/Addons/GTMController.js"
+import { GTMController } from "../../controllers/addons/GTMController.js"
 const router = express.Router()
-
-router.get("/", GTMController.getSettings)
-router.post("/update", GTMController.updateSettings)
-
+router.get("/", GTMController.get)
+router.post("/update", GTMController.update)
 export default router
