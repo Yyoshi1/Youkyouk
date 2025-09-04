@@ -10,3 +10,9 @@ export class YoukyoukCustomer extends Model {
     
     return {
       seller: { relation: Model.BelongsToOneRelation, modelClass: YoukyoukSeller, join: { from: "youkyouk_customers.seller_id", to: "youkyouk
+        .id" } },
+      orders: { relation: Model.HasManyRelation, modelClass: YoukyoukOrder, join: { from: "youkyouk_customers.id", to: "youkyouk_orders.customer_id" } },
+      reviews: { relation: Model.HasManyRelation, modelClass: YoukyoukReview, join: { from: "youkyouk_customers.id", to: "youkyouk_reviews.customer_id" } }
+    }
+  }
+}
