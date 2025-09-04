@@ -1,21 +1,61 @@
-import express from "express"
-import { YoukyoukAddon } from "../../models/YoukyoukAddon.js"
-
-const router = express.Router()
+// backend/routes/seller/addons.js
+const express = require("express");
+const router = express.Router();
+const YoukyoukAddon = require("../../models/YoukyoukAddon");
 
 // 
 router.get("/", async (req, res) => {
-  const addons = await YoukyoukAddon.query().where({ seller_id: req.user.id })
-  res.json(addons)
-})
+  try {
+    const addons = await YoukyoukAddon.findAll();
+    res.json(addons);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // 
-router.post("/:id/toggle", async (req, res) => {
-  const addon = await YoukyoukAddon.query().findById(req.params.id)
-  if (!addon) return res.status(404).json({ error: "Addon not found" })
-  addon.active = !addon.active
-  await addon.$query().patch({ active: addon.active })
-  res.json(addon)
-})
+router.get("/:id", async (req, res) => {
+  try {
+    const addon = await YoukyoukAddon.findByPk(req.params.id);
+    if (!addon) return res.status(404).json({ error: "Addon not found" });
+    res.json(addon);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-export default router
+// 
+router.post("/", async (req, res) => {
+  try {
+    const addon = await YoukyoukAddon.create(req.body);
+    res.status(201).json(addon);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 
+router.put("/:id", async (req, res) => {
+  try {
+    const addon = await YoukyoukAddon.findByPk(req.params.id);
+    if (!addon) return res.status(404).json({ error: "Addon not found" });
+    await addon.update(req.body);
+    res.json(addon);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 
+router.delete("/:id", async (req, res) => {
+  try {
+    const addon = await YoukyoukAddon.findByPk(req.params.id);
+    if (!addon) return res.status(404).json({ error: "Addon not found" });
+    await addon.destroy();
+    res.json({ message: "Addon deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;
