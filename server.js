@@ -4,6 +4,7 @@ const cors = require('cors');
 const { sequelize } = require('./models');
 const http = require('http');
 const { initSockets } = require('./sockets/tripSocket');
+const sellerAddonsRoutes = require('./routes/seller/addons');
 
 const app = express();
 const server = http.createServer(app);
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use('/api/trips', tripRoutes);
+app.use('/api/seller/addons', sellerAddonsRoutes);
 
 // Initialize WebSocket
 initSockets(server);
