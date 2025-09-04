@@ -1,0 +1,30 @@
+{
+  "name": "youkyouk",
+  "version": "1.0.0",
+  "description": "Youkyouk project - PHP backend with Linear-style admin dashboard",
+  "main": "public/index.php",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "php -S 0.0.0.0:8080 -t public"
+  },
+  "keywords": [
+    "youkyouk",
+    "php",
+    "linear",
+    "admin-dashboard",
+    "frontend"
+  ],
+  "author": "Karim Abou",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "sass": "^1.70.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.27"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "vue": "^3.3.0"
+  }
+}
