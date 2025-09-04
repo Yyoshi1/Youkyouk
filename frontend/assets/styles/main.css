@@ -1,190 +1,47 @@
-/* -----------------------------
-   Fonts
------------------------------- */
+/* Fonts */
 @font-face {
-    font-family: 'Inter';
-    src: url('../fonts/Inter-Regular.woff2') format('woff2'),
-         url('../fonts/Inter-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
+  font-family: 'Inter';
+  src: url('../fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
 }
 
-@font-face {
-    font-family: 'Inter';
-    src: url('../fonts/Inter-Bold.woff2') format('woff2'),
-         url('../fonts/Inter-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-}
-
+/* Body */
 body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa; /* Light mode background */
-    color: #212529;            /* Light mode text */
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f6fa;
+  color: #333;
 }
 
-/* -----------------------------
-   Dark Mode Support
------------------------------- */
-body.dark-mode {
-    background-color: #1e1e2f;
-    color: #f8f9fa;
-}
+/* Header / Sidebar / Footer */
+.app-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: #fff; }
+.app-sidebar { width: 250px; background-color: #2f3640; color: #fff; }
+.app-footer { text-align: center; padding: 10px; background-color: #f1f2f6; color: #666; }
 
-/* -----------------------------
-   Colors
------------------------------- */
-:root {
-    --primary-color: #5c6ac4;
-    --secondary-color: #f8f9fa;
-    --accent-color: #ff6b6b;
-    --success-color: #4caf50;
-    --warning-color: #ff9800;
-    --danger-color: #f44336;
-}
+/* Dark mode */
+.dark-mode { background-color: #1e1e2f; color: #f5f6fa; }
 
-/* -----------------------------
-   Buttons
------------------------------- */
-button {
-    font-family: 'Inter', sans-serif;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
+/* Buttons */
+.btn { padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+.btn-danger { background-color: #e84118; color: #fff; border: none; }
+.btn-sm { font-size: 0.85rem; padding: 4px 8px; }
 
-button.primary {
-    background-color: var(--primary-color);
-    color: #fff;
-}
+/* Tables */
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 10px; border-bottom: 1px solid #ddd; }
+.table-striped tbody tr:nth-child(odd) { background-color: #f9f9f9; }
 
-button.primary:hover {
-    background-color: #4b5bb5;
-}
-
-button.secondary {
-    background-color: var(--secondary-color);
-    color: #212529;
-    border: 1px solid #ced4da;
-}
-
-button.secondary:hover {
-    background-color: #e9ecef;
-}
-
-/* -----------------------------
-   Forms & Inputs
------------------------------- */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea,
-select {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    background-color: #fff;
-    color: #212529;
-}
-
-body.dark-mode input,
-body.dark-mode textarea,
-body.dark-mode select {
-    background-color: #2e2e3f;
-    border-color: #555;
-    color: #f8f9fa;
-}
-
-/* -----------------------------
-   Tables
------------------------------- */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1rem;
-}
-
-table th,
-table td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #dee2e6;
-}
-
-body.dark-mode table th,
-body.dark-mode table td {
-    border-color: #555;
-}
-
-/* -----------------------------
-   Alerts / Notifications
------------------------------- */
-.alert {
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.alert-warning {
-    background-color: #fff3cd;
-    color: #856404;
-}
-
-.alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-body.dark-mode .alert-success {
-    background-color: #2f4f2f;
-    color: #b8e0b8;
-}
-
-body.dark-mode .alert-warning {
-    background-color: #5c4a1c;
-    color: #ffeb99;
-}
-
-body.dark-mode .alert-danger {
-    background-color: #4b1c1c;
-    color: #ffb3b3;
-}
-
-/* -----------------------------
-   Layout Helpers
------------------------------- */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-}
-
-.flex {
-    display: flex;
-}
-
-.flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hidden {
-    display: none;
-}
-
-.visible {
-    display: block;
-}
+/* Modals / Alerts */
+.modal { display: none; position: fixed; top: 0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+.modal-content { background: #fff; padding: 20px; border-radius: 8px; max-width: 500px; margin: 100px auto; }
+.alert { padding: 10px 15px; border-radius: 4px; margin-bottom: 10px; }
+.alert-success { background-color: #4cd137; color: #fff; }
+.alert-error { background-color: #e84118; color: #fff; }
