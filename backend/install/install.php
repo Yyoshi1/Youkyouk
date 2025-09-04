@@ -25,7 +25,7 @@ try {
     // -----------------------------
     $tables = [
 
-        // Users table (must come first)
+        // Users table
         "CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
@@ -62,7 +62,7 @@ try {
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         ) ENGINE=InnoDB;",
 
-        // Projects table (created_by nullable now)
+        // Projects table
         "CREATE TABLE IF NOT EXISTS projects (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
@@ -149,4 +149,3 @@ try {
 } catch (PDOException $e) {
     die("Installation error: " . $e->getMessage());
 }
-?>
