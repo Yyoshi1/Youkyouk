@@ -4,7 +4,7 @@
     <Sidebar :collapsed="sidebarCollapsed" @toggle="toggleSidebar"/>
     <main>
       <h2>Products</h2>
-      <button @click="openAddProduct"><i class="linear-icon-plus"></i> Add Product</button>
+      <button @click="openAddProduct"><i class="youkyouk-icon-plus"></i> Add Product</button>
 
       <table class="products-table">
         <thead>
@@ -25,8 +25,8 @@
             <td>{{ product.stock }}</td>
             <td>{{ product.status }}</td>
             <td>
-              <button @click="editProduct(product.id)"><i class="linear-icon-pencil"></i></button>
-              <button @click="deleteProduct(product.id)"><i class="linear-icon-trash"></i></button>
+              <button @click="editProduct(product.id)"><i class="youkyouk-icon-pencil"></i></button>
+              <button @click="deleteProduct(product.id)"><i class="youkyouk-icon-trash"></i></button>
             </td>
           </tr>
         </tbody>
@@ -38,7 +38,7 @@
 <script setup>
 import Header from '../../components/layout/Header.vue'
 import Sidebar from '../../components/layout/Sidebar.vue'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 const sellerUser = { id: 1, name: 'Youkyouk Seller' }
@@ -52,9 +52,9 @@ const fetchProducts = async () => {
   products.value = res.data
 }
 
-const openAddProduct = () => { /* logic to open add product modal */ }
-const editProduct = (id) => { /* logic to edit product */ }
-const deleteProduct = (id) => { /* logic to delete product */ }
+const openAddProduct = () => { /* logic */ }
+const editProduct = (id) => { /* logic */ }
+const deleteProduct = (id) => { /* logic */ }
 
 onMounted(() => fetchProducts())
 </script>
@@ -65,7 +65,8 @@ main { flex: 1; padding: 20px; }
 .products-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
 .products-table th, .products-table td { border: 1px solid #ccc; padding: 8px; text-align: left; }
 button { cursor: pointer; }
-.linear-icon-plus::before { content: "\e900"; font-family: 'LinearIcons'; margin-right: 5px; }
-.linear-icon-pencil::before { content: "\e901"; font-family: 'LinearIcons'; margin-right: 5px; }
-.linear-icon-trash::before { content: "\e902"; font-family: 'LinearIcons'; margin-right: 5px; }
+
+.youkyouk-icon-plus::before { content: "\e900"; font-family: 'YoukyoukIcons'; margin-right: 5px; }
+.youkyouk-icon-pencil::before { content: "\e901"; font-family: 'YoukyoukIcons'; margin-right: 5px; }
+.youkyouk-icon-trash::before { content: "\e902"; font-family: 'YoukyoukIcons'; margin-right: 5px; }
 </style>
