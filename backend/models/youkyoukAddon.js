@@ -1,16 +1,32 @@
-import { Model } from "objection"
+// backend/models/YoukyoukAddon.js
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../models");
 
-export class YoukyoukAddon extends Model {
-  static get tableName() { return "youkyouk_addons" }
+const YoukyoukAddon = sequelize.define("YoukyoukAddon", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  price: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  status: {
+    type: DataTypes.ENUM("active", "inactive"),
+    defaultValue: "active",
+  },
+}, {
+  tableName: "youkyouk_addons",
+});
 
-  static get relationMappings() {
-    const { Seller } = require("./Seller")
-    return {
-      seller: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Seller,
-        join: { from: "youkyouk_addons.seller_id", to: "sellers.id" }
-      }
-    }
-  }
-}
+module.exports = YoukyoukAddon;
