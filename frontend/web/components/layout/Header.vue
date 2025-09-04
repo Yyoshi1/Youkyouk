@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="left-section">
-      <!-- Logo: default Linear style, replaceable -->
+      <!-- Logo (Linear style, replaceable by user) -->
       <a href="/" class="logo-wrapper">
         <img :src="logoIcon" alt="Logo Icon" class="logo-icon" />
         <span class="logo-text">{{ logoText }}</span>
@@ -11,7 +11,7 @@
       <div class="search-bar">
         <input type="text" v-model="searchQuery" placeholder="Search..." />
         <button @click="performSearch">
-          <i class="icon-search"></i>
+          <img src="/assets/icons/search.svg" alt="Search Icon" />
         </button>
       </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="right-section">
       <!-- Notifications -->
       <div class="notifications" @click="toggleNotifications">
-        <i class="icon-bell"></i>
+        <img src="/assets/icons/bell.svg" alt="Notifications" />
         <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
       </div>
 
@@ -34,14 +34,14 @@
 
       <!-- Theme Switch -->
       <div class="theme-switch" @click="toggleTheme">
-        <i :class="themeIcon"></i>
+        <img :src="themeIcon" alt="Theme Icon" />
       </div>
 
       <!-- User Profile -->
       <div class="user-profile">
         <img :src="user.avatar" alt="User Avatar" class="avatar" />
         <span class="username">{{ user.name }}</span>
-        <i class="icon-arrow-down"></i>
+        <img src="/assets/icons/arrow-down.svg" alt="Dropdown" />
 
         <!-- Dropdown -->
         <ul class="dropdown">
@@ -59,11 +59,11 @@ export default {
   props: {
     logoIcon: {
       type: String,
-      default: "/assets/images/linear-logo-icon.png" // Default Linear-style icon
+      default: "/assets/images/linear-logo-icon.png" // Linear-style icon
     },
     logoText: {
       type: String,
-      default: "Youkyouk" // Default text, can be customized
+      default: "Youkyouk"
     }
   },
   data() {
@@ -80,12 +80,14 @@ export default {
   },
   computed: {
     themeIcon() {
-      return this.theme === "light" ? "icon-sun" : "icon-moon";
+      return this.theme === "light"
+        ? "/assets/icons/sun.svg"
+        : "/assets/icons/moon.svg";
     }
   },
   methods: {
     performSearch() {
-      console.log("Search for:", this.searchQuery);
+      console.log("Search:", this.searchQuery);
     },
     toggleNotifications() {
       console.log("Toggle notifications");
@@ -108,7 +110,30 @@ export default {
 </script>
 
 <style scoped>
+@import url('/assets/fonts/inter.css');
+
+:root[data-theme="light"] {
+  --header-bg: #ffffff;
+  --text-color: #1f1f1f;
+  --button-bg: #f0f0f0;
+  --button-color: #1f1f1f;
+  --border-color: #e0e0e0;
+  --dropdown-bg: #ffffff;
+  --dropdown-hover: #f5f5f5;
+}
+
+:root[data-theme="dark"] {
+  --header-bg: #1f1f1f;
+  --text-color: #ffffff;
+  --button-bg: #2c2c2c;
+  --button-color: #ffffff;
+  --border-color: #3a3a3a;
+  --dropdown-bg: #2c2c2c;
+  --dropdown-hover: #3a3a3a;
+}
+
 .header {
+  font-family: 'Inter', sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -168,5 +193,70 @@ export default {
   align-items: center;
 }
 
-/* Notifications, language, theme, user profile styles remain unchanged */
+.notifications {
+  position: relative;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.notifications .badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.language-selector select {
+  margin-right: 16px;
+  padding: 4px;
+}
+
+.theme-switch {
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.user-profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-profile .avatar {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.user-profile .dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--border-color);
+  list-style: none;
+  padding: 8px 0;
+  display: none;
+  min-width: 120px;
+  z-index: 100;
+}
+
+.user-profile:hover .dropdown {
+  display: block;
+}
+
+.user-profile .dropdown li {
+  padding: 6px 16px;
+  cursor: pointer;
+}
+
+.user-profile .dropdown li:hover {
+  background-color: var(--dropdown-hover);
+}
 </style>
