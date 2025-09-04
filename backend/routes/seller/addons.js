@@ -1,10 +1,10 @@
 // backend/routes/seller/addons.js
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const YoukyoukAddon = require("../../models/YoukyoukAddon");
+const { YoukyoukAddon } = require('../../models/youkyoukAddon');
 
-// 
-router.get("/", async (req, res) => {
+// GET all addons
+router.get('/', async (req, res) => {
   try {
     const addons = await YoukyoukAddon.findAll();
     res.json(addons);
@@ -13,46 +13,48 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 
-router.get("/:id", async (req, res) => {
+// GET single addon by ID
+router.get('/:id', async (req, res) => {
   try {
     const addon = await YoukyoukAddon.findByPk(req.params.id);
-    if (!addon) return res.status(404).json({ error: "Addon not found" });
+    if (!addon) return res.status(404).json({ error: 'Addon not found' });
     res.json(addon);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// 
-router.post("/", async (req, res) => {
+// CREATE a new addon
+router.post('/', async (req, res) => {
   try {
-    const addon = await YoukyoukAddon.create(req.body);
-    res.status(201).json(addon);
+    const { name, description, isActive } = req.body;
+    const newAddon = await YoukyoukAddon.create({ name, description, isActive });
+    res.status(201).json(newAddon);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// 
-router.put("/:id", async (req, res) => {
+// UPDATE an addon
+router.put('/:id', async (req, res) => {
   try {
+    const { name, description, isActive } = req.body;
     const addon = await YoukyoukAddon.findByPk(req.params.id);
-    if (!addon) return res.status(404).json({ error: "Addon not found" });
-    await addon.update(req.body);
+    if (!addon) return res.status(404).json({ error: 'Addon not found' });
+    await addon.update({ name, description, isActive });
     res.json(addon);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// 
-router.delete("/:id", async (req, res) => {
+// DELETE an addon
+router.delete('/:id', async (req, res) => {
   try {
     const addon = await YoukyoukAddon.findByPk(req.params.id);
-    if (!addon) return res.status(404).json({ error: "Addon not found" });
+    if (!addon) return res.status(404).json({ error: 'Addon not found' });
     await addon.destroy();
-    res.json({ message: "Addon deleted" });
+    res.json({ message: 'Addon deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
