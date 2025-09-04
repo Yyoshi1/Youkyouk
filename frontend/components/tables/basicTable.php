@@ -15,8 +15,9 @@
     </tr>
   </thead>
   <tbody>
-    <?phو تحميل افتراضي (كمثال)
-    // هنا مجرد بيانات ثابتة لتوضيح الجدول
+    <?php
+    // 
+    // 
     $users = [
         ['id'=>1,'name'=>'John Doe','email'=>'john@example.com','role'=>'admin'],
         ['id'=>2,'name'=>'Jane Smith','email'=>'jane@example.com','role'=>'user'],
@@ -38,7 +39,7 @@
 </table>
 
 <script>
-// ربط زر الحذف مع ConfirmModal
+// ConfirmModal
 $('.deleteBtn').on('click', function() {
     let userId = $(this).data('id');
     openConfirmModal('delete_user', userId); // action 'delete_user' سيتم التعامل معها في ajax.php
