@@ -1,6 +1,6 @@
 <?php
 /**
- * Youkyouk Install Script - Corrected & Complete
+ * Youkyouk Install Script - Corrected
  * Creates database, tables, initial admin user, version & license files
  */
 
@@ -25,7 +25,7 @@ try {
     // -----------------------------
     $tables = [
 
-        // Users table
+        // Users table (must come first)
         "CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
@@ -51,7 +51,7 @@ try {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB;",
 
-        // Team members table
+        // Team members
         "CREATE TABLE IF NOT EXISTS team_members (
             id INT AUTO_INCREMENT PRIMARY KEY,
             team_id INT NOT NULL,
@@ -62,7 +62,7 @@ try {
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         ) ENGINE=InnoDB;",
 
-        // Projects table
+        // Projects table (created_by nullable now)
         "CREATE TABLE IF NOT EXISTS projects (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
@@ -149,3 +149,4 @@ try {
 } catch (PDOException $e) {
     die("Installation error: " . $e->getMessage());
 }
+?>
