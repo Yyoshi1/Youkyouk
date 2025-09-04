@@ -1,13 +1,9 @@
 <?php
 /**
- * Youkyouk Install Script
- * First version installer for shared hosting or local environment
+ * Youkyouk Install Script (Simplified)
  * Creates database, tables, admin user, version and license files
  */
 
-// -----------------------------
-// Database settings
-// -----------------------------
 $host = "localhost";        // Database server
 $dbname = "youkyouk_db";   // Database name
 $user = "root";             // Database username
@@ -28,14 +24,13 @@ try {
     // Create core tables
     // -----------------------------
     $tables = [
-
         // Users table
         "CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             email VARCHAR(100) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
-            role VARCHAR(50) NOT NULL,
+            role_id INT NOT NULL DEFAULT 2,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB;",
 
@@ -43,70 +38,30 @@ try {
         "CREATE TABLE IF NOT EXISTS roles (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(50) NOT NULL UNIQUE,
-            permissions TEXT NOT NULL,
+            permissions TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB;",
-
-        // Teams table
-        "CREATE TABLE IF NOT EXISTS teams (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            description TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB;",
-
-        // Team members
-        "CREATE TABLE IF NOT EXISTS team_members (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            team_id INT NOT NULL,
-            user_id INT NOT NULL,
-            role VARCHAR(50) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-        ) ENGINE=InnoDB;",
-
-        // Projects table
-        "CREATE TABLE IF NOT EXISTS projects (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(100) NOT NULL,
-            description TEXT,
-            created_by INT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
-        ) ENGINE=InnoDB;",
-
-        // Tasks table
-        "CREATE TABLE IF NOT EXISTS tasks (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            project_id INT NOT NULL,
-            title VARCHAR(150) NOT NULL,
-            description TEXT,
-            assigned_team_id INT,
-            assigned_user_id INT,
-            status VARCHAR(50) DEFAULT 'To Do',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
-            FOREIGN KEY (assigned_team_id) REFERENCES teams(id) ON DELETE SET NULL,
-            FOREIGN KEY (assigned_user_id) REFERENCES users(id) ON DELETE SET NULL
         ) ENGINE=InnoDB;",
 
         // Notifications table
         "CREATE TABLE IF NOT EXISTS notifications (
             id INT AUTO_INCREMENT PRIMARY KEY,
             user_id INT NOT NULL,
-            type VARCHAR(50) NOT NULL,
+            title VARCHAR(255) NOT NULL,
             message TEXT NOT NULL,
-            status VARCHAR(20) DEFAULT 'unread',
+            read TINYINT(1) DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         ) ENGINE=InnoDB;",
 
-        // System version table
-        "CREATE TABLE IF NOT EXISTS system_version (
+        // Chat table
+        "CREATE TABLE IF NOT EXISTS chat (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            version VARCHAR(20) NOT NULL,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            from_id INT NOT NULL,
+            to_id INT NOT NULL,
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (from_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (to_id) REFERENCES users(id) ON DELETE CASCADE
         ) ENGINE=InnoDB;"
     ];
 
@@ -122,10 +77,13 @@ try {
     $adminName = "Administrator";
     $adminEmail = "admin@youkyouk.com";
     $adminPass = password_hash("Admin@123", PASSWORD_BCRYPT);
-    $adminRole = "superadmin";
+    $adminRoleId = 1;
 
-    $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$adminName, $adminEmail, $adminPass, $adminRole]);
+    // Insert admin role first
+    $pdo->exec("INSERT INTO roles (name) VALUES ('superadmin')");
+
+    $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role_id) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$adminName, $adminEmail, $adminPass, $adminRoleId]);
 
     echo "Admin user created successfully.<br>";
 
