@@ -1,6 +1,18 @@
+// /pages/_app.tsx
+import '../styles/tailwind.css'
 import type { AppProps } from 'next/app'
-import '@/styles/globals.css'
+import { AppProvider } from '../contexts/AppContext'
+import { ProjectModal } from '../components/modals'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <AppProvider>
+      <Component {...pageProps} />
+      {/* Modals globally */}
+      <ProjectModal />
+      {/* TaskModal, TeamModal */}
+    </AppProvider>
+  )
 }
+
+export default MyApp
