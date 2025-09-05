@@ -5,12 +5,16 @@ import clsx from 'clsx'
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline'
   size?: 'sm' | 'md' | 'lg'
+  leftIcon?: React.ReactNode
+  rightIcon?: React.ReactNode
 }
 
 const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   size = 'md',
+  leftIcon,
+  rightIcon,
   className,
   ...props
 }) => {
@@ -37,7 +41,9 @@ const Button: React.FC<ButtonProps> = ({
       className={clsx(baseStyles, variants[variant], sizes[size], className)}
       {...props}
     >
+      {leftIcon && <span className="mr-2">{leftIcon}</span>}
       {children}
+      {rightIcon && <span className="ml-2">{rightIcon}</span>}
     </button>
   )
 }
