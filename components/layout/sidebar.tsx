@@ -1,22 +1,42 @@
 // /components/layout/Sidebar.tsx
 import React, { useState } from 'react'
+import clsx from 'clsx'
 import {
   HomeIcon,
+  InboxIcon,
   FolderIcon,
   ClipboardDocumentIcon,
-  UserGroupIcon,
-  BellIcon,
+  CalendarIcon,
   ChartBarIcon,
+  UserGroupIcon,
   Cog6ToothIcon,
   Squares2X2Icon,
+  BellIcon,
 } from '@heroicons/react/24/outline'
-import clsx from 'clsx'
 
-const sidebarLinks = [
+interface SubLink {
+  name: string
+  href: string
+}
+
+interface Link {
+  name: string
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  href: string
+  subLinks?: SubLink[]
+}
+
+const sidebarLinks: Link[] = [
+  { name: 'Home', icon: HomeIcon, href: '/dashboard' },
   {
-    name: 'Dashboard',
-    icon: HomeIcon,
-    href: '/dashboard',
+    name: 'Inbox',
+    icon: InboxIcon,
+    href: '/inbox',
+    subLinks: [
+      { name: 'All', href: '/inbox/all' },
+      { name: 'Unread', href: '/inbox/unread' },
+      { name: 'Starred', href: '/inbox/starred' },
+    ],
   },
   {
     name: 'Projects',
@@ -25,42 +45,20 @@ const sidebarLinks = [
     subLinks: [
       { name: 'Active', href: '/projects/active' },
       { name: 'Archived', href: '/projects/archived' },
+      { name: 'Templates', href: '/projects/templates' },
     ],
   },
-  {
-    name: 'Tasks',
-    icon: ClipboardDocumentIcon,
-    href: '/tasks',
-  },
-  {
-    name: 'Users',
-    icon: UserGroupIcon,
-    href: '/users',
-  },
-  {
-    name: 'Teams',
-    icon: Squares2X2Icon,
-    href: '/teams',
-  },
-  {
-    name: 'Notifications',
-    icon: BellIcon,
-    href: '/notifications',
-  },
-  {
-    name: 'Reports',
-    icon: ChartBarIcon,
-    href: '/reports',
-  },
-  {
-    name: 'Settings',
-    icon: Cog6ToothIcon,
-    href: '/settings',
-  },
+  { name: 'Tasks', icon: ClipboardDocumentIcon, href: '/tasks' },
+  { name: 'Calendar', icon: CalendarIcon, href: '/calendar' },
+  { name: 'Reports', icon: ChartBarIcon, href: '/reports' },
+  { name: 'Teams', icon: Squares2X2Icon, href: '/teams' },
+  { name: 'Users', icon: UserGroupIcon, href: '/users' },
+  { name: 'Notifications', icon: BellIcon, href: '/notifications' },
+  { name: 'Settings', icon: Cog6ToothIcon, href: '/settings' },
 ]
 
 const Sidebar: React.FC = () => {
-  const [active, setActive] = useState('Dashboard')
+  const [active, setActive] = useState('Home')
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({})
 
   const toggleSubMenu = (name: string) => {
@@ -68,13 +66,14 @@ const Sidebar: React.FC = () => {
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 shadow-md flex-shrink-0">
+    <aside className="w-64 bg-white dark:bg-gray-800 shadow-md flex-shrink-0 h-screen overflow-y-auto">
       <nav className="flex flex-col mt-4">
         {sidebarLinks.map((link) => (
           <div key={link.name}>
             <a
               href={link.href}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault()
                 setActive(link.name)
                 if (link.subLinks) toggleSubMenu(link.name)
               }}
