@@ -1,19 +1,17 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
 
-interface Project {
+export interface IProject extends Document {
   name: string
-  description?: string
-  startDate?: Date
-  endDate?: Date
-  status?: 'active' | 'completed' | 'on-hold'
+  description: string
+  status: string
+  team: mongoose.Types.ObjectId[]
 }
 
-const projectSchema = new Schema<Project>({
+const ProjectSchema: Schema = new Schema({
   name: { type: String, required: true },
-  description: String,
-  startDate: Date,
-  endDate: Date,
-  status: { type: String, default: 'active' }
+  description: { type: String },
+  status: { type: String, default: 'active' },
+  team: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
 }, { timestamps: true })
 
-export default model<Project>('Project', projectSchema)
+export default mongoose.model<IProject>('Project', ProjectSchema)
