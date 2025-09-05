@@ -1,3 +1,7 @@
+---
+
+### 3️⃣ `/package.json`
+```json
 {
   "name": "youkyouk",
   "version": "1.0.0",
@@ -9,14 +13,20 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "13.5.2",
+    "next": "14.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.2.2",
-    "tailwindcss": "^3.3.3",
-    "postcss": "^8.4.31",
-    "autoprefixer": "^10.4.14",
-    "@heroicons/react": "^2.0.18"
+    "tailwindcss": "3.3.2",
+    "postcss": "8.4.21",
+    "autoprefixer": "10.4.14",
+    "@heroicons/react": "2.0.18"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "20.4.2",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "eslint": "8.45.0",
+    "eslint-config-next": "14.0.0"
+  }
 }
