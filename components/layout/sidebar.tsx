@@ -1,108 +1,66 @@
-// /components/layout/Sidebar.tsx
-import React, { useState } from 'react'
-import clsx from 'clsx'
+import React from 'react'
 import {
   HomeIcon,
-  InboxIcon,
   FolderIcon,
   ClipboardDocumentIcon,
-  CalendarIcon,
+  UsersIcon,
   ChartBarIcon,
-  UserGroupIcon,
   Cog6ToothIcon,
-  Squares2X2Icon,
   BellIcon,
 } from '@heroicons/react/24/outline'
 
-interface SubLink {
-  name: string
-  href: string
-}
-
-interface Link {
+interface SidebarItem {
   name: string
   icon: React.FC<React.SVGProps<SVGSVGElement>>
-  href: string
-  subLinks?: SubLink[]
+  children?: SidebarItem[]
 }
 
-const sidebarLinks: Link[] = [
-  { name: 'Home', icon: HomeIcon, href: '/dashboard' },
-  {
-    name: 'Inbox',
-    icon: InboxIcon,
-    href: '/inbox',
-    subLinks: [
-      { name: 'All', href: '/inbox/all' },
-      { name: 'Unread', href: '/inbox/unread' },
-      { name: 'Starred', href: '/inbox/starred' },
-    ],
-  },
+const sidebarItems: SidebarItem[] = [
+  { name: 'Home', icon: HomeIcon },
   {
     name: 'Projects',
     icon: FolderIcon,
-    href: '/projects',
-    subLinks: [
-      { name: 'Active', href: '/projects/active' },
-      { name: 'Archived', href: '/projects/archived' },
-      { name: 'Templates', href: '/projects/templates' },
+    children: [
+      { name: 'All Projects', icon: FolderIcon },
+      { name: 'Active', icon: FolderIcon },
+      { name: 'Archived', icon: FolderIcon },
     ],
   },
-  { name: 'Tasks', icon: ClipboardDocumentIcon, href: '/tasks' },
-  { name: 'Calendar', icon: CalendarIcon, href: '/calendar' },
-  { name: 'Reports', icon: ChartBarIcon, href: '/reports' },
-  { name: 'Teams', icon: Squares2X2Icon, href: '/teams' },
-  { name: 'Users', icon: UserGroupIcon, href: '/users' },
-  { name: 'Notifications', icon: BellIcon, href: '/notifications' },
-  { name: 'Settings', icon: Cog6ToothIcon, href: '/settings' },
+  {
+    name: 'Tasks',
+    icon: ClipboardDocumentIcon,
+    children: [
+      { name: 'My Tasks', icon: ClipboardDocumentIcon },
+      { name: 'Today', icon: ClipboardDocumentIcon },
+      { name: 'Upcoming', icon: ClipboardDocumentIcon },
+    ],
+  },
+  { name: 'Team', icon: UsersIcon },
+  { name: 'Reports', icon: ChartBarIcon },
+  { name: 'Notifications', icon: BellIcon },
+  { name: 'Settings', icon: Cog6ToothIcon },
 ]
 
 const Sidebar: React.FC = () => {
-  const [active, setActive] = useState('Home')
-  const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({})
-
-  const toggleSubMenu = (name: string) => {
-    setOpenMenus((prev) => ({ ...prev, [name]: !prev[name] }))
-  }
-
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 shadow-md flex-shrink-0 h-screen overflow-y-auto">
-      <nav className="flex flex-col mt-4">
-        {sidebarLinks.map((link) => (
-          <div key={link.name}>
-            <a
-              href={link.href}
-              onClick={(e) => {
-                e.preventDefault()
-                setActive(link.name)
-                if (link.subLinks) toggleSubMenu(link.name)
-              }}
-              className={clsx(
-                'flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition rounded-r',
-                active === link.name ? 'bg-blue-500 text-white' : ''
-              )}
-            >
-              <link.icon className="w-5 h-5 mr-3" />
-              <span>{link.name}</span>
-              {link.subLinks && (
-                <span className="ml-auto">{openMenus[link.name] ? '▲' : '▼'}</span>
-              )}
-            </a>
-
-            {link.subLinks && openMenus[link.name] && (
-              <div className="ml-8 mt-1 flex flex-col">
-                {link.subLinks.map((sub) => (
-                  <a
-                    key={sub.name}
-                    href={sub.href}
-                    onClick={() => setActive(sub.name)}
-                    className={clsx(
-                      'px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded',
-                      active === sub.name ? 'bg-blue-400 text-white' : ''
-                    )}
+    <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 min-h-screen p-4">
+      <nav className="space-y-2">
+        {sidebarItems.map((item) => (
+          <div key={item.name}>
+            <button className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+              <item.icon className="w-5 h-5 mr-2" />
+              <span className="text-gray-900 dark:text-gray-100 font-medium">{item.name}</span>
+            </button>
+            {item.children && (
+              <div className="ml-6 mt-1 space-y-1">
+                {item.children.map((child) => (
+                  <button
+                    key={child.name}
+                    className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-700 dark:text-gray-300"
                   >
-                    {sub.name}
-                  </a>
+                    <child.icon className="w-4 h-4 mr-2" />
+                    <span>{child.name}</span>
+                  </button>
                 ))}
               </div>
             )}
