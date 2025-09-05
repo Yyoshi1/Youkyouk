@@ -15,6 +15,8 @@ const initialTasks: Task[] = [
   { id: 3, title: 'Create Dashboard Cards', project: 'Youkyouk Frontend', assignee: 'Charlie', dueDate: '2025-09-08', status: 'Completed' },
   { id: 4, title: 'API Integration', project: 'Youkyouk Backend', assignee: 'David', dueDate: '2025-09-15', status: 'In Progress' },
   { id: 5, title: 'Write Tests', project: 'Youkyouk Frontend', assignee: 'Eve', dueDate: '2025-09-20', status: 'Pending' },
+  { id: 6, title: 'Prepare Release', project: 'Youkyouk Backend', assignee: 'Frank', dueDate: '2025-09-25', status: 'Pending' },
+  { id: 7, title: 'Design Icons', project: 'Youkyouk Frontend', assignee: 'Grace', dueDate: '2025-09-18', status: 'Completed' },
 ]
 
 const TasksTable: React.FC = () => {
@@ -23,18 +25,21 @@ const TasksTable: React.FC = () => {
   const [sortAsc, setSortAsc] = useState(true)
   const [filterStatus, setFilterStatus] = useState<'All' | Task['status']>('All')
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 3
+  const [pageSize, setPageSize] = useState(5) // عدد المهام لكل صفحة قابل للتغيير
 
-  const filteredTasks = tasks.filter((task) =>
+  // Filtering
+  const filteredTasks = tasks.filter(task =>
     filterStatus === 'All' ? true : task.status === filterStatus
   )
 
+  // Sorting
   const sortedTasks = [...filteredTasks].sort((a, b) => {
     if (a[sortField] < b[sortField]) return sortAsc ? -1 : 1
     if (a[sortField] > b[sortField]) return sortAsc ? 1 : -1
     return 0
   })
 
+  // Pagination
   const totalPages = Math.ceil(sortedTasks.length / pageSize)
   const paginatedTasks = sortedTasks.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
@@ -47,20 +52,36 @@ const TasksTable: React.FC = () => {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded shadow overflow-x-auto p-4 space-y-4">
-      {/* Filter */}
-      <div className="flex items-center space-x-2">
-        <span>Status:</span>
-        <select
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value as any)}
-          className="border rounded px-2 py-1 dark:bg-gray-700 dark:text-white"
-        >
-          <option value="All">All</option>
-          <option value="Pending">Pending</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option>
-        </select>
+    <div className="bg-white dark:bg-gray-800 rounded shadow p-4 space-y-4">
+      {/* Filter & Page Size */}
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex items-center space-x-2">
+          <span>Status:</span>
+          <select
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value as any)}
+            className="border rounded px-2 py-1 dark:bg-gray-700 dark:text-white"
+          >
+            <option value="All">All</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <span>Tasks per page:</span>
+          <select
+            value={pageSize}
+            onChange={(e) => { setPageSize(Number(e.target.value)); setCurrentPage(1) }}
+            className="border rounded px-2 py-1 dark:bg-gray-700 dark:text-white"
+          >
+            <option value={3}>3</option>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+          </select>
+        </div>
       </div>
 
       {/* Table */}
@@ -100,7 +121,7 @@ const TasksTable: React.FC = () => {
       </table>
 
       {/* Pagination */}
-      <div className="flex justify-end space-x-2">
+      <div className="flex justify-end items-center space-x-2">
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
