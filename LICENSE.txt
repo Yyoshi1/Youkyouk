@@ -1,0 +1,45 @@
+Youkyouk Commercial License – Full Version
+
+Copyright (c) 2025
+All Rights Reserved by the Author
+
+---
+
+1. Ownership
+   The author retains all rights, titles, and interests in Youkyouk, including:
+   - Source code (frontend and backend)
+   - Design assets (images, icons, stylesheets)
+   - Documentation
+   - Any third-party assets included with proper attribution
+
+2. License Grant
+   Upon purchase, the buyer is granted a limited, non-exclusive, non-transferable license to:
+   - Use Youkyouk in a single or multiple projects (depending on Regular or Extended License)
+   - Modify Youkyouk for personal or commercial purposes
+   - Deploy Youkyouk to production servers
+
+3. Restrictions
+   The buyer is strictly prohibited from:
+   - Redistributing, reselling, sharing, or sublicensing Youkyouk, in whole or in part
+   - Using Youkyouk in a way that violates CodeCanyon’s Terms of Service
+   - Claiming ownership of Youkyouk or any of its components
+   - Using Youkyouk to create competing products
+
+4. Updates
+   - Any updates, patches, or new versions provided by the author are subject to the terms of the purchased license
+   - The buyer is entitled to updates only if the purchase includes update access
+   - Unauthorized distribution of updates is prohibited
+
+5. Liability
+   - Youkyouk is provided “as is” without any warranties or guarantees
+   - The author is not liable for any damages, losses, or claims arising from the use of Youkyouk
+
+6. Termination
+   - Violation of any terms will result in immediate termination of the license
+   - The buyer must cease all use of Youkyouk and destroy all copies upon termination
+
+7. Governing Law
+   - This license is governed by the laws of the author’s country of residence
+   - Any disputes shall be resolved under the jurisdiction specified by the author
+
+By using Youkyouk, the buyer acknowledges and agrees to comply with all terms stated above.
