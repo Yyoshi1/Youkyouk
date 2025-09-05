@@ -1,71 +1,55 @@
 import React from 'react'
 import {
   HomeIcon,
-  FolderIcon,
-  ClipboardDocumentIcon,
+  Squares2X2Icon,
+  CalendarIcon,
   UsersIcon,
+  ClipboardDocumentListIcon,
   ChartBarIcon,
   Cog6ToothIcon,
   BellIcon,
 } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/router'
 
 interface SidebarItem {
-  name: string
-  icon: React.FC<React.SVGProps<SVGSVGElement>>
-  children?: SidebarItem[]
+  title: string
+  icon: React.ReactNode
+  path: string
 }
 
 const sidebarItems: SidebarItem[] = [
-  { name: 'Home', icon: HomeIcon },
-  {
-    name: 'Projects',
-    icon: FolderIcon,
-    children: [
-      { name: 'All Projects', icon: FolderIcon },
-      { name: 'Active', icon: FolderIcon },
-      { name: 'Archived', icon: FolderIcon },
-    ],
-  },
-  {
-    name: 'Tasks',
-    icon: ClipboardDocumentIcon,
-    children: [
-      { name: 'My Tasks', icon: ClipboardDocumentIcon },
-      { name: 'Today', icon: ClipboardDocumentIcon },
-      { name: 'Upcoming', icon: ClipboardDocumentIcon },
-    ],
-  },
-  { name: 'Team', icon: UsersIcon },
-  { name: 'Reports', icon: ChartBarIcon },
-  { name: 'Notifications', icon: BellIcon },
-  { name: 'Settings', icon: Cog6ToothIcon },
+  { title: 'Dashboard', icon: <HomeIcon className="h-6 w-6" />, path: '/dashboard' },
+  { title: 'Projects', icon: <Squares2X2Icon className="h-6 w-6" />, path: '/projects' },
+  { title: 'Calendar', icon: <CalendarIcon className="h-6 w-6" />, path: '/calendar' },
+  { title: 'Tasks', icon: <ClipboardDocumentListIcon className="h-6 w-6" />, path: '/tasks' },
+  { title: 'Teams', icon: <UsersIcon className="h-6 w-6" />, path: '/teams' },
+  { title: 'Reports', icon: <ChartBarIcon className="h-6 w-6" />, path: '/reports' },
+  { title: 'Notifications', icon: <BellIcon className="h-6 w-6" />, path: '/notifications' },
+  { title: 'Settings', icon: <Cog6ToothIcon className="h-6 w-6" />, path: '/settings' },
 ]
 
 const Sidebar: React.FC = () => {
+  const router = useRouter()
+
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 min-h-screen p-4">
-      <nav className="space-y-2">
-        {sidebarItems.map((item) => (
-          <div key={item.name}>
-            <button className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition">
-              <item.icon className="w-5 h-5 mr-2" />
-              <span className="text-gray-900 dark:text-gray-100 font-medium">{item.name}</span>
-            </button>
-            {item.children && (
-              <div className="ml-6 mt-1 space-y-1">
-                {item.children.map((child) => (
-                  <button
-                    key={child.name}
-                    className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-700 dark:text-gray-300"
-                  >
-                    <child.icon className="w-4 h-4 mr-2" />
-                    <span>{child.name}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+    <aside className="w-64 bg-white dark:bg-gray-900 min-h-screen border-r border-gray-200 dark:border-gray-700">
+      <div className="p-4 text-xl font-bold text-gray-800 dark:text-white">Youkyouk</div>
+      <nav className="mt-6">
+        {sidebarItems.map((item) => {
+          const active = router.pathname === item.path
+          return (
+            <div
+              key={item.title}
+              onClick={() => router.push(item.path)}
+              className={`flex items-center space-x-3 px-4 py-3 cursor-pointer rounded-lg m-1 ${
+                active ? 'bg-blue-500 text-white' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
+              }`}
+            >
+              {item.icon}
+              <span className="font-medium">{item.title}</span>
+            </div>
+          )
+        })}
       </nav>
     </aside>
   )
