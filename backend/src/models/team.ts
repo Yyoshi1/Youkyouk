@@ -1,13 +1,13 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema, Document } from 'mongoose'
 
-interface Team {
+export interface ITeam extends Document {
   name: string
   members: string[]
 }
 
-const teamSchema = new Schema<Team>({
+const TeamSchema: Schema = new Schema({
   name: { type: String, required: true },
-  members: [String]
+  members: [{ type: String }]
 }, { timestamps: true })
 
-export default model<Team>('Team', teamSchema)
+export default mongoose.model<ITeam>('Team', TeamSchema)
