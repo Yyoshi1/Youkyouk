@@ -1,23 +1,28 @@
 # Youkyouk
 
-Youkyouk is a full-featured web application inspired by modern dashboard designs, built with Next.js and TailwindCSS.  
-This project is ready for deployment and sale, fully functional without any payment or subscription systems.
+A modern project management system built with **Next.js**, **TypeScript**, and **TailwindCSS**.  
+This project provides a clean, professional interface with a focus on productivity and simplicity.
+
+---
 
 ## Features
+- Next.js 14 with App Router
+- TypeScript for strict typing
+- TailwindCSS for styling
+- Dark/Light theme
+- Intuitive layout (Sidebar, Header, Command Menu, etc.)
 
-- Fully responsive dashboard layout (Header, Sidebar, Footer)
-- Dark/Light mode support with ThemeContext
-- Project, Task, and Team management pages
-- Reusable UI components: Buttons, Tabs, Modals, Cards
-- Heroicons integrated for all icons
-- Commercial license included (see LICENSE.txt)
-- Code, comments, and component names all in English
-- Clean file structure for easy customization and scaling
+---
 
 ## Installation
 
-1. Clone the repository:
-
 ```bash
-git clone https://github.com/Yyoshi1/youkyouk.git
-cd youkyouk
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+npm start
