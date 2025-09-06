@@ -1,87 +1,42 @@
-import React, { useState, useEffect, useContext, createContext } from 'react'
+import React from 'react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 
-// Context
-interface Shortcut {
-  name: string
-  action: string
+interface SearchModalProps {
+  onClose: () => void
 }
 
-const defaultShortcuts: Shortcut[] = [
-  { name: 'Dashboard', action: 'Go to Dashboard' },
-  { name: 'Projects', action: 'View Projects' },
-  { name: 'Tasks', action: 'View Tasks' },
-  { name: 'Team', action: 'View Team Members' },
-  { name: 'Settings', action: 'Open Settings' },
-  { name: 'Reports', action: 'View Reports' },
-  { name: 'Notifications', action: 'Check Notifications' },
-  { name: 'Help', action: 'Open Help Center' },
-  // 
-]
-
-interface ShortcutsContextProps {
-  shortcuts: Shortcut[]
-}
-
-const ShortcutsContext = createContext<ShortcutsContextProps>({
-  shortcuts: defaultShortcuts,
-})
-
-export const useShortcuts = () => useContext(ShortcutsContext)
-
-export const ShortcutsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
   return (
-    <ShortcutsContext.Provider value={{ shortcuts: defaultShortcuts }}>
-      {children}
-    </ShortcutsContext.Provider>
-  )
-}
-
-const SearchModal: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [query, setQuery] = useState('')
-  const { shortcuts } = useShortcuts()
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key.toLowerCase() === 'e') {
-        e.preventDefault()
-        setIsOpen((prev) => !prev)
-      }
-      if (e.key === 'Escape') {
-        setIsOpen(false)
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-  if (!isOpen) return null
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-96 p-6">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-900 w-96 p-6 rounded shadow-lg relative">
+        <button onClick={onClose} className="absolute top-2 right-2">
+          <XMarkIcon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+        </button>
         <input
           type="text"
+          className="w-full p-2 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white"
           placeholder="Search..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full p-3 rounded border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <ul className="mt-4 max-h-64 overflow-y-auto">
-          {shortcuts
-            .filter((s) => s.name.toLowerCase().includes(query.toLowerCase()))
-            .map((s) => (
-              <li
-                key={s.name}
-                className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-              >
-                <span className="font-medium">{s.name}</span> - <span>{s.action}</span>
-              </li>
-            ))}
-        </ul>
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          {/* Linear original shortcut icons */}
+          <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
+            <FolderIcon className="w-5 h-5" />
+            <span>Projects</span>
+          </button>
+          <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
+            <ClipboardListIcon className="w-5 h-5" />
+            <span>Tasks</span>
+          </button>
+          <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
+            <UsersIcon className="w-5 h-5" />
+            <span>Team</span>
+          </button>
+          <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
+            <Cog6ToothIcon className="w-5 h-5" />
+            <span>Settings</span>
+          </button>
+        </div>
       </div>
     </div>
   )
 }
-
-export default SearchModal
