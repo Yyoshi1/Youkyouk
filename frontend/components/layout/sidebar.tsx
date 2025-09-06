@@ -2,84 +2,63 @@ import React, { useState } from 'react'
 import {
   HomeIcon,
   FolderIcon,
+  CalendarIcon,
   UsersIcon,
   ChartBarIcon,
   CogIcon,
-} from '@heroicons/react/24/outline'
+  LogoutIcon,
+} from '@heroicons/react/outline'
 
-interface SidebarItem {
-  title: string
-  icon: React.ReactNode
-  subItems?: { title: string }[]
+interface MenuItem {
+  name: string
+  icon: React.ElementType
+  subItems?: MenuItem[]
 }
 
-const sidebarItems: SidebarItem[] = [
-  { title: 'Dashboard', icon: <HomeIcon className="h-5 w-5" /> },
-  {
-    title: 'Projects',
-    icon: <FolderIcon className="h-5 w-5" />,
-    subItems: [
-      { title: 'Active Projects' },
-      { title: 'Archived Projects' },
-      { title: 'Templates' },
-    ],
-  },
-  {
-    title: 'Team',
-    icon: <UsersIcon className="h-5 w-5" />,
-    subItems: [
-      { title: 'Members' },
-      { title: 'Roles' },
-      { title: 'Permissions' },
-    ],
-  },
-  {
-    title: 'Reports',
-    icon: <ChartBarIcon className="h-5 w-5" />,
-    subItems: [
-      { title: 'Monthly' },
-      { title: 'Quarterly' },
-      { title: 'Annual' },
-    ],
-  },
-  { title: 'Settings', icon: <CogIcon className="h-5 w-5" /> },
+const menu: MenuItem[] = [
+  { name: 'Dashboard', icon: HomeIcon },
+  { name: 'Projects', icon: FolderIcon },
+  { name: 'Tasks', icon: CalendarIcon },
+  { name: 'Team', icon: UsersIcon },
+  { name: 'Reports', icon: ChartBarIcon },
+  { name: 'Settings', icon: CogIcon },
+  { name: 'Logout', icon: LogoutIcon },
 ]
 
 const Sidebar: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({})
 
-  const toggleSubmenu = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
+  const toggleSection = (name: string) => {
+    setOpenSections({ ...openSections, [name]: !openSections[name] })
   }
 
   return (
-    <aside className="w-64 bg-gray-100 dark:bg-gray-900 min-h-screen p-4">
-      <nav className="space-y-2">
-        {sidebarItems.map((item, index) => (
-          <div key={item.title}>
+    <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 min-h-screen p-4">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Youkyouk</h1>
+      <ul>
+        {menu.map((item) => (
+          <li key={item.name} className="mb-2">
             <button
-              onClick={() => toggleSubmenu(index)}
-              className="flex items-center w-full p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800"
+              className="flex items-center w-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded"
+              onClick={() => toggleSection(item.name)}
             >
-              {item.icon}
-              <span className="ml-3">{item.title}</span>
+              <item.icon className="w-5 h-5 mr-3" />
+              <span>{item.name}</span>
             </button>
-            {item.subItems && openIndex === index && (
-              <div className="ml-6 mt-1 space-y-1">
+            {item.subItems && openSections[item.name] && (
+              <ul className="ml-6 mt-1">
                 {item.subItems.map((sub) => (
-                  <div
-                    key={sub.title}
-                    className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer"
-                  >
-                    {sub.title}
-                  </div>
+                  <li key={sub.name} className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <sub.icon className="w-4 h-4 mr-2 inline-block" />
+                    {sub.name}
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
-          </div>
+          </li>
         ))}
-      </nav>
-    </aside>
+      </ul>
+    </div>
   )
 }
 
