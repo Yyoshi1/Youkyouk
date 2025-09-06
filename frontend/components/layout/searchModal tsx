@@ -1,62 +1,53 @@
-// /frontend/components/layout/SearchModal.tsx
-import React, { useEffect, useState } from 'react'
-import { XMarkIcon, HomeIcon, FolderIcon, CalendarIcon, UsersIcon, ChartBarIcon } from '@heroicons/react/24/outline'
+import React, { useState, useEffect } from 'react'
 
 interface Shortcut {
   title: string
-  icon: React.ReactNode
-  action?: () => void
+  description: string
+  action: () => void
 }
 
 const shortcuts: Shortcut[] = [
-  { title: 'Dashboard', icon: <HomeIcon className="w-5 h-5"/> },
-  { title: 'Projects', icon: <FolderIcon className="w-5 h-5"/> },
-  { title: 'Tasks', icon: <CalendarIcon className="w-5 h-5"/> },
-  { title: 'Team', icon: <UsersIcon className="w-5 h-5"/> },
-  { title: 'Reports', icon: <ChartBarIcon className="w-5 h-5"/> },
+  { title: 'Go to Dashboard', description: 'Open main dashboard', action: () => {} },
+  { title: 'Open Projects', description: 'View all projects', action: () => {} },
+  { title: 'Create Task', description: 'Add a new task', action: () => {} },
+  { title: 'Team Members', description: 'View team', action: () => {} },
+  { title: 'Reports', description: 'Open reports section', action: () => {} },
 ]
 
 const SearchModal: React.FC = () => {
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === 'e') {
-        e.preventDefault()
-        setOpen(prev => !prev)
-      }
-      if (e.key === 'Escape') {
-        setOpen(false)
-      }
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'e') {
+      e.preventDefault()
+      setOpen(!open)
     }
+    if (e.key === 'Escape') setOpen(false)
+  }
+
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [open])
 
   if (!open) return null
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 w-96 p-6 rounded-lg shadow-lg relative">
-        <button
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-          onClick={() => setOpen(false)}
-        >
-          <XMarkIcon className="w-5 h-5" />
-        </button>
-        <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Search Shortcuts</h2>
-        <div className="flex flex-col space-y-3">
-          {shortcuts.map((s, idx) => (
-            <button
-              key={idx}
-              className="flex items-center space-x-3 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"
-              onClick={s.action}
+      <div className="bg-white dark:bg-gray-900 w-96 p-6 rounded-lg shadow-lg">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Shortcuts</h2>
+        <ul className="space-y-3">
+          {shortcuts.map((sc) => (
+            <li
+              key={sc.title}
+              className="flex flex-col p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+              onClick={sc.action}
             >
-              {s.icon}
-              <span className="text-gray-900 dark:text-gray-100">{s.title}</span>
-            </button>
+              <span className="font-medium text-gray-800 dark:text-gray-200">{sc.title}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">{sc.description}</span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   )
