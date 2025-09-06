@@ -1,9 +1,21 @@
-import { useContext } from 'react'
-import { ThemeContext } from '../context/ThemeContext'
+import { useEffect } from 'react'
+import { useLocalStorage } from './useLocalStorage'
 
-const useDarkMode = () => {
-  const { darkMode, toggleDarkMode } = useContext(ThemeContext)
-  return { darkMode, toggleDarkMode }
+export const useDarkMode = () => {
+  const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('theme', 'light')
+
+  useEffect(() => {
+    const root = window.document.documentElement
+    if (theme === 'dark') {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+  }, [theme])
+
+  const toggleDarkMode = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
+  return { theme, toggleDarkMode }
 }
-
-export default useDarkMode
