@@ -1,50 +1,57 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface Shortcut {
   title: string
   description: string
-  action: () => void
 }
 
 const shortcuts: Shortcut[] = [
-  { title: 'Go to Dashboard', description: 'Open main dashboard', action: () => {} },
-  { title: 'Open Projects', description: 'View all projects', action: () => {} },
-  { title: 'Create Task', description: 'Add a new task', action: () => {} },
-  { title: 'Team Members', description: 'View team', action: () => {} },
-  { title: 'Reports', description: 'Open reports section', action: () => {} },
+  { title: 'Dashboard', description: 'Go to Dashboard' },
+  { title: 'Projects', description: 'View all projects' },
+  { title: 'Create Project', description: 'Add a new project' },
+  { title: 'Team', description: 'Manage team members' },
+  { title: 'Reports', description: 'View reports' },
+  { title: 'Settings', description: 'Open settings' },
 ]
 
 const SearchModal: React.FC = () => {
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'e') {
+    if (e.ctrlKey && e.key.toLowerCase() === 'e') {
       e.preventDefault()
-      setOpen(!open)
+      setIsOpen(!isOpen)
     }
-    if (e.key === 'Escape') setOpen(false)
+    if (e.key === 'Escape') {
+      setIsOpen(false)
+    }
   }
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [open])
+  }, [isOpen])
 
-  if (!open) return null
+  if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-900 w-96 p-6 rounded-lg shadow-lg">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Shortcuts</h2>
-        <ul className="space-y-3">
-          {shortcuts.map((sc) => (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-900 rounded-lg w-96 p-6 shadow-lg">
+        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+          Quick Actions
+        </h2>
+        <ul className="space-y-2 max-h-64 overflow-y-auto">
+          {shortcuts.map((shortcut) => (
             <li
-              key={sc.title}
-              className="flex flex-col p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
-              onClick={sc.action}
+              key={shortcut.title}
+              className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
             >
-              <span className="font-medium text-gray-800 dark:text-gray-200">{sc.title}</span>
-              <span className="text-sm text-gray-500 dark:text-gray-400">{sc.description}</span>
+              <span className="font-medium text-gray-700 dark:text-gray-300">
+                {shortcut.title}
+              </span>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {shortcut.description}
+              </p>
             </li>
           ))}
         </ul>
