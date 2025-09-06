@@ -1,78 +1,81 @@
 import React, { useState } from 'react'
 import {
   HomeIcon,
-  ClipboardListIcon,
-  UsersIcon,
+  FolderIcon,
+  CalendarIcon,
   ChartBarIcon,
-  BellIcon,
-  CogIcon,
+  UsersIcon,
+  Cog6ToothIcon,
 } from '@heroicons/react/24/outline'
 
-interface SidebarItem {
-  name: string
+interface MenuItem {
+  title: string
   icon: React.ReactNode
-  subItems?: SidebarItem[]
+  subItems?: MenuItem[]
 }
 
-const sidebarItems: SidebarItem[] = [
-  { name: 'Dashboard', icon: <HomeIcon className="w-5 h-5" /> },
+const menuItems: MenuItem[] = [
+  { title: 'Dashboard', icon: <HomeIcon className="w-5 h-5" /> },
   {
-    name: 'Projects',
-    icon: <ClipboardListIcon className="w-5 h-5" />,
+    title: 'Projects',
+    icon: <FolderIcon className="w-5 h-5" />,
     subItems: [
-      { name: 'Active Projects', icon: <ClipboardListIcon className="w-4 h-4" /> },
-      { name: 'Archived Projects', icon: <ClipboardListIcon className="w-4 h-4" /> },
+      { title: 'All Projects', icon: <FolderIcon className="w-4 h-4" /> },
+      { title: 'Active', icon: <FolderIcon className="w-4 h-4" /> },
+      { title: 'Archived', icon: <FolderIcon className="w-4 h-4" /> },
     ],
   },
   {
-    name: 'Team',
-    icon: <UsersIcon className="w-5 h-5" />,
+    title: 'Tasks',
+    icon: <CalendarIcon className="w-5 h-5" />,
     subItems: [
-      { name: 'Members', icon: <UsersIcon className="w-4 h-4" /> },
-      { name: 'Roles', icon: <CogIcon className="w-4 h-4" /> },
+      { title: 'Today', icon: <CalendarIcon className="w-4 h-4" /> },
+      { title: 'Upcoming', icon: <CalendarIcon className="w-4 h-4" /> },
     ],
   },
-  { name: 'Reports', icon: <ChartBarIcon className="w-5 h-5" /> },
-  { name: 'Notifications', icon: <BellIcon className="w-5 h-5" /> },
-  { name: 'Settings', icon: <CogIcon className="w-5 h-5" /> },
+  { title: 'Reports', icon: <ChartBarIcon className="w-5 h-5" /> },
+  { title: 'Team', icon: <UsersIcon className="w-5 h-5" /> },
+  { title: 'Settings', icon: <Cog6ToothIcon className="w-5 h-5" /> },
 ]
 
 const Sidebar: React.FC = () => {
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
+  const [openMenu, setOpenMenu] = useState<string | null>(null)
 
-  const toggleItem = (name: string) => {
-    setOpenItems((prev) => ({ ...prev, [name]: !prev[name] }))
+  const toggleSubMenu = (title: string) => {
+    setOpenMenu(openMenu === title ? null : title)
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 border-r dark:border-gray-700 min-h-screen p-4">
-      <div className="text-xl font-bold mb-6 text-gray-900 dark:text-gray-100">Youkyouk</div>
-      <ul className="space-y-2">
-        {sidebarItems.map((item) => (
-          <li key={item.name}>
+    <aside className="w-64 bg-white dark:bg-gray-900 border-r dark:border-gray-700 h-screen flex flex-col">
+      <div className="px-6 py-4 font-bold text-xl text-gray-900 dark:text-white">
+        Youkyouk
+      </div>
+      <nav className="flex-1 px-2 space-y-1">
+        {menuItems.map((item) => (
+          <div key={item.title}>
             <button
-              onClick={() => item.subItems && toggleItem(item.name)}
-              className="flex items-center w-full p-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+              onClick={() => item.subItems && toggleSubMenu(item.title)}
+              className="flex items-center w-full px-2 py-2 text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
             >
               {item.icon}
-              <span className="ml-3">{item.name}</span>
-              {item.subItems && (
-                <span className="ml-auto">{openItems[item.name] ? '-' : '+'}</span>
-              )}
+              <span className="ml-3">{item.title}</span>
             </button>
-            {item.subItems && openItems[item.name] && (
-              <ul className="ml-6 mt-1 space-y-1">
+            {item.subItems && openMenu === item.title && (
+              <div className="ml-8 mt-1 space-y-1">
                 {item.subItems.map((sub) => (
-                  <li key={sub.name} className="flex items-center p-1 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
+                  <button
+                    key={sub.title}
+                    className="flex items-center w-full px-2 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+                  >
                     {sub.icon}
-                    <span className="ml-2">{sub.name}</span>
-                  </li>
+                    <span className="ml-2">{sub.title}</span>
+                  </button>
                 ))}
-              </ul>
+              </div>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </nav>
     </aside>
   )
 }
