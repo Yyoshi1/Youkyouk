@@ -1,21 +1,37 @@
-import { useEffect } from 'react'
-import { useLocalStorage } from './useLocalStorage'
+// frontend/hooks/useDarkMode.tsx
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
-export const useDarkMode = () => {
-  const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('theme', 'light')
+interface ThemeContextType {
+  darkMode: boolean
+  toggleDarkMode: () => void
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
-    const root = window.document.documentElement
-    if (theme === 'dark') {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
-  }, [theme])
+    const stored = localStorage.getItem('darkMode')
+    if (stored) setDarkMode(stored === 'true')
+  }, [])
 
-  const toggleDarkMode = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode)
+    localStorage.setItem('darkMode', darkMode.toString())
+  }, [darkMode])
 
-  return { theme, toggleDarkMode }
+  const toggleDarkMode = () => setDarkMode(prev => !prev)
+
+  return (
+    <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
+      {children}
+    </ThemeContext.Provider>
+  )
+}
+
+export const useDarkMode = () => {
+  const context = useContext(ThemeContext)
+  if (!context) throw new Error('useDarkMode must be used within ThemeProvider')
+  return context
 }
