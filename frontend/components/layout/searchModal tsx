@@ -1,0 +1,87 @@
+import React, { useState, useEffect, useContext, createContext } from 'react'
+
+// Context
+interface Shortcut {
+  name: string
+  action: string
+}
+
+const defaultShortcuts: Shortcut[] = [
+  { name: 'Dashboard', action: 'Go to Dashboard' },
+  { name: 'Projects', action: 'View Projects' },
+  { name: 'Tasks', action: 'View Tasks' },
+  { name: 'Team', action: 'View Team Members' },
+  { name: 'Settings', action: 'Open Settings' },
+  { name: 'Reports', action: 'View Reports' },
+  { name: 'Notifications', action: 'Check Notifications' },
+  { name: 'Help', action: 'Open Help Center' },
+  // 
+]
+
+interface ShortcutsContextProps {
+  shortcuts: Shortcut[]
+}
+
+const ShortcutsContext = createContext<ShortcutsContextProps>({
+  shortcuts: defaultShortcuts,
+})
+
+export const useShortcuts = () => useContext(ShortcutsContext)
+
+export const ShortcutsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <ShortcutsContext.Provider value={{ shortcuts: defaultShortcuts }}>
+      {children}
+    </ShortcutsContext.Provider>
+  )
+}
+
+const SearchModal: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const { shortcuts } = useShortcuts()
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === 'e') {
+        e.preventDefault()
+        setIsOpen((prev) => !prev)
+      }
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-96 p-6">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full p-3 rounded border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <ul className="mt-4 max-h-64 overflow-y-auto">
+          {shortcuts
+            .filter((s) => s.name.toLowerCase().includes(query.toLowerCase()))
+            .map((s) => (
+              <li
+                key={s.name}
+                className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+              >
+                <span className="font-medium">{s.name}</span> - <span>{s.action}</span>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+export default SearchModal
