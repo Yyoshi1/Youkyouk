@@ -1,57 +1,71 @@
 import React, { useState } from 'react'
-import { HomeIcon, FolderIcon, ChartBarIcon, UsersIcon, BellIcon, CogIcon } from '@heroicons/react/24/outline'
+import {
+  HomeIcon,
+  FolderIcon,
+  CalendarIcon,
+  UsersIcon,
+  Cog6ToothIcon,
+  ChartBarIcon,
+  ChatBubbleLeftEllipsisIcon,
+} from '@heroicons/react/24/outline'
 
-interface MenuItem {
+interface SidebarItem {
   title: string
   icon: JSX.Element
-  subItems?: MenuItem[]
+  subItems?: SidebarItem[]
 }
 
-const menuItems: MenuItem[] = [
+const sidebarItems: SidebarItem[] = [
   { title: 'Dashboard', icon: <HomeIcon className="w-5 h-5" /> },
-  { 
-    title: 'Projects', icon: <FolderIcon className="w-5 h-5" />,
+  {
+    title: 'Projects',
+    icon: <FolderIcon className="w-5 h-5" />,
     subItems: [
       { title: 'Active Projects', icon: <FolderIcon className="w-4 h-4" /> },
       { title: 'Archived Projects', icon: <FolderIcon className="w-4 h-4" /> },
-      { title: 'Templates', icon: <FolderIcon className="w-4 h-4" /> },
-    ]
+    ],
   },
-  { title: 'Analytics', icon: <ChartBarIcon className="w-5 h-5" /> },
-  { 
-    title: 'Team', icon: <UsersIcon className="w-5 h-5" />,
+  { title: 'Calendar', icon: <CalendarIcon className="w-5 h-5" /> },
+  {
+    title: 'Team',
+    icon: <UsersIcon className="w-5 h-5" />,
     subItems: [
       { title: 'Members', icon: <UsersIcon className="w-4 h-4" /> },
-      { title: 'Roles', icon: <UsersIcon className="w-4 h-4" /> },
-    ]
+      { title: 'Roles', icon: <Cog6ToothIcon className="w-4 h-4" /> },
+    ],
   },
-  { title: 'Notifications', icon: <BellIcon className="w-5 h-5" /> },
-  { title: 'Settings', icon: <CogIcon className="w-5 h-5" /> },
+  { title: 'Analytics', icon: <ChartBarIcon className="w-5 h-5" /> },
+  { title: 'Messages', icon: <ChatBubbleLeftEllipsisIcon className="w-5 h-5" /> },
+  { title: 'Settings', icon: <Cog6ToothIcon className="w-5 h-5" /> },
 ]
 
 const Sidebar: React.FC = () => {
-  const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({})
+  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({})
 
-  const toggleSubMenu = (title: string) => {
-    setOpenItems(prev => ({ ...prev, [title]: !prev[title] }))
+  const toggleSection = (title: string) => {
+    setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }))
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 min-h-screen p-4 border-r border-gray-200 dark:border-gray-700">
-      <nav className="space-y-2">
-        {menuItems.map(item => (
+    <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 min-h-screen">
+      <div className="p-4 font-bold text-xl text-gray-800 dark:text-gray-200">Youkyouk</div>
+      <nav className="mt-6">
+        {sidebarItems.map((item) => (
           <div key={item.title}>
             <button
-              className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
-              onClick={() => item.subItems ? toggleSubMenu(item.title) : undefined}
+              onClick={() => item.subItems && toggleSection(item.title)}
+              className="flex items-center w-full px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
             >
               {item.icon}
               <span className="ml-3">{item.title}</span>
             </button>
-            {item.subItems && openItems[item.title] && (
-              <div className="ml-6 mt-1 space-y-1">
-                {item.subItems.map(sub => (
-                  <button key={sub.title} className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            {item.subItems && openSections[item.title] && (
+              <div className="ml-8 mt-1 space-y-1">
+                {item.subItems.map((sub) => (
+                  <button
+                    key={sub.title}
+                    className="flex items-center w-full px-4 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                  >
                     {sub.icon}
                     <span className="ml-2">{sub.title}</span>
                   </button>
