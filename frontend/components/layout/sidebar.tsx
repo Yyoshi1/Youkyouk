@@ -1,77 +1,77 @@
 // /frontend/components/layout/Sidebar.tsx
 import React, { useState } from 'react'
-import { 
-  HomeIcon, 
-  FolderIcon, 
-  CalendarIcon, 
-  UsersIcon, 
-  ChartBarIcon, 
-  CogIcon, 
-  ChevronDownIcon 
+import {
+  HomeIcon,
+  FolderIcon,
+  ChartBarIcon,
+  UsersIcon,
+  Cog6ToothIcon,
+  ChevronDownIcon,
+  ChevronRightIcon
 } from '@heroicons/react/24/outline'
 
 interface MenuItem {
   title: string
   icon: React.ReactNode
-  subItems?: MenuItem[]
+  children?: MenuItem[]
 }
 
-const menuItems: MenuItem[] = [
-  { title: 'Dashboard', icon: <HomeIcon className="w-5 h-5"/> },
-  { 
-    title: 'Projects', 
-    icon: <FolderIcon className="w-5 h-5"/>,
-    subItems: [
-      { title: 'Active Projects', icon: <FolderIcon className="w-4 h-4"/> },
-      { title: 'Archived Projects', icon: <FolderIcon className="w-4 h-4"/> },
-    ]
+const menu: MenuItem[] = [
+  { title: 'Dashboard', icon: <HomeIcon className="w-5 h-5" /> },
+  {
+    title: 'Projects',
+    icon: <FolderIcon className="w-5 h-5" />,
+    children: [
+      { title: 'Active Projects', icon: <FolderIcon className="w-4 h-4" /> },
+      { title: 'Archived Projects', icon: <FolderIcon className="w-4 h-4" /> },
+    ],
   },
-  { title: 'Tasks', icon: <CalendarIcon className="w-5 h-5"/> },
-  { title: 'Team', icon: <UsersIcon className="w-5 h-5"/> },
-  { title: 'Reports', icon: <ChartBarIcon className="w-5 h-5"/> },
-  { 
-    title: 'Settings', 
-    icon: <CogIcon className="w-5 h-5"/>,
-    subItems: [
-      { title: 'Profile', icon: <CogIcon className="w-4 h-4"/> },
-      { title: 'Preferences', icon: <CogIcon className="w-4 h-4"/> },
-    ]
+  { title: 'Analytics', icon: <ChartBarIcon className="w-5 h-5" /> },
+  {
+    title: 'Team',
+    icon: <UsersIcon className="w-5 h-5" />,
+    children: [
+      { title: 'Members', icon: <UsersIcon className="w-4 h-4" /> },
+      { title: 'Roles', icon: <Cog6ToothIcon className="w-4 h-4" /> },
+    ],
   },
+  { title: 'Settings', icon: <Cog6ToothIcon className="w-5 h-5" /> },
 ]
 
 const Sidebar: React.FC = () => {
-  const [openIndexes, setOpenIndexes] = useState<number[]>([])
+  const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({})
 
-  const toggleSubmenu = (index: number) => {
-    setOpenIndexes(prev => 
-      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-    )
+  const toggleItem = (title: string) => {
+    setOpenItems((prev) => ({ ...prev, [title]: !prev[title] }))
   }
 
   return (
-    <div className="w-64 h-screen bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg flex flex-col">
-      <div className="p-4 font-bold text-xl border-b border-gray-200 dark:border-gray-700">
-        Youkyouk
-      </div>
-      <nav className="flex-1 overflow-y-auto">
-        {menuItems.map((item, idx) => (
-          <div key={idx}>
+    <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-screen p-4 overflow-y-auto">
+      <nav className="space-y-2">
+        {menu.map((item) => (
+          <div key={item.title}>
             <button
-              onClick={() => item.subItems && toggleSubmenu(idx)}
-              className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
+              className="flex items-center w-full p-2 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+              onClick={() => item.children && toggleItem(item.title)}
             >
-              <div className="flex items-center space-x-2">
-                {item.icon}
-                <span>{item.title}</span>
-              </div>
-              {item.subItems && <ChevronDownIcon className={`w-4 h-4 transform ${openIndexes.includes(idx) ? 'rotate-180' : ''}`} />}
+              {item.icon}
+              <span className="ml-3 flex-1 text-left">{item.title}</span>
+              {item.children &&
+                (openItems[item.title] ? (
+                  <ChevronDownIcon className="w-4 h-4" />
+                ) : (
+                  <ChevronRightIcon className="w-4 h-4" />
+                ))}
             </button>
-            {item.subItems && openIndexes.includes(idx) && (
-              <div className="pl-10 flex flex-col">
-                {item.subItems.map((sub, sidx) => (
-                  <button key={sidx} className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600">
-                    {sub.icon}
-                    <span>{sub.title}</span>
+            {item.children && openItems[item.title] && (
+              <div className="ml-6 mt-1 space-y-1">
+                {item.children.map((child) => (
+                  <button
+                    key={child.title}
+                    className="flex items-center w-full p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded"
+                  >
+                    {child.icon}
+                    <span className="ml-2">{child.title}</span>
                   </button>
                 ))}
               </div>
@@ -79,7 +79,7 @@ const Sidebar: React.FC = () => {
           </div>
         ))}
       </nav>
-    </div>
+    </aside>
   )
 }
 
