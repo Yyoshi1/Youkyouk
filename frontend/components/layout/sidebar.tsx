@@ -1,3 +1,4 @@
+// frontend/components/layout/Sidebar.tsx
 import React, { useState } from 'react'
 import {
   HomeIcon,
@@ -11,54 +12,65 @@ import {
 
 interface MenuItem {
   name: string
-  icon: React.ElementType
+  icon: React.ReactNode
   subItems?: MenuItem[]
 }
 
-const menu: MenuItem[] = [
-  { name: 'Dashboard', icon: HomeIcon },
-  { name: 'Projects', icon: FolderIcon },
-  { name: 'Tasks', icon: CalendarIcon },
-  { name: 'Team', icon: UsersIcon },
-  { name: 'Reports', icon: ChartBarIcon },
-  { name: 'Settings', icon: CogIcon },
-  { name: 'Logout', icon: LogoutIcon },
+const menuItems: MenuItem[] = [
+  { name: 'Dashboard', icon: <HomeIcon className="w-5 h-5" /> },
+  {
+    name: 'Projects',
+    icon: <FolderIcon className="w-5 h-5" />,
+    subItems: [
+      { name: 'All Projects', icon: <FolderIcon className="w-4 h-4" /> },
+      { name: 'Active', icon: <FolderIcon className="w-4 h-4" /> },
+      { name: 'Archived', icon: <FolderIcon className="w-4 h-4" /> },
+    ],
+  },
+  { name: 'Tasks', icon: <CalendarIcon className="w-5 h-5" /> },
+  { name: 'Team', icon: <UsersIcon className="w-5 h-5" /> },
+  { name: 'Reports', icon: <ChartBarIcon className="w-5 h-5" /> },
+  { name: 'Settings', icon: <CogIcon className="w-5 h-5" /> },
+  { name: 'Logout', icon: <LogoutIcon className="w-5 h-5" /> },
 ]
 
 const Sidebar: React.FC = () => {
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({})
+  const [openSubMenu, setOpenSubMenu] = useState<string | null>(null)
 
-  const toggleSection = (name: string) => {
-    setOpenSections({ ...openSections, [name]: !openSections[name] })
+  const toggleSubMenu = (name: string) => {
+    setOpenSubMenu(openSubMenu === name ? null : name)
   }
 
   return (
-    <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 min-h-screen p-4">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Youkyouk</h1>
-      <ul>
-        {menu.map((item) => (
-          <li key={item.name} className="mb-2">
+    <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
+      <div className="p-4 text-lg font-bold text-gray-900 dark:text-white">Youkyouk</div>
+      <nav className="mt-5">
+        {menuItems.map((item) => (
+          <div key={item.name}>
             <button
-              className="flex items-center w-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded"
-              onClick={() => toggleSection(item.name)}
+              className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+              onClick={() => item.subItems && toggleSubMenu(item.name)}
             >
-              <item.icon className="w-5 h-5 mr-3" />
-              <span>{item.name}</span>
+              {item.icon}
+              <span className="ml-3">{item.name}</span>
             </button>
-            {item.subItems && openSections[item.name] && (
-              <ul className="ml-6 mt-1">
+            {item.subItems && openSubMenu === item.name && (
+              <div className="ml-8 mt-1">
                 {item.subItems.map((sub) => (
-                  <li key={sub.name} className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
-                    <sub.icon className="w-4 h-4 mr-2 inline-block" />
-                    {sub.name}
-                  </li>
+                  <button
+                    key={sub.name}
+                    className="flex items-center w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                  >
+                    {sub.icon}
+                    <span className="ml-3">{sub.name}</span>
+                  </button>
                 ))}
-              </ul>
+              </div>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
-    </div>
+      </nav>
+    </aside>
   )
 }
 
