@@ -1,63 +1,81 @@
-import React, { useState, useContext } from 'react'
-import { SunIcon, MoonIcon, BellIcon, MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import { ThemeContext } from '../../contexts/ThemeContext'
-import CommandMenu from '../shared/CommandMenu'
+// frontend/components/layout/Header.tsx
+import React, { useState, useEffect } from 'react'
+import { SunIcon, MoonIcon, BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 const Header: React.FC = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext)
-  const [isCommandOpen, setIsCommandOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [darkMode, setDarkMode] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.ctrlKey && e.key === 'e') {
-      e.preventDefault()
-      setIsCommandOpen(!isCommandOpen)
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode)
+    if (!darkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
     }
   }
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.ctrlKey && e.key.toLowerCase() === 'e') {
+      e.preventDefault()
+      setSearchOpen(true)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   return (
-    <header
-      className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-    >
-      {/* Left section: Logo */}
+    <header className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow">
       <div className="flex items-center space-x-4">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-white">Youkyouk</h1>
+        <span className="font-bold text-xl">Youkyouk</span>
       </div>
-
-      {/* Center section: Search */}
-      <div className="flex-1 mx-4 relative">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full py-2 pl-10 pr-4 rounded border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <MagnifyingGlassIcon className="w-5 h-5 absolute left-3 top-2.5 text-gray-500 dark:text-gray-400" />
-      </div>
-
-      {/* Right section: Icons */}
       <div className="flex items-center space-x-4">
+        <button onClick={toggleDarkMode} className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+          {darkMode ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+        </button>
         <button
-          onClick={toggleTheme}
-          className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800"
+          onClick={() => setSearchOpen(true)}
+          className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
         >
-          {theme === 'light' ? <SunIcon className="w-5 h-5 text-yellow-400" /> : <MoonIcon className="w-5 h-5 text-gray-300" />}
+          <MagnifyingGlassIcon className="w-5 h-5" />
         </button>
-
-        <button className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800 relative">
-          <BellIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-          <span className="absolute top-0 right-0 inline-block w-2 h-2 bg-red-500 rounded-full"></span>
+        <button className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+          <BellIcon className="w-5 h-5" />
         </button>
-
-        <button className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">
-          <UserCircleIcon className="w-6 h-6 text-gray-600 dark:text-gray-300" />
-        </button>
+        <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
       </div>
 
-      {isCommandOpen && <CommandMenu onClose={() => setIsCommandOpen(false)} />}
+      {/* Search Modal */}
+      {searchOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg w-96 p-4">
+            <div className="flex justify-between items-center mb-4">
+              <span className="font-bold text-lg">Quick Search</span>
+              <button onClick={() => setSearchOpen(false)} className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">
+                ✕
+              </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Type to search..."
+              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              autoFocus
+            />
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Dashboard</button>
+              <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Projects</button>
+              <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Teams</button>
+              <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Calendar</button>
+              <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Reports</button>
+              <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Chat</button>
+              <button className="p-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Settings</button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   )
 }
