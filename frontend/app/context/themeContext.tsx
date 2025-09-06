@@ -10,20 +10,25 @@ export const ThemeContext = createContext<ThemeContextProps>({
   toggleDarkMode: () => {},
 })
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+interface ThemeProviderProps {
+  children: ReactNode
+}
+
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
-    const saved = localStorage.getItem('darkMode')
-    if (saved) setDarkMode(saved === 'true')
+    const savedTheme = localStorage.getItem('darkMode')
+    if (savedTheme) setDarkMode(savedTheme === 'true')
   }, [])
 
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode.toString())
-    document.documentElement.classList.toggle('dark', darkMode)
+    if (darkMode) document.documentElement.classList.add('dark')
+    else document.documentElement.classList.remove('dark')
   }, [darkMode])
 
-  const toggleDarkMode = () => setDarkMode(prev => !prev)
+  const toggleDarkMode = () => setDarkMode((prev) => !prev)
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
