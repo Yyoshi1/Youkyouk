@@ -1,73 +1,81 @@
-// /components/layout/Sidebar/Sidebar.tsx
 import React, { useState } from 'react'
 import {
   HomeIcon,
-  InboxIcon,
-  UsersIcon,
+  FolderIcon,
   CalendarIcon,
-  CogIcon,
-  BellIcon,
-  PlusIcon,
+  UsersIcon,
+  ChatBubbleBottomCenterTextIcon,
+  Cog6ToothIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
 } from '@heroicons/react/24/outline'
 
 interface MenuItem {
   title: string
   icon: React.ReactNode
-  submenu?: MenuItem[]
+  subItems?: MenuItem[]
 }
 
-const menu: MenuItem[] = [
-  { title: 'Dashboard', icon: <HomeIcon className="h-5 w-5" /> },
-  { title: 'Inbox', icon: <InboxIcon className="h-5 w-5" /> },
-  { title: 'Team', icon: <UsersIcon className="h-5 w-5" /> },
-  {
-    title: 'Projects',
-    icon: <CalendarIcon className="h-5 w-5" />,
-    submenu: [
-      { title: 'Active Projects', icon: <PlusIcon className="h-4 w-4" /> },
-      { title: 'Archived', icon: <PlusIcon className="h-4 w-4" /> },
-    ],
-  },
-  { title: 'Settings', icon: <CogIcon className="h-5 w-5" /> },
-  { title: 'Notifications', icon: <BellIcon className="h-5 w-5" /> },
+const menuItems: MenuItem[] = [
+  { title: 'Dashboard', icon: <HomeIcon className="w-5 h-5" /> },
+  { title: 'Projects', icon: <FolderIcon className="w-5 h-5" />, subItems: [
+    { title: 'Active Projects', icon: <ChevronRightIcon className="w-4 h-4" /> },
+    { title: 'Archived Projects', icon: <ChevronRightIcon className="w-4 h-4" /> },
+  ]},
+  { title: 'Calendar', icon: <CalendarIcon className="w-5 h-5" /> },
+  { title: 'Team', icon: <UsersIcon className="w-5 h-5" />, subItems: [
+    { title: 'Members', icon: <ChevronRightIcon className="w-4 h-4" /> },
+    { title: 'Roles', icon: <ChevronRightIcon className="w-4 h-4" /> },
+  ]},
+  { title: 'Messages', icon: <ChatBubbleBottomCenterTextIcon className="w-5 h-5" /> },
+  { title: 'Settings', icon: <Cog6ToothIcon className="w-5 h-5" /> },
 ]
 
 const Sidebar: React.FC = () => {
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
+  const [openIndexes, setOpenIndexes] = useState<number[]>([])
 
-  const toggleSubmenu = (title: string) => {
-    setOpenSubmenu(openSubmenu === title ? null : title)
+  const toggleSubmenu = (index: number) => {
+    setOpenIndexes(prev =>
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    )
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 h-screen shadow-md">
-      <div className="p-4 font-bold text-xl text-gray-900 dark:text-white">Youkyouk</div>
-      <ul>
-        {menu.map((item) => (
-          <li key={item.title}>
-            <button
-              onClick={() => item.submenu && toggleSubmenu(item.title)}
-              className="flex items-center w-full px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
-            >
-              {item.icon}
-              <span className="ml-3">{item.title}</span>
-              {item.submenu && (
-                <span className="ml-auto">{openSubmenu === item.title ? '▾' : '▸'}</span>
+    <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 min-h-screen p-4">
+      <div className="text-lg font-bold mb-6 text-gray-900 dark:text-white">Youkyouk</div>
+      <nav>
+        <ul>
+          {menuItems.map((item, idx) => (
+            <li key={idx} className="mb-1">
+              <button
+                className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
+                onClick={() => item.subItems && toggleSubmenu(idx)}
+              >
+                {item.icon}
+                <span className="ml-3 flex-1 text-left">{item.title}</span>
+                {item.subItems &&
+                  (openIndexes.includes(idx) ? (
+                    <ChevronDownIcon className="w-4 h-4" />
+                  ) : (
+                    <ChevronRightIcon className="w-4 h-4" />
+                  ))}
+              </button>
+              {item.subItems && openIndexes.includes(idx) && (
+                <ul className="ml-6 mt-1">
+                  {item.subItems.map((sub, sIdx) => (
+                    <li key={sIdx}>
+                      <button className="flex items-center w-full p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm">
+                        {sub.icon}
+                        <span className="ml-2">{sub.title}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
               )}
-            </button>
-            {item.submenu && openSubmenu === item.title && (
-              <ul className="pl-8">
-                {item.submenu.map((sub) => (
-                  <li key={sub.title} className="py-1 flex items-center">
-                    {sub.icon}
-                    <span className="ml-2">{sub.title}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </aside>
   )
 }
