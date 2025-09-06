@@ -1,7 +1,12 @@
+// /pages/dashboard.tsx
 import React from 'react'
 import Sidebar from '../components/layout/Sidebar'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
+import DashboardCards from '../components/dashboard/DashboardCards'
+import ChartsSection from '../components/dashboard/ChartsSection'
+import TasksTable from '../components/dashboard/TasksTable'
+import SearchModal from '../components/dashboard/SearchModal'
 
 const DashboardPage: React.FC = () => {
   return (
@@ -10,11 +15,13 @@ const DashboardPage: React.FC = () => {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="p-6 flex-1 overflow-auto">
-          {/* Dashboard content: charts, tables, cards */}
-          {/* يمكن إضافة أي محتوى إضافي مطابق للينيار هنا */}
+          <DashboardCards />
+          <ChartsSection />
+          <TasksTable />
         </main>
         <Footer />
       </div>
+      <SearchModal />
     </div>
   )
 }
