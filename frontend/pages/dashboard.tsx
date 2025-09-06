@@ -6,7 +6,6 @@ import Footer from '../components/layout/Footer'
 import DashboardCards from '../components/dashboard/DashboardCards'
 import ChartsSection from '../components/dashboard/ChartsSection'
 import TasksTable from '../components/dashboard/TasksTable'
-import SearchModal from '../components/dashboard/SearchModal'
 
 const DashboardPage: React.FC = () => {
   return (
@@ -21,7 +20,6 @@ const DashboardPage: React.FC = () => {
         </main>
         <Footer />
       </div>
-      <SearchModal />
     </div>
   )
 }
