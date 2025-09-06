@@ -1,22 +1,34 @@
 import React from 'react'
+import { ChatBubbleLeftEllipsisIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
 
 const Footer: React.FC = () => {
-  return (
-    <footer className="w-full border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 flex justify-between items-center">
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        © 2025 Youkyouk. All rights reserved.
-      </p>
+  const currentYear = new Date().getFullYear()
 
-      <div className="flex space-x-4">
-        <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm">
-          Terms
-        </a>
-        <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm">
-          Privacy
-        </a>
-        <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm">
-          Support
-        </a>
+  return (
+    <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        {/* Left section: copyright */}
+        <div className="text-gray-600 dark:text-gray-300 text-sm">
+          © {currentYear} Youkyouk. All rights reserved.
+        </div>
+
+        {/* Middle section: quick links */}
+        <div className="flex space-x-4 text-gray-600 dark:text-gray-300 text-sm">
+          <a href="#" className="hover:text-blue-500">Home</a>
+          <a href="#" className="hover:text-blue-500">About</a>
+          <a href="#" className="hover:text-blue-500">Contact</a>
+          <a href="#" className="hover:text-blue-500">Privacy</a>
+        </div>
+
+        {/* Right section: icons */}
+        <div className="flex space-x-4">
+          <button>
+            <ChatBubbleLeftEllipsisIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+          </button>
+          <button>
+            <GlobeAltIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+          </button>
+        </div>
       </div>
     </footer>
   )
