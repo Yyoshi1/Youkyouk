@@ -1,41 +1,73 @@
+// /components/layout/Sidebar/Sidebar.tsx
 import React, { useState } from 'react'
-import { HomeIcon, FolderIcon, ClipboardListIcon, UsersIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
+import {
+  HomeIcon,
+  InboxIcon,
+  UsersIcon,
+  CalendarIcon,
+  CogIcon,
+  BellIcon,
+  PlusIcon,
+} from '@heroicons/react/24/outline'
+
+interface MenuItem {
+  title: string
+  icon: React.ReactNode
+  submenu?: MenuItem[]
+}
+
+const menu: MenuItem[] = [
+  { title: 'Dashboard', icon: <HomeIcon className="h-5 w-5" /> },
+  { title: 'Inbox', icon: <InboxIcon className="h-5 w-5" /> },
+  { title: 'Team', icon: <UsersIcon className="h-5 w-5" /> },
+  {
+    title: 'Projects',
+    icon: <CalendarIcon className="h-5 w-5" />,
+    submenu: [
+      { title: 'Active Projects', icon: <PlusIcon className="h-4 w-4" /> },
+      { title: 'Archived', icon: <PlusIcon className="h-4 w-4" /> },
+    ],
+  },
+  { title: 'Settings', icon: <CogIcon className="h-5 w-5" /> },
+  { title: 'Notifications', icon: <BellIcon className="h-5 w-5" /> },
+]
 
 const Sidebar: React.FC = () => {
-  const [openKeys, setOpenKeys] = useState<string[]>([])
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
 
-  const toggleMenu = (key: string) => {
-    setOpenKeys((prev) => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key])
+  const toggleSubmenu = (title: string) => {
+    setOpenSubmenu(openSubmenu === title ? null : title)
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 min-h-screen shadow flex-shrink-0">
-      <nav className="flex flex-col p-4 space-y-2">
-        <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
-          <HomeIcon className="w-6 h-6" />
-          <span>Dashboard</span>
-        </button>
-
-        <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded" onClick={() => toggleMenu('projects')}>
-          <FolderIcon className="w-6 h-6" />
-          <span>Projects</span>
-        </button>
-
-        <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded" onClick={() => toggleMenu('tasks')}>
-          <ClipboardListIcon className="w-6 h-6" />
-          <span>Tasks</span>
-        </button>
-
-        <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
-          <UsersIcon className="w-6 h-6" />
-          <span>Team</span>
-        </button>
-
-        <button className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded">
-          <Cog6ToothIcon className="w-6 h-6" />
-          <span>Settings</span>
-        </button>
-      </nav>
+    <aside className="w-64 bg-white dark:bg-gray-800 h-screen shadow-md">
+      <div className="p-4 font-bold text-xl text-gray-900 dark:text-white">Youkyouk</div>
+      <ul>
+        {menu.map((item) => (
+          <li key={item.title}>
+            <button
+              onClick={() => item.submenu && toggleSubmenu(item.title)}
+              className="flex items-center w-full px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
+            >
+              {item.icon}
+              <span className="ml-3">{item.title}</span>
+              {item.submenu && (
+                <span className="ml-auto">{openSubmenu === item.title ? '▾' : '▸'}</span>
+              )}
+            </button>
+            {item.submenu && openSubmenu === item.title && (
+              <ul className="pl-8">
+                {item.submenu.map((sub) => (
+                  <li key={sub.title} className="py-1 flex items-center">
+                    {sub.icon}
+                    <span className="ml-2">{sub.title}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
     </aside>
   )
 }
