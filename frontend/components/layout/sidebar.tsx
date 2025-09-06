@@ -1,74 +1,75 @@
 import React, { useState } from 'react'
 import {
   HomeIcon,
-  FolderIcon,
-  CalendarIcon,
-  ChartBarIcon,
+  ClipboardListIcon,
   UsersIcon,
+  ChartBarIcon,
   Cog6ToothIcon,
 } from '@heroicons/react/24/outline'
 
 interface MenuItem {
   title: string
   icon: React.ReactNode
-  subItems?: MenuItem[]
+  children?: MenuItem[]
 }
 
 const menuItems: MenuItem[] = [
-  { title: 'Dashboard', icon: <HomeIcon className="w-5 h-5" /> },
+  { title: 'Dashboard', icon: <HomeIcon className="h-5 w-5" /> },
   {
     title: 'Projects',
-    icon: <FolderIcon className="w-5 h-5" />,
-    subItems: [
-      { title: 'All Projects', icon: <FolderIcon className="w-4 h-4" /> },
-      { title: 'Active', icon: <FolderIcon className="w-4 h-4" /> },
-      { title: 'Archived', icon: <FolderIcon className="w-4 h-4" /> },
+    icon: <ClipboardListIcon className="h-5 w-5" />,
+    children: [
+      { title: 'All Projects', icon: <ChartBarIcon className="h-4 w-4" /> },
+      { title: 'Create Project', icon: <ChartBarIcon className="h-4 w-4" /> },
     ],
   },
   {
-    title: 'Tasks',
-    icon: <CalendarIcon className="w-5 h-5" />,
-    subItems: [
-      { title: 'Today', icon: <CalendarIcon className="w-4 h-4" /> },
-      { title: 'Upcoming', icon: <CalendarIcon className="w-4 h-4" /> },
+    title: 'Team',
+    icon: <UsersIcon className="h-5 w-5" />,
+    children: [
+      { title: 'All Members', icon: <ChartBarIcon className="h-4 w-4" /> },
+      { title: 'Add Member', icon: <ChartBarIcon className="h-4 w-4" /> },
     ],
   },
-  { title: 'Reports', icon: <ChartBarIcon className="w-5 h-5" /> },
-  { title: 'Team', icon: <UsersIcon className="w-5 h-5" /> },
-  { title: 'Settings', icon: <Cog6ToothIcon className="w-5 h-5" /> },
+  { title: 'Reports', icon: <ChartBarIcon className="h-5 w-5" /> },
+  { title: 'Settings', icon: <Cog6ToothIcon className="h-5 w-5" /> },
 ]
 
 const Sidebar: React.FC = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null)
+  const [openMenus, setOpenMenus] = useState<string[]>([])
 
-  const toggleSubMenu = (title: string) => {
-    setOpenMenu(openMenu === title ? null : title)
+  const toggleMenu = (title: string) => {
+    if (openMenus.includes(title)) {
+      setOpenMenus(openMenus.filter((t) => t !== title))
+    } else {
+      setOpenMenus([...openMenus, title])
+    }
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 border-r dark:border-gray-700 h-screen flex flex-col">
-      <div className="px-6 py-4 font-bold text-xl text-gray-900 dark:text-white">
-        Youkyouk
+    <aside className="w-64 bg-white dark:bg-gray-900 min-h-screen shadow">
+      <div className="p-6">
+        <h1 className="text-xl font-bold text-gray-800 dark:text-gray-200">Youkyouk</h1>
       </div>
-      <nav className="flex-1 px-2 space-y-1">
+      <nav className="px-2">
         {menuItems.map((item) => (
-          <div key={item.title}>
+          <div key={item.title} className="mb-2">
             <button
-              onClick={() => item.subItems && toggleSubMenu(item.title)}
-              className="flex items-center w-full px-2 py-2 text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+              onClick={() => item.children && toggleMenu(item.title)}
+              className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
             >
               {item.icon}
               <span className="ml-3">{item.title}</span>
             </button>
-            {item.subItems && openMenu === item.title && (
-              <div className="ml-8 mt-1 space-y-1">
-                {item.subItems.map((sub) => (
+            {item.children && openMenus.includes(item.title) && (
+              <div className="ml-6 mt-1 space-y-1">
+                {item.children.map((child) => (
                   <button
-                    key={sub.title}
-                    className="flex items-center w-full px-2 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+                    key={child.title}
+                    className="flex items-center w-full p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400"
                   >
-                    {sub.icon}
-                    <span className="ml-2">{sub.title}</span>
+                    {child.icon}
+                    <span className="ml-2">{child.title}</span>
                   </button>
                 ))}
               </div>
