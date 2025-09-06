@@ -17,10 +17,7 @@ const DashboardCards: React.FC = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {cards.map((card) => (
-        <div
-          key={card.title}
-          className={`p-4 rounded shadow ${card.color} text-white`}
-        >
+        <div key={card.title} className={`p-4 rounded shadow ${card.color} text-white`}>
           <h3 className="text-sm font-medium">{card.title}</h3>
           <p className="mt-2 text-2xl font-bold">{card.value}</p>
         </div>
