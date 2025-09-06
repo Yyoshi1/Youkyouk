@@ -1,8 +1,8 @@
-// frontend/pages/dashboard.tsx
 import React from 'react'
 import Sidebar from '../components/layout/Sidebar'
 import Header from '../components/layout/Header'
 import DashboardCards from '../components/dashboard/DashboardCards'
+import SearchModal from '../components/layout/SearchModal'
 
 const DashboardPage: React.FC = () => {
   return (
@@ -12,9 +12,9 @@ const DashboardPage: React.FC = () => {
         <Header />
         <main className="p-6">
           <DashboardCards />
-          {/* */}
         </main>
       </div>
+      <SearchModal />
     </div>
   )
 }
