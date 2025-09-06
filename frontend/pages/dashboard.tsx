@@ -12,7 +12,7 @@ const DashboardPage: React.FC = () => {
         <Header />
         <main className="p-6">
           <DashboardCards />
-          {/* هنا يمكن إضافة charts, tables, notifications مطابقة للينيار */}
+          {/* */}
         </main>
       </div>
     </div>
