@@ -15,7 +15,6 @@ const DashboardPage: React.FC = () => {
           <DashboardCards />
           <ChartsSection />
           <TasksTable />
-          {/* يمكن إضافة أي محتوى إضافي مطابق للينيار هنا */}
         </main>
       </div>
     </div>
