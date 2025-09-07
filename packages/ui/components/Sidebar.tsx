@@ -11,74 +11,81 @@ import {
   TeamsIcon,
   FavoritesIcon,
   YourTeamIcon,
-} from "../icons/sidebar";
+} from "../icons/Icons";
 
 export const Sidebar: React.FC = () => {
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 shadow flex flex-col">
-      <nav className="flex-1 p-4 space-y-2 overflow-auto">
-        {/* أقسام رئيسية */}
-        <div>
-          <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <InboxIcon className="w-5 h-5" />
-            <span>Inbox</span>
-          </div>
-          <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <IssuesIcon className="w-5 h-5" />
-            <span>My Issues</span>
-          </div>
-          <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <PulseIcon className="w-5 h-5" />
-            <span>Pulse</span>
-          </div>
-        </div>
+    <aside className="w-64 bg-white dark:bg-gray-800 h-screen shadow overflow-auto">
+      <ul className="p-4 space-y-2">
 
-        {/* Workspace */}
-        <div className="mt-4">
-          <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <WorkspaceIcon className="w-5 h-5" />
-            <span>Workspace</span>
-          </div>
-          <div className="ml-6 space-y-1">
-            <div className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-              <InitiativesIcon className="w-4 h-4" />
-              <span>Initiatives</span>
-            </div>
-            <div className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-              <ProjectsIcon className="w-4 h-4" />
-              <span>Projects</span>
-            </div>
-            <div className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-              <ViewsIcon className="w-4 h-4" />
-              <span>Views</span>
-            </div>
-            <div className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-              <MembersIcon className="w-4 h-4" />
-              <span>Members</span>
-            </div>
-            <div className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-              <TeamsIcon className="w-4 h-4" />
-              <span>Teams</span>
-            </div>
-          </div>
-        </div>
+        {/* Sections at the top */}
+        <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+          <InboxIcon className="w-5 h-5" />
+          <span>Inbox</span>
+        </li>
+        <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+          <IssuesIcon className="w-5 h-5" />
+          <span>My Issues</span>
+        </li>
+        <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+          <PulseIcon className="w-5 h-5" />
+          <span>Pulse</span>
+        </li>
 
-        {/* Favorites */}
-        <div className="mt-4">
-          <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <FavoritesIcon className="w-5 h-5" />
-            <span>Favorites</span>
-          </div>
-        </div>
+        {/* Workspace Section */}
+        <li className="mt-4 font-semibold flex items-center space-x-2 p-2">
+          <WorkspaceIcon className="w-5 h-5" />
+          <span>Workspace</span>
+        </li>
+        <ul className="ml-6 space-y-1">
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <InitiativesIcon className="w-4 h-4" />
+            <span>Initiatives</span>
+          </li>
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <ProjectsIcon className="w-4 h-4" />
+            <span>Projects</span>
+          </li>
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <ViewsIcon className="w-4 h-4" />
+            <span>Views</span>
+          </li>
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <MembersIcon className="w-4 h-4" />
+            <span>Members</span>
+          </li>
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <TeamsIcon className="w-4 h-4" />
+            <span>Teams</span>
+          </li>
+        </ul>
 
-        {/* Your Team */}
-        <div className="mt-4">
-          <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-            <YourTeamIcon className="w-5 h-5" />
-            <span>Your Team</span>
-          </div>
-        </div>
-      </nav>
+        {/* Favorites Section */}
+        <li className="mt-4 flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+          <FavoritesIcon className="w-5 h-5" />
+          <span>Favorites</span>
+        </li>
+
+        {/* Your Team Section */}
+        <li className="mt-4 flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+          <YourTeamIcon className="w-5 h-5" />
+          <span>Your Team</span>
+        </li>
+        <ul className="ml-6 space-y-1">
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <IssuesIcon className="w-4 h-4" />
+            <span>Issues</span>
+          </li>
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <ProjectsIcon className="w-4 h-4" />
+            <span>Projects</span>
+          </li>
+          <li className="flex items-center space-x-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <ViewsIcon className="w-4 h-4" />
+            <span>Views</span>
+          </li>
+        </ul>
+      </ul>
     </aside>
   );
 };
