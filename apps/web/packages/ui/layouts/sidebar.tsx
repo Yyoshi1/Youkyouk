@@ -11,23 +11,27 @@ export const Sidebar: React.FC = () => {
 
       <nav className="px-2">
         <ul className="space-y-2">
+
+          {/*  */}
           <li>
             <Link href="/inbox" className="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
               Inbox
             </Link>
           </li>
+
           <li>
             <Link href="/my-issues" className="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
               My Issues
             </Link>
           </li>
+
           <li>
             <Link href="/pulse" className="block px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800">
               Pulse
             </Link>
           </li>
 
-          {/* Workspaces */}
+          {/* Workspaces  */}
           <li>
             <button
               onClick={() => setWorkspacesOpen(!workspacesOpen)}
@@ -89,7 +93,7 @@ export const Sidebar: React.FC = () => {
                     All Teams
                   </Link>
                 </li>
-                {/* */}
+                {/*  */}
               </ul>
             )}
           </li>
