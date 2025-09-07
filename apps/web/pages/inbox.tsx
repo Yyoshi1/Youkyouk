@@ -7,7 +7,7 @@ const InboxPage: React.FC = () => {
   return (
     <MainLayout>
       <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Inbox</h1>
-      {/*  */}
+      {/* */}
     </MainLayout>
   );
 };
