@@ -1,58 +1,53 @@
 import React, { useState } from "react";
-import { useTheme } from "./context/ThemeContext";
 
 export const YoukyoukHeader: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark");
+  };
 
   return (
-    <header className="h-16 bg-white dark:bg-neutral-900 border-b flex items-center justify-between px-6">
-      <div className="font-bold text-lg cursor-pointer">youkyouk</div>
+    <header className="flex justify-between items-center bg-white dark:bg-gray-900 p-4 shadow">
+      {/* Logo */}
+      <div className="flex items-center space-x-2">
+        <span className="text-xl font-bold text-gray-900 dark:text-white cursor-pointer">Youkyouk</span>
+      </div>
 
-      <div className="flex-1 mx-6 relative">
+      {/* Search */}
+      <div className="flex-1 mx-4">
         <input
           type="text"
           placeholder="Search..."
-          className="w-full px-3 py-1 border rounded text-sm bg-neutral-50 dark:bg-neutral-800 focus:outline-none focus:ring"
-          onFocus={() => setSearchOpen(true)}
-          onBlur={() => setSearchOpen(false)}
+          className="w-full p-2 border rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white"
         />
-        {searchOpen && (
-          <div className="absolute mt-1 w-full bg-white dark:bg-neutral-800 border rounded shadow z-10">
-            {/* Quick Search Results */}
-          </div>
-        )}
       </div>
 
+      {/* Actions */}
       <div className="flex items-center space-x-4">
-        <button
-          onClick={toggleTheme}
-          className="px-3 py-1 border rounded text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800"
-        >
-          {theme === "light" ? "Dark Mode" : "Light Mode"}
+        {/* Dark Mode */}
+        <button onClick={toggleDarkMode} className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+          {darkMode ? "🌙" : "☀️"}
         </button>
 
+        {/* Notifications */}
+        <button className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">🔔</button>
+
+        {/* User Dropdown */}
         <div className="relative">
-          <div
-            className="w-8 h-8 rounded-full bg-neutral-400 cursor-pointer"
-            onClick={() => setUserMenuOpen(!userMenuOpen)}
-          />
-          {userMenuOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-neutral-800 border rounded shadow z-20">
-              <ul className="py-1 text-sm text-neutral-700 dark:text-neutral-300">
-                <li className="px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer">
-                  Settings
-                </li>
-                <li className="px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer">
-                  Invite / Manage Members
-                </li>
-                <li className="px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer">
-                  Switch Workspace
-                </li>
-                <li className="px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer">
-                  Logout
-                </li>
+          <button onClick={toggleDropdown} className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+            👤
+          </button>
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow z-50">
+              <ul>
+                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Settings</li>
+                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Invite Members</li>
+                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Switch Workspace</li>
+                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Logout</li>
               </ul>
             </div>
           )}
