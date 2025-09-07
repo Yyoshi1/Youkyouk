@@ -1,24 +1,38 @@
 import React, { useState } from "react";
 
 export const UserDropdown: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const menuItems = [
+    { label: "Profile", action: () => alert("Go to Profile") },
+    { label: "Settings", action: () => alert("Go to Settings") },
+    { label: "Logout", action: () => alert("Logging out...") },
+  ];
 
   return (
     <div className="relative">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
       >
-        <img src="/avatar.png" alt="User" className="w-6 h-6 rounded-full" />
-        <span className="text-gray-800 dark:text-gray-200">John Doe</span>
+        <img
+          src="/icons/user.svg"
+          alt="User"
+          className="w-6 h-6 rounded-full"
+        />
       </button>
-      {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow rounded">
-          <ul className="py-1">
-            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Profile</li>
-            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Settings</li>
-            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Logout</li>
-          </ul>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded z-50">
+          {menuItems.map((item, idx) => (
+            <button
+              key={idx}
+              onClick={() => { item.action(); setIsOpen(false); }}
+              className="block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       )}
     </div>
