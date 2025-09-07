@@ -1,7 +1,8 @@
+// packages/ui/layouts/MainLayout.tsx
 import React, { ReactNode } from "react";
-import { Sidebar } from "./Sidebar";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
+import { Header } from "../components/Header";
+import { Sidebar } from "../components/Sidebar";
+import { Footer } from "../components/Footer";
 
 interface MainLayoutProps {
   children: ReactNode;
