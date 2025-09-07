@@ -1,38 +1,71 @@
 #!/bin/bash
 
-echo "===================================="
-echo " 🚀 Youkyouk Installation Started "
-echo "===================================="
+# Youkyouk Installer Script
+# Make sure to run: chmod +x install.sh
 
-# Check Node.js
+echo "==================================="
+echo " Youkyouk Installation Started"
+echo "==================================="
+
+# 1. Check Node.js
 if ! command -v node &> /dev/null
 then
-    echo "❌ Node.js is not installed. Please install Node.js v18+ before continuing."
+    echo "❌ Node.js not found! Please install Node.js >= 18"
     exit 1
 fi
 
-# Check npm
+# 2. Check npm
 if ! command -v npm &> /dev/null
 then
-    echo "❌ npm is not installed. Please install npm before continuing."
+    echo "❌ npm not found! Please install npm >= 9"
     exit 1
 fi
 
-# Install dependencies
-echo "📦 Installing dependencies..."
+# 3. Check PostgreSQL
+if ! command -v psql &> /dev/null
+then
+    echo "❌ PostgreSQL not found! Please install PostgreSQL >= 14"
+    exit 1
+fi
+
+echo "✅ All requirements met."
+
+# 4. Install dependencies
+echo "Installing frontend dependencies..."
+cd apps/web || exit
 npm install
+cd ../../ || exit
 
-# Build the project
-echo "⚡ Building the project..."
+# 5. Setup database
+echo "Setting up PostgreSQL database..."
+read -p "Enter PostgreSQL username: " PGUSER
+read -sp "Enter PostgreSQL password: " PGPASS
+echo ""
+read -p "Enter database name (will be created if not exists): " PGDB
+
+export PGPASSWORD=$PGPASS
+createdb -U $PGUSER $PGDB 2>/dev/null || echo "Database already exists."
+
+echo "✅ Database setup completed."
+
+# 6. Build frontend
+echo "Building frontend..."
+cd apps/web || exit
 npm run build
+cd ../../ || exit
+echo "✅ Frontend build completed."
 
-# Run database migrations
-echo "🗄️ Running database migrations..."
-npm run migrate
+# 7. License setup
+echo "Setting up license verification..."
+LICENSE_FILE="apps/web/public/license.txt"
+if [ ! -f "$LICENSE_FILE" ]; then
+    read -p "Enter your Youkyouk license key: " LICENSE_KEY
+    echo $LICENSE_KEY > $LICENSE_FILE
+    echo "✅ License key saved."
+fi
 
-# Done
-echo "===================================="
-echo " ✅ Installation Completed Successfully! "
-echo " Run: npm run dev  (to start development server)"
-echo " Run: npm run start (to start production server)"
-echo "===================================="
+# 8. Final message
+echo "==================================="
+echo " Youkyouk Installation Completed!"
+echo "To start the project, run: npm run dev in apps/web"
+echo "==================================="
