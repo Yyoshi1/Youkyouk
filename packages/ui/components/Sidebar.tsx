@@ -1,127 +1,91 @@
 // packages/ui/components/Sidebar.tsx
-import React, { useState } from "react";
-import { FaInbox, FaTasks, FaChartLine, FaProjectDiagram, FaStar, FaUsers, FaCog } from "react-icons/fa";
+import React from "react";
+import { FaInbox, FaTasks, FaChartLine, FaFolder, FaUsers, FaStar } from "react-icons/fa";
 
-interface Team {
-  name: string;
-  sections: string[];
-}
-
-interface User {
-  role: "admin" | "manager" | "employee";
-  teams: Team[];
-}
-
-const Sidebar: React.FC<{ user: User }> = ({ user }) => {
-  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
-
-  const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
-  };
-
+const Sidebar: React.FC = () => {
   return (
-    <aside className="w-64 bg-gray-100 dark:bg-gray-900 h-screen p-4">
-      <ul className="space-y-2">
-        <li className="flex items-center space-x-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
-          <FaInbox /> <span>Inbox</span>
-        </li>
-        <li className="flex items-center space-x-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
-          <FaTasks /> <span>My Issues</span>
-        </li>
-        <li className="flex items-center space-x-2 p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
-          <FaChartLine /> <span>Pulse</span>
-        </li>
+    <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
+      <nav className="px-4 py-6">
+        {/* Inbox */}
+        <div className="flex items-center space-x-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+          <FaInbox />
+          <span>Inbox</span>
+        </div>
 
-        {/* Workspaces Section */}
-        <li>
-          <div
-            className="flex items-center justify-between p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-            onClick={() => toggleSection("workspaces")}
-          >
-            <div className="flex items-center space-x-2">
-              <FaProjectDiagram />
-              <span>Workspaces</span>
+        {/* My Issues */}
+        <div className="flex items-center space-x-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+          <FaTasks />
+          <span>My Issues</span>
+        </div>
+
+        {/* Pulse */}
+        <div className="flex items-center space-x-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+          <FaChartLine />
+          <span>Pulse</span>
+        </div>
+
+        {/* Workspace */}
+        <div className="mt-4">
+          <h3 className="text-gray-500 uppercase text-xs px-3">Workspace</h3>
+          <div className="ml-4 mt-2 space-y-2">
+            <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+              <FaFolder />
+              <span>Initiatives</span>
             </div>
-            <span>{expandedSections["workspaces"] ? "▼" : "▶"}</span>
+            <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+              <FaFolder />
+              <span>Projects</span>
+            </div>
+            <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+              <FaFolder />
+              <span>Views</span>
+            </div>
+            <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+              <FaUsers />
+              <span>Members</span>
+            </div>
+            <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+              <FaUsers />
+              <span>Teams</span>
+            </div>
           </div>
-          {expandedSections["workspaces"] && (
-            <ul className="pl-8 space-y-1">
-              <li>Initiatives</li>
-              <li>Projects</li>
-              <li>Views</li>
-              <li>Members</li>
-              <li>Teams</li>
-            </ul>
-          )}
-        </li>
+        </div>
 
-        {/* Favorites Section */}
-        <li>
-          <div
-            className="flex items-center justify-between p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-            onClick={() => toggleSection("favorites")}
-          >
-            <div className="flex items-center space-x-2">
+        {/* Favorites */}
+        <div className="mt-4">
+          <h3 className="text-gray-500 uppercase text-xs px-3">Favorites</h3>
+          <div className="ml-4 mt-2 space-y-2">
+            <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
               <FaStar />
               <span>Favorites</span>
             </div>
-            <span>{expandedSections["favorites"] ? "▼" : "▶"}</span>
           </div>
-          {expandedSections["favorites"] && (
-            <ul className="pl-8 space-y-1">
-              <li>Favorites</li>
-            </ul>
-          )}
-        </li>
+        </div>
 
-        {/* Your Teams Section */}
-        <li>
-          <div
-            className="flex items-center justify-between p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-            onClick={() => toggleSection("teams")}
-          >
-            <div className="flex items-center space-x-2">
-              <FaUsers />
-              <span>Your Teams</span>
+        {/* Your Teams */}
+        <div className="mt-4">
+          <h3 className="text-gray-500 uppercase text-xs px-3">Your Teams</h3>
+          <div className="ml-4 mt-2 space-y-2">
+            <div className="flex flex-col">
+              <span className="font-semibold cursor-pointer hover:text-blue-600">Team Alpha</span>
+              <div className="ml-4 mt-1 space-y-1">
+                <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+                  <FaTasks />
+                  <span>Issues</span>
+                </div>
+                <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+                  <FaFolder />
+                  <span>Projects</span>
+                </div>
+                <div className="flex items-center space-x-2 cursor-pointer hover:text-blue-600">
+                  <FaFolder />
+                  <span>Views</span>
+                </div>
+              </div>
             </div>
-            <span>{expandedSections["teams"] ? "▼" : "▶"}</span>
           </div>
-          {expandedSections["teams"] &&
-            user.teams.map((team, idx) => (
-              <div key={idx} className="pl-8">
-                <div className="font-semibold">{team.name}</div>
-                <ul className="pl-4 space-y-1">
-                  {team.sections.map((sec, sidx) => (
-                    <li key={sidx}>{sec}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-        </li>
-
-        {/* Settings Section */}
-        {user.role === "admin" || user.role === "manager" || user.role === "employee" ? (
-          <li>
-            <div
-              className="flex items-center justify-between p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded cursor-pointer"
-              onClick={() => toggleSection("settings")}
-            >
-              <div className="flex items-center space-x-2">
-                <FaCog />
-                <span>Settings</span>
-              </div>
-              <span>{expandedSections["settings"] ? "▼" : "▶"}</span>
-            </div>
-            {expandedSections["settings"] && (
-              <ul className="pl-8 space-y-1">
-                {user.role === "admin" && <li>All Settings</li>}
-                {user.role === "manager" && <li>Team Settings</li>}
-                {user.role === "employee" && <li>Limited Settings</li>}
-              </ul>
-            )}
-          </li>
-        ) : null}
-      </ul>
+        </div>
+      </nav>
     </aside>
   );
 };
