@@ -8,7 +8,6 @@ export default function MyIssuesPage() {
   return (
     <MainLayout activePage="My Issues">
       <Header title="My Issues" />
-      {/* Issues list */}
       <div className="bg-white p-4 rounded shadow mb-4">
         <h2 className="font-bold">Issue 1</h2>
         <p>Status: Open</p>
