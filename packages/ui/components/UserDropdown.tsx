@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { UserIcon } from "../icons/Icons";
 
 export const UserDropdown: React.FC = () => {
+  const [open, setOpen] = useState(false);
   return (
     <div className="relative">
-      <button className="flex items-center p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
-        <img
-          src="/icons/user.png"
-          alt="User"
-          className="h-6 w-6 rounded-full"
-        />
+      <button onClick={() => setOpen(!open)} className="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+        <UserIcon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+        <span className="text-gray-900 dark:text-white">Admin</span>
       </button>
+      {open && (
+        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow rounded">
+          <ul>
+            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Profile</li>
+            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Settings</li>
+            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Logout</li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
