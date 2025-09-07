@@ -1,25 +1,28 @@
-import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 import { MainLayout } from "../packages/ui/layouts/MainLayout";
-import { Header } from "../packages/ui/components/Header";
+import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 
-export default function PulsePage() {
+const PulsePage: React.FC = () => {
   useLicenseGuard();
 
+  const updates = [
+    { id: 1, content: "Alice completed Task #42", time: "2h ago" },
+    { id: 2, content: "Bob commented on Project Alpha", time: "5h ago" },
+    { id: 3, content: "Charlie joined the Backend Team", time: "1d ago" },
+  ];
+
   return (
-    <MainLayout activePage="Pulse">
-      <Header title="Pulse" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <h2 className="font-bold text-gray-900 dark:text-gray-100">Project A</h2>
-          <p className="text-gray-700 dark:text-gray-300">Status: Active</p>
-          <p className="text-gray-700 dark:text-gray-300">Tasks: 12</p>
-        </div>
-        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <h2 className="font-bold text-gray-900 dark:text-gray-100">Project B</h2>
-          <p className="text-gray-700 dark:text-gray-300">Status: In Progress</p>
-          <p className="text-gray-700 dark:text-gray-300">Tasks: 8</p>
-        </div>
-      </div>
+    <MainLayout>
+      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Pulse</h1>
+      <ul className="space-y-2">
+        {updates.map((update) => (
+          <li key={update.id} className="p-3 bg-white dark:bg-gray-800 rounded shadow hover:bg-gray-100 dark:hover:bg-gray-700">
+            <p className="text-gray-700 dark:text-gray-300">{update.content}</p>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{update.time}</span>
+          </li>
+        ))}
+      </ul>
     </MainLayout>
   );
-}
+};
+
+export default PulsePage;
