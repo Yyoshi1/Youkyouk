@@ -8,10 +8,8 @@ export const YoukyoukHeader: React.FC = () => {
 
   return (
     <header className="h-16 bg-white dark:bg-neutral-900 border-b flex items-center justify-between px-6">
-      {/* Logo */}
       <div className="font-bold text-lg cursor-pointer">youkyouk</div>
 
-      {/* Search Input */}
       <div className="flex-1 mx-6 relative">
         <input
           type="text"
@@ -27,9 +25,7 @@ export const YoukyoukHeader: React.FC = () => {
         )}
       </div>
 
-      {/* Right Controls */}
       <div className="flex items-center space-x-4">
-        {/* Dark/Light Mode Toggle */}
         <button
           onClick={toggleTheme}
           className="px-3 py-1 border rounded text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -37,7 +33,6 @@ export const YoukyoukHeader: React.FC = () => {
           {theme === "light" ? "Dark Mode" : "Light Mode"}
         </button>
 
-        {/* User Avatar / Dropdown */}
         <div className="relative">
           <div
             className="w-8 h-8 rounded-full bg-neutral-400 cursor-pointer"
