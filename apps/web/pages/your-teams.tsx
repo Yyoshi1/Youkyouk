@@ -8,15 +8,15 @@ export default function YourTeamsPage() {
   return (
     <MainLayout activePage="Your Teams">
       <Header title="Your Teams" />
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h2 className="font-bold">Team Alpha</h2>
-        <p>Members: 5</p>
-        <p>Projects: 3</p>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
+        <h2 className="font-bold text-gray-900 dark:text-gray-100">Team Alpha</h2>
+        <p className="text-gray-700 dark:text-gray-300">Members: 5</p>
+        <p className="text-gray-700 dark:text-gray-300">Projects: 3</p>
       </div>
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h2 className="font-bold">Team Beta</h2>
-        <p>Members: 8</p>
-        <p>Projects: 2</p>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
+        <h2 className="font-bold text-gray-900 dark:text-gray-100">Team Beta</h2>
+        <p className="text-gray-700 dark:text-gray-300">Members: 8</p>
+        <p className="text-gray-700 dark:text-gray-300">Projects: 2</p>
       </div>
     </MainLayout>
   );
