@@ -3,14 +3,8 @@ import React from "react";
 
 export const Sidebar: React.FC = () => {
   return (
-    <aside className="w-64 p-4 bg-gray-200 dark:bg-gray-900">
-      <nav>
-        <ul className="space-y-2">
-          <li>Dashboard</li>
-          <li>Inbox</li>
-          <li>Workspaces</li>
-        </ul>
-      </nav>
+    <aside className="w-64 bg-gray-100 dark:bg-gray-900 p-4">
+      <p className="text-gray-900 dark:text-white">Sidebar</p>
     </aside>
   );
 };
