@@ -1,58 +1,68 @@
-import React from "react";
-import { useTheme } from "./context/ThemeContext";
+import React, { useState } from "react";
+import Link from "next/link";
 
 export const YoukyoukSidebar: React.FC = () => {
-  const { theme } = useTheme();
+  const [expanded, setExpanded] = useState(true);
 
-  const mainSections = ["Inbox", "My Issues", "Pulse"];
-  const workspaces = ["Initiatives", "Projects", "Views", "Members", "Teams"];
-  const favorites = ["Favorites"];
-  const yourTeams = [
-    { name: "Frontend Team" },
-    { name: "Backend Team" },
-    { name: "Design Team" },
+  const workspaces = [
+    { name: "Initiatives", path: "/workspaces#initiatives" },
+    { name: "Projects", path: "/workspaces#projects" },
+    { name: "Views", path: "/workspaces#views" },
+    { name: "Members", path: "/workspaces#members" },
+    { name: "Teams", path: "/workspaces#teams" },
   ];
 
-  const Section = ({ title, items }: { title: string; items: string[] }) => (
-    <div className="mb-6">
-      <p className="text-xs font-semibold uppercase text-neutral-400 dark:text-neutral-500 mb-2">{title}</p>
-      <ul>
-        {items.map((item) => (
-          <li
-            key={item}
-            className="px-3 py-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer"
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-
-  const TeamSection = () => (
-    <div>
-      <p className="text-xs font-semibold uppercase text-neutral-400 dark:text-neutral-500 mb-2">Your Teams</p>
-      <ul>
-        {yourTeams.map((team) => (
-          <li
-            key={team.name}
-            className="px-3 py-2 rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer"
-          >
-            {team.name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-
   return (
-    <aside
-      className={`w-64 bg-white dark:bg-neutral-900 border-r h-full overflow-auto p-4 flex-shrink-0`}
-    >
-      <Section title="Main" items={mainSections} />
-      <Section title="Workspaces" items={workspaces} />
-      <Section title="Favorites" items={favorites} />
-      <TeamSection />
+    <aside className={`bg-white dark:bg-gray-900 p-4 transition-all duration-300 ${expanded ? "w-64" : "w-20"} flex flex-col`}>
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="mb-4 px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded"
+      >
+        {expanded ? "Collapse" : "Expand"}
+      </button>
+
+      <nav className="flex-1">
+        <ul className="space-y-2">
+          <li>
+            <Link href="/inbox">
+              <a className="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Inbox</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/my-issues">
+              <a className="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">My Issues</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/pulse">
+              <a className="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Pulse</a>
+            </Link>
+          </li>
+
+          <li className="mt-4 font-semibold">Workspaces</li>
+          {workspaces.map((ws) => (
+            <li key={ws.name}>
+              <Link href={ws.path}>
+                <a className="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">{ws.name}</a>
+              </Link>
+            </li>
+          ))}
+
+          <li className="mt-4 font-semibold">Favorites</li>
+          <li>
+            <Link href="/favorites">
+              <a className="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">All Favorites</a>
+            </Link>
+          </li>
+
+          <li className="mt-4 font-semibold">Your Teams</li>
+          <li>
+            <Link href="/your-teams">
+              <a className="block p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">View Teams</a>
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </aside>
   );
 };
