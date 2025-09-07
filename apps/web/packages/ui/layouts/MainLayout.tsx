@@ -1,6 +1,8 @@
+// apps/web/packages/ui/layouts/MainLayout.tsx
 import React from "react";
-import { Header } from "./Header";
-import { Sidebar } from "./Sidebar";
+import { Header } from "../components/Header";
+import { Sidebar } from "../components/Sidebar";
+import { Footer } from "../components/Footer";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -8,21 +10,12 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900">
-      {/* Sidebar */}
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar />
-
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
+      <div className="flex flex-col flex-1">
         <Header />
-
-        {/* Main content */}
         <main className="flex-1 p-4 overflow-auto">{children}</main>
-
-        {/* Footer */}
-        <footer className="p-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-center">
-          © 2025 Youkyouk. All rights reserved.
-        </footer>
+        <Footer />
       </div>
     </div>
   );
