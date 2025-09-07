@@ -1,23 +1,31 @@
-import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 import { MainLayout } from "../packages/ui/layouts/MainLayout";
-import { Header } from "../packages/ui/components/Header";
+import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 
-export default function MyIssuesPage() {
+const MyIssuesPage: React.FC = () => {
   useLicenseGuard();
 
+  const issues = [
+    { id: 1, title: "Fix login bug", status: "Open", priority: "High" },
+    { id: 2, title: "Update documentation", status: "In Progress", priority: "Medium" },
+    { id: 3, title: "Refactor sidebar", status: "Closed", priority: "Low" },
+  ];
+
   return (
-    <MainLayout activePage="My Issues">
-      <Header title="My Issues" />
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
-        <h2 className="font-bold text-gray-900 dark:text-gray-100">Issue 1</h2>
-        <p className="text-gray-700 dark:text-gray-300">Status: Open</p>
-        <p className="text-gray-700 dark:text-gray-300">Description: Lorem ipsum dolor sit amet.</p>
-      </div>
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
-        <h2 className="font-bold text-gray-900 dark:text-gray-100">Issue 2</h2>
-        <p className="text-gray-700 dark:text-gray-300">Status: In Progress</p>
-        <p className="text-gray-700 dark:text-gray-300">Description: Curabitur lobortis id lorem id bibendum.</p>
-      </div>
+    <MainLayout>
+      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">My Issues</h1>
+      <ul className="space-y-2">
+        {issues.map((issue) => (
+          <li key={issue.id} className="p-3 bg-white dark:bg-gray-800 rounded shadow hover:bg-gray-100 dark:hover:bg-gray-700">
+            <div className="flex justify-between">
+              <span className="font-medium">{issue.title}</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">{issue.status}</span>
+            </div>
+            <p className="text-gray-700 dark:text-gray-300 text-sm">Priority: {issue.priority}</p>
+          </li>
+        ))}
+      </ul>
     </MainLayout>
   );
-}
+};
+
+export default MyIssuesPage;
