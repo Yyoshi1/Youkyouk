@@ -1,25 +1,15 @@
-import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 import { MainLayout } from "../packages/ui/layouts/MainLayout";
-import { Header } from "../packages/ui/components/Header";
+import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 
-export default function WorkspacesPage() {
+export const WorkspacesPage: React.FC = () => {
   useLicenseGuard();
 
   return (
-    <MainLayout activePage="Workspaces">
-      <Header title="Workspaces" />
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
-        <h2 className="font-bold text-gray-900 dark:text-gray-100">Initiatives</h2>
-        <p className="text-gray-700 dark:text-gray-300">List of initiatives</p>
-      </div>
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
-        <h2 className="font-bold text-gray-900 dark:text-gray-100">Projects</h2>
-        <p className="text-gray-700 dark:text-gray-300">List of projects</p>
-      </div>
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
-        <h2 className="font-bold text-gray-900 dark:text-gray-100">Views</h2>
-        <p className="text-gray-700 dark:text-gray-300">Custom views</p>
-      </div>
+    <MainLayout>
+      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Workspaces</h1>
+      {/* */}
     </MainLayout>
   );
-}
+};
+
+export default WorkspacesPage;
