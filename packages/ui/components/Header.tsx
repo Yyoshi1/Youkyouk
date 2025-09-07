@@ -1,3 +1,4 @@
+// packages/ui/components/Header.tsx
 import React from "react";
 import { QuickSearch } from "./QuickSearch";
 import { UserDropdown } from "./UserDropdown";
@@ -5,15 +6,18 @@ import { UserDropdown } from "./UserDropdown";
 export const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow">
+      {/* شعار */}
       <div className="flex items-center space-x-2">
         <img src="/logo.png" alt="Youkyouk" className="h-8 w-8" />
         <span className="font-bold text-xl text-gray-900 dark:text-white">Youkyouk</span>
       </div>
 
+      {/* شريط البحث */}
       <div className="flex-1 px-4">
         <QuickSearch />
       </div>
 
+      {/* أيقونات وإعدادات المستخدم */}
       <div className="flex items-center space-x-4">
         <button className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
