@@ -16,7 +16,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         {/* Header */}
         <Header />
 
-        {/*  */}
+        {/* Main content */}
         <main className="flex-1 p-4 overflow-auto">{children}</main>
 
         {/* Footer */}
