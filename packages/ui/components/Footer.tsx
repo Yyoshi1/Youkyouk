@@ -3,8 +3,8 @@ import React from "react";
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="p-4 bg-gray-100 dark:bg-gray-800 text-center">
-      © 2025 Youkyouk. All rights reserved.
+    <footer className="bg-white dark:bg-gray-800 p-4 shadow">
+      <p className="text-gray-700 dark:text-gray-300">Footer</p>
     </footer>
   );
 };
