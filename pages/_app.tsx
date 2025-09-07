@@ -1,17 +1,12 @@
-// pages/_app.tsx
-import type { AppProps } from "next/app";
-import MainLayout from "../packages/ui/layouts/MainLayout";
-import AdminLayout from "../packages/ui/layouts/AdminLayout";
+import React from "react";
+import { AppProps } from "next/app";
+import { MainLayout } from "../packages/ui/layouts/MainLayout";
+import "../styles/globals.css";
 
-export default function MyApp({ Component, pageProps, router }: AppProps) {
-  //  AdminLayout
-  const isAdminPage = router.pathname.startsWith("/admin");
-
-  const Layout = isAdminPage ? AdminLayout : MainLayout;
-
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <MainLayout>
       <Component {...pageProps} />
-    </Layout>
+    </MainLayout>
   );
 }
