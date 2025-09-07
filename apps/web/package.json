@@ -5,22 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
-    "next": "14.2.3",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "tailwindcss": "3.4.1",
-    "autoprefixer": "10.4.14",
-    "postcss": "8.4.23",
-    "@headlessui/react": "^1.7.20",
-    "@heroicons/react": "^2.1.5",
-    "axios": "^1.6.8"
+    "next": "^13.5.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.3"
+    "typescript": "^5.2.2"
   }
 }
