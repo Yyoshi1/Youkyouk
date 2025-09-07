@@ -1,19 +1,12 @@
 import React from "react";
 
-interface InputProps {
-  placeholder?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export const Input: React.FC<InputProps> = ({ placeholder, value, onChange }) => {
+export const Input: React.FC<InputProps> = (props) => {
   return (
     <input
-      type="text"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+      {...props}
+      className="px-3 py-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:border-blue-500"
     />
   );
 };
