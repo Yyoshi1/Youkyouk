@@ -1,5 +1,4 @@
-// pages/_app.tsx
-import React from "react";
+import "../styles/globals.css"; // إذا عندك CSS عام
 import { MainLayout } from "../packages/ui/layouts/MainLayout";
 import type { AppProps } from "next/app";
 
