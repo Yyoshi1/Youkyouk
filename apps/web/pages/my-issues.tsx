@@ -8,15 +8,15 @@ export default function MyIssuesPage() {
   return (
     <MainLayout activePage="My Issues">
       <Header title="My Issues" />
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h2 className="font-bold">Issue 1</h2>
-        <p>Status: Open</p>
-        <p>Description: Lorem ipsum dolor sit amet.</p>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
+        <h2 className="font-bold text-gray-900 dark:text-gray-100">Issue 1</h2>
+        <p className="text-gray-700 dark:text-gray-300">Status: Open</p>
+        <p className="text-gray-700 dark:text-gray-300">Description: Lorem ipsum dolor sit amet.</p>
       </div>
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h2 className="font-bold">Issue 2</h2>
-        <p>Status: In Progress</p>
-        <p>Description: Curabitur lobortis id lorem id bibendum.</p>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
+        <h2 className="font-bold text-gray-900 dark:text-gray-100">Issue 2</h2>
+        <p className="text-gray-700 dark:text-gray-300">Status: In Progress</p>
+        <p className="text-gray-700 dark:text-gray-300">Description: Curabitur lobortis id lorem id bibendum.</p>
       </div>
     </MainLayout>
   );
