@@ -1,28 +1,33 @@
 # Youkyouk
 
-A modern project management system built with **Next.js**, **TypeScript**, and **TailwindCSS**.  
-This project provides a clean, professional interface with a focus on productivity and simplicity.
+Youkyouk is a modern task & project management system designed for teams and projects.  
+It focuses on **task management, workspaces, and team collaboration**.
 
 ---
 
-## Features
-- Next.js 14 with App Router
-- TypeScript for strict typing
-- TailwindCSS for styling
-- Dark/Light theme
-- Intuitive layout (Sidebar, Header, Command Menu, etc.)
+## 🚀 Features
+- Admin dashboard with roles & permissions
+- Team dashboard with task management
+- Projects & initiatives management
+- Workspaces with custom views
+- Favorites (tasks, projects, views)
+- Dark/Light mode support
+- Multi-language support (English, French, Arabic)
+- Real-time notifications
+- License verification system (`useLicenseGuard`)
 
 ---
 
-## Installation
+## 📦 Installation
 
-```bash
-# Install dependencies
-npm install
+### Requirements
+- **Node.js** >= 18
+- **npm** >= 9
+- **PostgreSQL** >= 14
+- Linux / macOS / Windows with terminal access
 
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-npm start
+### Steps
+1. Download and extract the package `youkyouk-package.zip`.
+2. Open a terminal and navigate to the project folder:
+   ```bash
+   cd youkyouk
