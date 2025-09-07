@@ -1,10 +1,11 @@
-import React from "react";
-import { MainLayout } from "../../packages/ui/layouts/MainLayout";
+import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 
-export const FavoritesPage: React.FC = () => {
+export default function FavoritesPage() {
+  useLicenseGuard();
   return (
-    <MainLayout>
-      <h1 className="text-2xl font-semibold mb-4">Favorites</h1>
-    </MainLayout>
+    <div className="page-content">
+      {/* Favorites content */}
+      <h1>Favorites</h1>
+    </div>
   );
-};
+}
