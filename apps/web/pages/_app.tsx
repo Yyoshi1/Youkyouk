@@ -1,13 +1,12 @@
-import { AppProps } from "next/app";
+// pages/_app.tsx
+import React from "react";
 import { MainLayout } from "../packages/ui/layouts/MainLayout";
-import "../packages/ui/styles/global.css";
+import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MainLayout>
       <Component {...pageProps} />
     </MainLayout>
   );
 }
-
-export default MyApp;
