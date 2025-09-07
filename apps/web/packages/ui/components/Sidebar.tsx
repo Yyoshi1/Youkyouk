@@ -1,36 +1,20 @@
 import React from "react";
 
-interface SidebarProps {
-  activePage?: string;
-}
-
-export const Sidebar: React.FC<SidebarProps> = ({ activePage }) => {
-  const menu = [
-    { name: "Inbox", path: "/inbox" },
-    { name: "My Issues", path: "/my-issues" },
-    { name: "Pulse", path: "/pulse" },
-    { name: "Workspaces", path: "/workspaces" },
-    { name: "Favorites", path: "/favorites" },
-    { name: "Your Teams", path: "/your-teams" },
-  ];
-
+export const Sidebar: React.FC = () => {
   return (
-    <aside className="w-64 bg-white border-r">
-      <div className="p-4 font-bold text-xl">Youkyouk</div>
-      <nav className="mt-6">
-        <ul>
-          {menu.map((item) => (
-            <li
-              key={item.name}
-              className={`p-2 hover:bg-gray-200 rounded ${
-                activePage === item.name ? "bg-gray-200" : ""
-              }`}
-            >
-              <a href={item.path}>{item.name}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <aside className="w-64 bg-white dark:bg-gray-800 shadow-md h-full">
+      <ul className="p-4 space-y-2">
+        <li>
+          <a href="/" className="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="/about" className="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+            About
+          </a>
+        </li>
+      </ul>
     </aside>
   );
 };
