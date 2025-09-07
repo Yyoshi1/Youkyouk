@@ -1,76 +1,29 @@
-// packages/ui/components/Sidebar.tsx
 import React from "react";
-import { FaInbox, FaTasks, FaRocket, FaProjectDiagram, FaUsers, FaStar, FaTeam } from "react-icons/fa";
+import { InboxIcon, IssuesIcon, PulseIcon, WorkspaceIcon, TeamsIcon, FavoritesIcon } from "../icons/sidebar";
 
-export const Sidebar: React.FC = () => {
-  return (
-    <aside className="w-64 bg-white dark:bg-gray-900 shadow flex flex-col h-screen">
-      <nav className="flex-1 overflow-auto">
-        <ul className="space-y-2 p-4">
-          {/* Inbox */}
-          <li className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-            <FaInbox />
-            <span>Inbox</span>
-          </li>
-
-          {/* My Issues */}
-          <li className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-            <FaTasks />
-            <span>My Issues</span>
-          </li>
-
-          {/* Pulse */}
-          <li className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-            <FaRocket />
-            <span>Pulse</span>
-          </li>
-
-          {/* Workspace */}
-          <li className="mt-4 font-semibold text-gray-500 uppercase">Workspace</li>
-          <li className="flex flex-col ml-4 space-y-1">
-            <span className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-              <FaProjectDiagram />
-              <span>Projects</span>
-            </span>
-            <span className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-              <FaRocket />
-              <span>Initiatives</span>
-            </span>
-            <span className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-              <FaUsers />
-              <span>Members</span>
-            </span>
-            <span className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-              <FaTeam />
-              <span>Teams</span>
-            </span>
-          </li>
-
-          {/* Favorites */}
-          <li className="mt-4 font-semibold text-gray-500 uppercase">Favorites</li>
-          <li className="flex items-center space-x-2 p-2 ml-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-            <FaStar />
-            <span>Favorites</span>
-          </li>
-
-          {/* Your Teams */}
-          <li className="mt-4 font-semibold text-gray-500 uppercase">Your Teams</li>
-          <li className="flex flex-col ml-4 space-y-1">
-            <span className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-              <FaTeam />
-              <span>Team A</span>
-            </span>
-            <span className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-              <FaTasks />
-              <span>Issues</span>
-            </span>
-            <span className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
-              <FaProjectDiagram />
-              <span>Projects</span>
-            </span>
-          </li>
+export const Sidebar: React.FC = () => (
+  <nav className="w-64 bg-white dark:bg-gray-800 p-4 h-screen">
+    <ul>
+      <li className="flex items-center mb-2">
+        <InboxIcon className="w-5 h-5 mr-2" /> Inbox
+      </li>
+      <li className="flex items-center mb-2">
+        <IssuesIcon className="w-5 h-5 mr-2" /> My Issues
+      </li>
+      <li className="flex items-center mb-2">
+        <PulseIcon className="w-5 h-5 mr-2" /> Pulse
+      </li>
+      <li className="flex flex-col mb-2">
+        <div className="flex items-center"><WorkspaceIcon className="w-5 h-5 mr-2" /> Workspace</div>
+        <ul className="ml-6 mt-1">
+          <li>Initiatives</li>
+          <li>Projects</li>
+          <li>Views</li>
+          <li>Members</li>
         </ul>
-      </nav>
-    </aside>
-  );
-};
+      </li>
+      <li className="flex items-center mb-2"><TeamsIcon className="w-5 h-5 mr-2" /> Your Teams</li>
+      <li className="flex items-center"><FavoritesIcon className="w-5 h-5 mr-2" /> Favorites</li>
+    </ul>
+  </nav>
+);
