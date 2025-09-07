@@ -1,23 +1,19 @@
 import React from "react";
 
-interface HeaderProps {
-  title: string;
-}
-
-export const Header: React.FC<HeaderProps> = ({ title }) => {
+export const Header: React.FC = () => {
   return (
-    <header className="flex justify-between items-center mb-6">
-      <div className="text-xl font-semibold">{title}</div>
-      <div className="flex items-center space-x-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="border rounded px-2 py-1"
-        />
-        <button className="px-3 py-1 bg-blue-500 text-white rounded">
-          New
+    <header className="flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow">
+      <h1 className="text-lg font-bold text-gray-800 dark:text-white">
+        Youkyouk
+      </h1>
+      <nav className="flex items-center gap-4">
+        <button className="text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white">
+          Notifications
         </button>
-      </div>
+        <button className="text-sm text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white">
+          Profile
+        </button>
+      </nav>
     </header>
   );
 };
