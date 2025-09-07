@@ -2,11 +2,17 @@ import React from "react";
 
 export const AdminSidebar: React.FC = () => {
   return (
-    <aside className="w-64 bg-gray-100 dark:bg-gray-900 h-screen p-4 overflow-auto">
+    <aside className="w-64 bg-gray-200 dark:bg-gray-800 h-screen p-4">
       <nav className="space-y-2">
-        <div className="font-bold text-gray-800 dark:text-gray-100">Dashboard</div>
-        <div className="font-semibold text-gray-700 dark:text-gray-200">Users</div>
-        <div className="font-semibold text-gray-700 dark:text-gray-200">Settings</div>
+        <div>
+          <h3 className="text-gray-800 dark:text-gray-200 font-semibold mb-1">Dashboard</h3>
+        </div>
+        <div>
+          <h3 className="text-gray-800 dark:text-gray-200 font-semibold mb-1">Users</h3>
+        </div>
+        <div>
+          <h3 className="text-gray-800 dark:text-gray-200 font-semibold mb-1">Settings</h3>
+        </div>
       </nav>
     </aside>
   );
