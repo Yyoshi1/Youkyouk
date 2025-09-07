@@ -1,10 +1,11 @@
-import React from "react";
-import { MainLayout } from "../../packages/ui/layouts/MainLayout";
+import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 
-export const WorkspacesPage: React.FC = () => {
+export default function WorkspacesPage() {
+  useLicenseGuard();
   return (
-    <MainLayout>
-      <h1 className="text-2xl font-semibold mb-4">Workspaces</h1>
-    </MainLayout>
+    <div className="page-content">
+      {/* Workspaces content */}
+      <h1>Workspaces</h1>
+    </div>
   );
-};
+}
