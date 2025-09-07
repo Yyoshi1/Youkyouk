@@ -1,17 +1,15 @@
-import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 import { MainLayout } from "../packages/ui/layouts/MainLayout";
-import { Header } from "../packages/ui/components/Header";
+import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 
-export default function InboxPage() {
+export const InboxPage: React.FC = () => {
   useLicenseGuard();
 
   return (
-    <MainLayout activePage="Inbox">
-      <Header title="Inbox" />
-      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-        <p className="text-gray-900 dark:text-gray-100">
-        </p>
-      </div>
+    <MainLayout>
+      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Inbox</h1>
+      {/* */}
     </MainLayout>
   );
-}
+};
+
+export default InboxPage;
