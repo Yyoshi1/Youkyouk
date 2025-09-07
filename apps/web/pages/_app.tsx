@@ -1,15 +1,13 @@
-// apps/web/pages/_app.tsx
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { ThemeProvider } from "../packages/ui/context/ThemeContext";
+import { AppProps } from "next/app";
 import { MainLayout } from "../packages/ui/layouts/MainLayout";
+import "../packages/ui/styles/global.css";
 
-export default function App({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
-      <MainLayout>
-        <Component {...pageProps} />
-      </MainLayout>
-    </ThemeProvider>
+    <MainLayout>
+      <Component {...pageProps} />
+    </MainLayout>
   );
 }
+
+export default MyApp;
