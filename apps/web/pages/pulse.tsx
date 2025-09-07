@@ -1,10 +1,11 @@
-import React from "react";
-import { MainLayout } from "../../packages/ui/layouts/MainLayout";
+import { useLicenseGuard } from "../packages/ui/license/useLicenseGuard";
 
-export const PulsePage: React.FC = () => {
+export default function PulsePage() {
+  useLicenseGuard();
   return (
-    <MainLayout>
-      <h1 className="text-2xl font-semibold mb-4">Pulse</h1>
-    </MainLayout>
+    <div className="page-content">
+      {/* Pulse content */}
+      <h1>Pulse</h1>
+    </div>
   );
-};
+}
