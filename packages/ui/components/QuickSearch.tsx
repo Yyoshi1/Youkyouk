@@ -1,52 +1,18 @@
-// packages/ui/components/QuickSearch.tsx
 import React, { useState } from "react";
-
-interface QuickSearchItem {
-  title: string;
-  description?: string;
-}
-
-const mockItems: QuickSearchItem[] = [
-  { title: "Dashboard", description: "Go to main dashboard" },
-  { title: "Projects", description: "View all projects" },
-  { title: "My Issues", description: "Your assigned tasks" },
-  { title: "Teams", description: "View your teams" },
-  { title: "Settings", description: "Account and preferences" },
-];
+import { QuickSearchIcon } from "../icons/Icons";
 
 export const QuickSearch: React.FC = () => {
   const [query, setQuery] = useState("");
-
-  const filteredItems = mockItems.filter((item) =>
-    item.title.toLowerCase().includes(query.toLowerCase())
-  );
-
   return (
-    <div className="w-full">
+    <div className="relative">
+      <QuickSearchIcon className="absolute left-3 top-2.5 w-5 h-5 text-gray-500" />
       <input
         type="text"
-        autoFocus
-        placeholder="Search..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500 mb-2"
+        placeholder="Search..."
+        className="w-full pl-10 pr-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
       />
-      <ul className="max-h-64 overflow-y-auto">
-        {filteredItems.map((item, index) => (
-          <li
-            key={index}
-            className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
-          >
-            <span className="font-semibold text-gray-900 dark:text-white">{item.title}</span>
-            {item.description && (
-              <span className="text-gray-500 dark:text-gray-300 text-sm ml-2">{item.description}</span>
-            )}
-          </li>
-        ))}
-        {filteredItems.length === 0 && (
-          <li className="p-2 text-gray-500 dark:text-gray-400">No results found</li>
-        )}
-      </ul>
     </div>
   );
 };
