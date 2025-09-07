@@ -1,23 +1,21 @@
-import React from "react";
+import React, { ReactNode } from "react";
+import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 interface MainLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      {/*  */}
-      <Header />
-
-      {/* */}
-      <main className="flex-1 p-4">{children}</main>
-
-      {/* */}
-      <footer className="p-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-center">
-        © 2025 Youkyouk. All rights reserved.
-      </footer>
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+      <Sidebar />
+      <div className="flex flex-col flex-1">
+        <Header />
+        <main className="flex-1 p-6 overflow-auto">{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 };
