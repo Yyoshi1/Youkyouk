@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Youkyouk Installer Script
-# Make sure to run: chmod +x install.sh
+# Youkyouk Auto Installer Script
+# Run: chmod +x install.sh && ./install.sh
 
 echo "==================================="
-echo " Youkyouk Installation Started"
+echo " Youkyouk Automatic Installation"
 echo "==================================="
 
 # 1. Check Node.js
@@ -30,22 +30,19 @@ fi
 
 echo "✅ All requirements met."
 
-# 4. Install dependencies
+# 4. Install frontend dependencies
 echo "Installing frontend dependencies..."
 cd apps/web || exit
 npm install
 cd ../../ || exit
+echo "✅ Dependencies installed."
 
-# 5. Setup database
-echo "Setting up PostgreSQL database..."
-read -p "Enter PostgreSQL username: " PGUSER
-read -sp "Enter PostgreSQL password: " PGPASS
-echo ""
-read -p "Enter database name (will be created if not exists): " PGDB
-
-export PGPASSWORD=$PGPASS
-createdb -U $PGUSER $PGDB 2>/dev/null || echo "Database already exists."
-
+# 5. Setup PostgreSQL database automatically
+DB_NAME="youkyouk_db"
+DB_USER="postgres"
+echo "Creating database '$DB_NAME' if not exists..."
+export PGPASSWORD=$PGPASSWORD
+createdb -U $DB_USER $DB_NAME 2>/dev/null || echo "Database already exists."
 echo "✅ Database setup completed."
 
 # 6. Build frontend
@@ -56,16 +53,19 @@ cd ../../ || exit
 echo "✅ Frontend build completed."
 
 # 7. License setup
-echo "Setting up license verification..."
 LICENSE_FILE="apps/web/public/license.txt"
 if [ ! -f "$LICENSE_FILE" ]; then
-    read -p "Enter your Youkyouk license key: " LICENSE_KEY
+    echo "Please enter your Youkyouk license key:"
+    read LICENSE_KEY
+    mkdir -p $(dirname "$LICENSE_FILE")
     echo $LICENSE_KEY > $LICENSE_FILE
-    echo "✅ License key saved."
+    echo "✅ License key saved to $LICENSE_FILE"
+else
+    echo "License file already exists. Skipping..."
 fi
 
-# 8. Final message
+# 8. Finish
 echo "==================================="
 echo " Youkyouk Installation Completed!"
-echo "To start the project, run: npm run dev in apps/web"
+echo "Run the project: cd apps/web && npm run dev"
 echo "==================================="
