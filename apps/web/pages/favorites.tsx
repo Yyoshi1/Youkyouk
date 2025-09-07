@@ -8,13 +8,13 @@ export default function FavoritesPage() {
   return (
     <MainLayout activePage="Favorites">
       <Header title="Favorites" />
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h2 className="font-bold">Task 1</h2>
-        <p>Project: Project A</p>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
+        <h2 className="font-bold text-gray-900 dark:text-gray-100">Task 1</h2>
+        <p className="text-gray-700 dark:text-gray-300">Project: Project A</p>
       </div>
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h2 className="font-bold">Project B</h2>
-        <p>Favorite Project</p>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4">
+        <h2 className="font-bold text-gray-900 dark:text-gray-100">Project B</h2>
+        <p className="text-gray-700 dark:text-gray-300">Favorite Project</p>
       </div>
     </MainLayout>
   );
