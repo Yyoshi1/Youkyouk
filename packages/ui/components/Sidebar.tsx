@@ -1,71 +1,81 @@
+// packages/ui/components/Sidebar.tsx
 import React from "react";
-import { Home, Inbox, AlertCircle, Activity, Users, Settings, Folder } from "lucide-react";
-
-interface MenuItem {
-  name: string;
-  icon?: React.ReactNode;
-  roles: string[];
-  subItems?: MenuItem[];
-}
+import { FaUsers, FaCog, FaInbox, FaTasks, FaProjectDiagram } from "react-icons/fa";
 
 interface SidebarProps {
-  userRole: string; // admin, manager, employee, etc.
+  role: "admin" | "manager" | "employee";
+  isOpen: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ userRole }) => {
-  const menuItems: MenuItem[] = [
-    { name: "Dashboard", icon: <Home size={16} />, roles: ["admin", "manager", "employee"] },
-    { name: "Inbox", icon: <Inbox size={16} />, roles: ["admin", "manager", "employee"] },
-    { name: "Issues", icon: <AlertCircle size={16} />, roles: ["admin", "manager"] },
-    { name: "Pulse", icon: <Activity size={16} />, roles: ["admin", "manager"] },
+export const Sidebar: React.FC<SidebarProps> = ({ role, isOpen }) => {
+  const sections = [
+    {
+      name: "Dashboard",
+      icon: <FaProjectDiagram />,
+      sub: [],
+      roles: ["admin", "manager", "employee"],
+    },
     {
       name: "Workspaces",
-      icon: <Folder size={16} />,
+      icon: <FaTasks />,
+      sub: ["Workspace 1", "Workspace 2"],
       roles: ["admin", "manager"],
-      subItems: [
-        { name: "Projects", roles: ["admin", "manager"] },
-        { name: "Tasks", roles: ["admin", "manager"] },
-      ],
     },
     {
       name: "Your Teams",
-      icon: <Users size={16} />,
+      icon: <FaUsers />,
+      sub: ["Team A", "Team B"],
       roles: ["admin", "manager"],
-      subItems: [
-        { name: "Team A", roles: ["admin", "manager"] },
-        { name: "Team B", roles: ["admin", "manager"] },
-      ],
     },
-    { name: "Settings", icon: <Settings size={16} />, roles: ["admin", "manager", "employee"] },
+    {
+      name: "Inbox",
+      icon: <FaInbox />,
+      sub: [],
+      roles: ["admin", "manager", "employee"],
+    },
+    {
+      name: "Issues",
+      icon: <FaTasks />,
+      sub: [],
+      roles: ["admin", "manager"],
+    },
+    {
+      name: "Settings",
+      icon: <FaCog />,
+      sub: ["Profile", "Security", "Notifications"],
+      roles: ["admin"], // 
+    },
   ];
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 h-screen shadow-md flex flex-col">
-      <div className="p-4 text-xl font-bold text-gray-900 dark:text-white">Youkyouk</div>
-      <nav className="flex-1 overflow-auto">
-        {menuItems.map((item, idx) => {
-          if (!item.roles.includes(userRole)) return null;
-          return (
-            <div key={idx}>
-              <div className="flex items-center px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                {item.icon && <span className="mr-2">{item.icon}</span>}
-                <span>{item.name}</span>
+    <aside
+      className={`bg-white dark:bg-gray-800 shadow w-64 transition-transform ${
+        isOpen ? "translate-x-0" : "-translate-x-64"
+      }`}
+    >
+      <nav className="flex flex-col p-4 space-y-2">
+        {sections
+          .filter((section) => section.roles.includes(role))
+          .map((section) => (
+            <div key={section.name}>
+              <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer">
+                {section.icon}
+                <span>{section.name}</span>
               </div>
-              {item.subItems &&
-                item.subItems.map(
-                  (sub, sidx) =>
-                    sub.roles.includes(userRole) && (
-                      <div
-                        key={sidx}
-                        className="flex items-center pl-8 px-4 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
-                      >
-                        {sub.name}
-                      </div>
-                    )
-                )}
+              {section.sub.length > 0 && (
+                <div className="ml-6 mt-1 flex flex-col space-y-1">
+                  {section.sub.map((sub) => (
+                    <div
+                      key={sub}
+                      className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white cursor-pointer"
+                    >
+                      {sub}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          );
-        })}
+          ))}
       </nav>
     </aside>
   );
