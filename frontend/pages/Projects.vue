@@ -1,18 +1,18 @@
 <template>
-  <div class="projects-page">
+  <div class="projects">
     <h1>Projects</h1>
-    <div class="projects-list">
-      <ProjectCard v-for="project in projects" :key="project.id" :project="project"/>
+    <div class="project-list">
+      <div class="project-card" v-for="project in projects" :key="project.id">
+        <h3>{{ project.name }}</h3>
+        <p>{{ project.description }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ProjectCard from '../components/ProjectCard.vue'
-
 export default {
-  name: 'ProjectsPage',
-  components: { ProjectCard },
+  name: 'Projects',
   data() {
     return {
       projects: [
@@ -25,10 +25,10 @@ export default {
 </script>
 
 <style scoped>
-.projects-page {
-  padding: 2rem;
+.projects {
+  padding: 1rem;
 }
-.projects-list {
+.project-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
