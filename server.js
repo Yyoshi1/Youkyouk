@@ -1,17 +1,29 @@
-import { sequelize } from './config/db.js'; // إذا بغيت default: import sequelize
+import express from 'express';
+import { sequelize } from './config/db.js';
 import User from './models/User.js';
 
-async function main() {
+const app = express();
+app.use(express.json());
+
+app.get('/users', async (req, res) => {
+  const users = await User.findAll();
+  res.json(users);
+});
+
+app.post('/users', async (req, res) => {
+  const { name, email } = req.body;
   try {
-    await sequelize.sync({ force: true }); // ينشئ الجداول
-    console.log("Database & tables created!");
-
-    // اختبار إنشاء مستخدم
-    const user = await User.create({ name: "Karim", email: "karim@example.com" });
-    console.log(user.toJSON());
+    const user = await User.create({ name, email });
+    res.json(user);
   } catch (err) {
-    console.error(err);
+    res.status(400).json({ error: err.message });
   }
-}
+});
 
-main();
+const start = async () => {
+  await sequelize.sync({ alter: true });
+  console.log("Database synced successfully");
+  app.listen(4000, () => console.log('Server running on http://localhost:4000'));
+};
+
+start();
