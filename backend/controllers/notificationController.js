@@ -1,27 +1,31 @@
-// إنشاء إشعار جديد
-export const createNotification = (req, res) => {
-  res.json({ message: "Notification created successfully" });
-};
+// backend/controllers/notificationController.js
 
-// جلب جميع الإشعارات
+// إرجاع جميع الإشعارات
 export const getNotifications = (req, res) => {
-  res.json([{ id: 1, message: "Welcome notification" }]);
+  const notifications = [
+    { id: 1, title: "Bienvenue!", message: "Votre compte est activé." },
+    { id: 2, title: "Promo", message: "Réduction spéciale aujourd’hui." },
+    { id: 3, title: "Info", message: "Nouvelle fonctionnalité disponible." },
+  ];
+
+  res.json(notifications);
 };
 
-// جلب إشعار واحد بالـ ID
+// إرجاع إشعار واحد بالـ ID
 export const getNotificationById = (req, res) => {
   const { id } = req.params;
-  res.json({ id, message: `Notification with ID ${id}` });
-};
 
-// تحديث إشعار
-export const updateNotification = (req, res) => {
-  const { id } = req.params;
-  res.json({ id, message: `Notification ${id} updated` });
-};
+  const notifications = [
+    { id: 1, title: "Bienvenue!", message: "Votre compte est activé." },
+    { id: 2, title: "Promo", message: "Réduction spéciale aujourd’hui." },
+    { id: 3, title: "Info", message: "Nouvelle fonctionnalité disponible." },
+  ];
 
-// حذف إشعار
-export const deleteNotification = (req, res) => {
-  const { id } = req.params;
-  res.json({ id, message: `Notification ${id} deleted` });
+  const notif = notifications.find((n) => n.id === parseInt(id));
+
+  if (!notif) {
+    return res.status(404).json({ error: "Notification introuvable" });
+  }
+
+  res.json(notif);
 };
