@@ -1,10 +1,7 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
 
-// تهيئة قاعدة البيانات SQLite
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./youkyouk.db", // اسم الملف ديال قاعدة البيانات
+export const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './youkyouk.db',
   logging: false
 });
-
-export default sequelize;
