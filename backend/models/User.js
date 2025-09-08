@@ -1,4 +1,4 @@
-import { sequelize } from '../config/db.js';
+import { sequelize } from '../config/db.js'; // هنا بالـ curly braces
 import { DataTypes } from 'sequelize';
 
 export const User = sequelize.define('User', {
