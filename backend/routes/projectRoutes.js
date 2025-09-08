@@ -1,12 +1,18 @@
 import express from 'express';
-import Project from '../models/Project.js';
+import {
+  getAllProjects,
+  getProjectById,
+  createProject,
+  updateProject,
+  deleteProject
+} from '../controllers/projectController.js';
 
 const router = express.Router();
 
-// 
-router.get('/', async (req, res) => {
-  const projects = await Project.findAll();
-  res.json(projects);
-});
+router.get('/', getAllProjects);
+router.get('/:id', getProjectById);
+router.post('/', createProject);
+router.put('/:id', updateProject);
+router.delete('/:id', deleteProject);
 
 export default router;
