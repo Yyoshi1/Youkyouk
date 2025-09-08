@@ -1,51 +1,75 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+// backend/server.js
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const { Pool } = require('pg')
+const path = require('path')
 
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
+// ----------------------
+// Sync language files automatically
+// ----------------------
+require('./i18nSync')
 
-// Mock database connection
-let dbConfig = {
-  host: 'localhost',
-  user: 'your_db_user',
-  password: 'your_db_password',
-  database: 'youkyouk_db'
-};
+// ----------------------
+// Express setup
+// ----------------------
+const app = express()
+const PORT = process.env.PORT || 4000
 
-// Routes
-app.get('/api/projects', (req, res) => {
-  res.json([
-    { id: 1, name: 'Project Alpha', team: 'Team A' },
-    { id: 2, name: 'Project Beta', team: 'Team B' }
-  ]);
-});
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/api/tasks', (req, res) => {
-  res.json([
-    { id: 1, title: 'Task 1', status: 'In Progress', assignedTo: 'User 1' },
-    { id: 2, title: 'Task 2', status: 'Completed', assignedTo: 'User 2' }
-  ]);
-});
+// ----------------------
+// PostgreSQL database setup
+// ----------------------
+const pool = new Pool({
+  user: process.env.DB_USER || 'youkyouk_user',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'youkyouk_db',
+  password: process.env.DB_PASS || 'password',
+  port: process.env.DB_PORT || 5432
+})
 
-app.get('/api/teams', (req, res) => {
-  res.json(['Team A', 'Team B', 'Team C']);
-});
+pool.connect()
+  .then(() => console.log('🔹 Database connection successful'))
+  .catch(err => console.error('❌ Database connection error:', err))
 
-app.get('/api/users', (req, res) => {
-  res.json(['Admin', 'User 1', 'User 2', 'User 3']);
-});
+// ----------------------
+// Test API routes
+// ----------------------
+app.get('/', (req, res) => {
+  res.send('Youkyouk Server is running successfully! 🚀')
+})
 
-app.get('/api/reports', (req, res) => {
-  res.json([
-    { name: 'Weekly Progress', chart: '[Chart Placeholder]' },
-    { name: 'Team Performance', chart: '[Chart Placeholder]' }
-  ]);
-});
+app.get('/api/projects', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM projects LIMIT 10')
+    res.json(result.rows)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Error fetching projects' })
+  }
+})
 
+app.get('/api/tasks', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM tasks LIMIT 10')
+    res.json(result.rows)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Error fetching tasks' })
+  }
+})
+
+// ----------------------
+// Serve frontend static files
+// ----------------------
+app.use(express.static(path.join(__dirname, '../frontend')))
+
+// ----------------------
 // Start server
-const PORT = process.env.PORT || 4000;
+// ----------------------
 app.listen(PORT, () => {
-  console.log(`Youkyouk backend running on port ${PORT}`);
-});
+  console.log(`🚀 Youkyouk Server is running on port: ${PORT}`)
+})
