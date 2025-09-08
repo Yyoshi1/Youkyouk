@@ -1,0 +1,16 @@
+{
+  "dashboard": "Dashboard",
+  "projects": "Projects",
+  "tasks": "Tasks",
+  "teams": "Teams",
+  "users": "Users",
+  "roles": "Roles",
+  "reports": "Reports",
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "welcome": "Welcome to Youkyouk",
+  "newProject": "New Project",
+  "newTask": "New Task",
+  "profile": "Profile",
+  "logout": "Logout"
+}
