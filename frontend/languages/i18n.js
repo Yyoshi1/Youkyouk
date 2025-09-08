@@ -1,5 +1,6 @@
 import { createI18n } from 'vue-i18n'
 
+// Import all languages
 import en from './en.json'
 import fr from './fr.json'
 import ar from './ar.json'
@@ -26,7 +27,7 @@ const messages = {
 }
 
 const i18n = createI18n({
-  locale: 'en', // Default Language
+  locale: 'en', // default language
   fallbackLocale: 'en',
   messages
 })
