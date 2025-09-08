@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
-import User from './User.js';
 
 const Project = sequelize.define('Project', {
   id: {
@@ -13,18 +12,13 @@ const Project = sequelize.define('Project', {
     allowNull: false
   },
   description: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    allowNull: true
   },
-  isPrivate: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
+  teamName: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
-}, {
-  timestamps: true
 });
-
-// Associations
-Project.belongsTo(User, { as: 'owner', foreignKey: 'ownerId' });
-Project.hasMany(User, { as: 'members', foreignKey: 'projectId' });
 
 export default Project;
