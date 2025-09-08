@@ -1,0 +1,16 @@
+{
+  "dashboard": "Tableau de bord",
+  "projects": "Projets",
+  "tasks": "Tâches",
+  "teams": "Équipes",
+  "users": "Utilisateurs",
+  "roles": "Rôles",
+  "reports": "Rapports",
+  "settings": "Paramètres",
+  "notifications": "Notifications",
+  "welcome": "Bienvenue sur Youkyouk",
+  "newProject": "Nouveau projet",
+  "newTask": "Nouvelle tâche",
+  "profile": "Profil",
+  "logout": "Déconnexion"
+}
