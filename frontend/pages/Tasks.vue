@@ -1,11 +1,10 @@
 <template>
-  <div class="tasks-page">
+  <div class="tasks">
     <h1>Tasks</h1>
-    <div class="tasks-list">
+    <div class="task-list">
       <div class="task-card" v-for="task in tasks" :key="task.id">
-        <h3>{{ task.title }}</h3>
-        <p>{{ task.description }}</p>
-        <span>Status: {{ task.status }}</span>
+        <h4>{{ task.title }}</h4>
+        <p>Status: {{ task.status }}</p>
       </div>
     </div>
   </div>
@@ -13,12 +12,12 @@
 
 <script>
 export default {
-  name: 'TasksPage',
+  name: 'Tasks',
   data() {
     return {
       tasks: [
-        { id: 1, title: 'Setup Backend', description: 'Initialize server and database', status: 'Pending' },
-        { id: 2, title: 'Design UI', description: 'Create frontend layout', status: 'In Progress' }
+        { id: 1, title: 'Setup Backend', status: 'Pending' },
+        { id: 2, title: 'Design UI', status: 'In Progress' }
       ]
     }
   }
@@ -26,12 +25,12 @@ export default {
 </script>
 
 <style scoped>
-.tasks-page {
-  padding: 2rem;
+.tasks {
+  padding: 1rem;
 }
-.tasks-list {
+.task-list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 </style>
