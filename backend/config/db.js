@@ -1,4 +1,5 @@
-import { Sequelize } from 'sequelize';
+import sqlite from 'sqlite';
+import sqlite3 from 'sqlite3';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,4 +15,9 @@ const sequelize = new Sequelize(
   }
 );
 
-export default sequelize;
+export async function openDB() {
+  return sqlite.open({
+    filename: './youkyouk.db',
+    driver: sqlite3.Database
+  });
+}
