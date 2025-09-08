@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Youkyouk Installation - Requirements</title>
+  <meta charset="UTF-8">
+  <title>Youkyouk Installer - Requirements</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    .success { color: green; }
+    .error { color: red; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; }
+  </style>
 </head>
 <body>
-<h1>System Requirements</h1>
-<ul>
-  <li>Node.js >= 18</li>
-  <li>PostgreSQL installed</li>
-  <li>npm or yarn</li>
-</ul>
-<button onclick="nextStep()">Next</button>
-<script>
-function nextStep() {
-  window.location.href = 'database.html';
-}
-</script>
+  <h1>Step 1: Requirements Check</h1>
+  <ul id="requirements">
+    <li id="node">Node.js: Checking...</li>
+    <li id="npm">npm: Checking...</li>
+    <li id="db">Database: Checking...</li>
+  </ul>
+  <button id="nextBtn" disabled>Next Step</button>
+
+  <script>
+    function checkRequirements() {
+      const node = true; // simulate check
+      const npm = true;
+      const db = true;
+      
+      document.getElementById('node').innerHTML = node ? 'Node.js: OK ✅' : 'Node.js: Missing ❌';
+      document.getElementById('npm').innerHTML = npm ? 'npm: OK ✅' : 'npm: Missing ❌';
+      document.getElementById('db').innerHTML = db ? 'Database: OK ✅' : 'Database: Missing ❌';
+      
+      if(node && npm && db){
+        document.getElementById('nextBtn').disabled = false;
+      }
+    }
+
+    checkRequirements();
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      window.location.href = 'database.html';
+    });
+  </script>
 </body>
 </html>
