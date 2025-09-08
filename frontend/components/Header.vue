@@ -1,15 +1,39 @@
 <template>
-  <header class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow">
-    <h1 class="text-xl font-bold text-gray-900 dark:text-white">Youkyouk Dashboard</h1>
-    <div class="flex items-center space-x-4">
-      <button @click="$emit('toggleTheme')" class="text-gray-700 dark:text-gray-200">🌙</button>
-      <img class="w-8 h-8 rounded-full" src="https://via.placeholder.com/32" alt="User Avatar"/>
+  <header :class="['header', { dark: isDark }]">
+    <div class="left">
+      <h1>{{ $t('welcome') }}</h1>
+    </div>
+    <div class="right">
+      <span>{{ $t('notifications') }}</span>
+      <button>{{ $t('profile') }}</button>
+      <button>{{ $t('logout') }}</button>
     </div>
   </header>
 </template>
 
 <script>
 export default {
-  emits: ['toggleTheme']
+  name: 'Header',
+  props: {
+    isDark: Boolean
+  }
 }
 </script>
+
+<style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #ddd;
+}
+.header.dark {
+  background-color: #111827;
+  color: #f3f4f6;
+}
+.header button {
+  margin-left: 1rem;
+  cursor: pointer;
+}
+</style>
