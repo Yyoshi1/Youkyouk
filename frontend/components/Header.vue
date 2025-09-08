@@ -1,66 +1,67 @@
 <template>
-  <header class="header">
-    <div class="logo">Youkyouk</div>
-    <div class="header-actions">
-      <button @click="toggleTheme">Toggle Theme</button>
-      <select v-model="currentLanguage" @change="changeLanguage">
-        <option v-for="lang in languages" :key="lang.code" :value="lang.code">
-          {{ lang.label }}
+  <header class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <img src="/logo.png" alt="Youkyouk Logo" class="h-8 w-8">
+      <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Youkyouk</h1>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button @click="toggleTheme" class="text-gray-500 dark:text-gray-300">
+        <span v-if="isDark">🌞</span>
+        <span v-else>🌙</span>
+      </button>
+      <select v-model="currentLocale" @change="changeLocale" class="rounded border-gray-300 dark:bg-gray-700 dark:text-white p-1">
+        <option v-for="lang in availableLocales" :key="lang.code" :value="lang.code">
+          {{ lang.name }}
         </option>
       </select>
-      <div class="user-info">
-        <span>{{ user.name }}</span>
-      </div>
+      <img src="/avatar.png" alt="User" class="h-8 w-8 rounded-full">
     </div>
   </header>
 </template>
 
-<script>
-import i18n from '../languages/i18n.js'
+<script setup>
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-  name: 'Header',
-  data() {
-    return {
-      user: { name: 'John Doe' },
-      currentLanguage: 'en',
-      languages: [
-        { code: 'en', label: 'English' },
-        { code: 'fr', label: 'French' },
-        { code: 'ar', label: 'Arabic' },
-        // add more languages here
-      ]
-    }
-  },
-  methods: {
-    toggleTheme() {
-      document.body.classList.toggle('dark')
-    },
-    changeLanguage() {
-      i18n.global.locale = this.currentLanguage
-    }
-  }
+const isDark = ref(false)
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  document.body.classList.toggle('dark', isDark.value)
+}
+
+// i18n
+const { locale } = useI18n()
+const currentLocale = ref(locale.value)
+const availableLocales = [
+  { code: 'en', name: 'English' },
+  { code: 'fr', name: 'Français' },
+  { code: 'ar', name: 'العربية' },
+  { code: 'es', name: 'Español' },
+  { code: 'de', name: 'Deutsch' },
+  { code: 'it', name: 'Italiano' },
+  { code: 'pt', name: 'Português' },
+  { code: 'ru', name: 'Русский' },
+  { code: 'zh', name: '中文' },
+  { code: 'ja', name: '日本語' },
+  { code: 'ko', name: '한국어' },
+  { code: 'nl', name: 'Nederlands' },
+  { code: 'sv', name: 'Svenska' },
+  { code: 'no', name: 'Norsk' },
+  { code: 'da', name: 'Dansk' },
+  { code: 'fi', name: 'Suomi' },
+  { code: 'pl', name: 'Polski' },
+  { code: 'tr', name: 'Türkçe' },
+  { code: 'id', name: 'Bahasa Indonesia' },
+  { code: 'ms', name: 'Bahasa Melayu' }
+]
+
+const changeLocale = () => {
+  locale.value = currentLocale.value
 }
 </script>
 
 <style scoped>
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid #ddd;
-}
-
-body.dark .header {
-  background-color: #1f2937;
-  border-color: #4b5563;
-  color: #f3f4f6;
-}
-
-.header-actions select,
-.header-actions button {
-  margin-left: 0.5rem;
+header {
+  transition: all 0.2s ease-in-out;
 }
 </style>
