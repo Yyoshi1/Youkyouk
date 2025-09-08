@@ -8,9 +8,8 @@
 
 <script>
 export default {
-  props: {
-    project: Object
-  }
+  name: 'ProjectCard',
+  props: { project: Object }
 }
 </script>
 
@@ -20,8 +19,10 @@ export default {
   border: 1px solid #ddd;
   padding: 1rem;
   border-radius: 6px;
+  width: 250px;
   transition: all 0.2s ease-in-out;
 }
+
 body.dark .project-card {
   background-color: #374151;
   border-color: #4b5563;
