@@ -1,75 +1,42 @@
-// backend/server.js
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const { Pool } = require('pg')
-const path = require('path')
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import sequelize from './config/db.js';
 
-// ----------------------
-// Sync language files automatically
-// ----------------------
-require('./i18nSync')
+// Import Routes
+import authRoutes from './routes/authRoutes.js';
+import projectRoutes from './routes/projectRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
+import teamRoutes from './routes/teamRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
-// ----------------------
-// Express setup
-// ----------------------
-const app = express()
-const PORT = process.env.PORT || 4000
+dotenv.config();
 
-app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+const app = express();
 
-// ----------------------
-// PostgreSQL database setup
-// ----------------------
-const pool = new Pool({
-  user: process.env.DB_USER || 'youkyouk_user',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'youkyouk_db',
-  password: process.env.DB_PASS || 'password',
-  port: process.env.DB_PORT || 5432
-})
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-pool.connect()
-  .then(() => console.log('🔹 Database connection successful'))
-  .catch(err => console.error('❌ Database connection error:', err))
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/teams', teamRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/notifications', notificationRoutes);
 
-// ----------------------
-// Test API routes
-// ----------------------
+// Test endpoint
 app.get('/', (req, res) => {
-  res.send('Youkyouk Server is running successfully! 🚀')
-})
+  res.send('Youkyouk Backend is running...');
+});
 
-app.get('/api/projects', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM projects LIMIT 10')
-    res.json(result.rows)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: 'Error fetching projects' })
-  }
-})
-
-app.get('/api/tasks', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM tasks LIMIT 10')
-    res.json(result.rows)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: 'Error fetching tasks' })
-  }
-})
-
-// ----------------------
-// Serve frontend static files
-// ----------------------
-app.use(express.static(path.join(__dirname, '../frontend')))
-
-// ----------------------
-// Start server
-// ----------------------
-app.listen(PORT, () => {
-  console.log(`🚀 Youkyouk Server is running on port: ${PORT}`)
-})
+// Start the server
+const PORT = process.env.PORT || 4000;
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connected.');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch(err => console.error('Database connection failed:', err));
