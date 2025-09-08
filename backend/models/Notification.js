@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
+import User from './User.js';
 
 const Notification = sequelize.define('Notification', {
   id: {
@@ -7,20 +8,22 @@ const Notification = sequelize.define('Notification', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  content: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  message: {
+    type: DataTypes.TEXT
   },
   read: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
-  },
-  userId: {
-    type: DataTypes.UUID,
-    allowNull: false
   }
 }, {
   timestamps: true
 });
+
+// Associations
+Notification.belongsTo(User, { foreignKey: 'userId' });
 
 export default Notification;
