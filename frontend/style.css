@@ -1,72 +1,51 @@
-/* ===== Body & Theme ===== */
-body.light { background: #f5f5f5; color: #333; }
-body.dark { background: #121212; color: #eee; }
-body { font-family: Arial, sans-serif; margin:0; padding:0; }
-
-/* ===== Header ===== */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: #007bff;
-  color: white;
+/*  */
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  font-family: 'Inter', sans-serif;
 }
-.header .logo { font-size: 1.5rem; font-weight: bold; }
-.header .search input { padding: 0.4rem; border-radius: 4px; border: none; }
-.header .actions select, .header .actions button { margin-left: 0.5rem; padding: 0.3rem 0.5rem; }
 
-/* ===== Sidebar ===== */
-.sidebar {
-  width: 220px;
-  background: #f0f0f0;
-  height: 100vh;
-  position: fixed;
-  padding: 1rem;
+/*  */
+body.dark {
+  background-color: #1f2937;
+  color: #f3f4f6;
 }
-.sidebar ul { list-style: none; padding: 0; }
-.sidebar ul li { margin-bottom: 1rem; }
-.sidebar ul li a { text-decoration: none; color: inherit; }
 
-/* ===== Main Content ===== */
-.main-content { margin-left: 240px; padding: 1rem; }
-
-/* ===== Cards ===== */
-.card {
+/*  */
+.project-card {
+  background-color: #ffffff;
   border: 1px solid #ddd;
-  border-radius: 6px;
   padding: 1rem;
-  margin-bottom: 1rem;
-  background: white;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
 }
-body.dark .card { background: #1e1e1e; border-color: #333; color: #eee; }
 
-/* ===== Tables ===== */
-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
-th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
-body.dark table, body.dark th, body.dark td { border-color: #333; }
+body.dark .project-card {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
 
-/* ===== Forms ===== */
-input, select, textarea { padding: 0.4rem; border-radius: 4px; border: 1px solid #ccc; }
-body.dark input, body.dark select, body.dark textarea { background: #2a2a2a; border-color: #555; color: #eee; }
+/* */
+.task-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border-radius: 6px;
+}
 
-/* ===== Buttons ===== */
+body.dark .task-card {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+/*  */
 button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  background: #007bff;
-  color: white;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
-button:hover { background: #0056b3; }
 
-/* ===== Notifications ===== */
-.notification { padding: 0.5rem 1rem; margin-bottom: 0.5rem; border-radius: 4px; background: #fffae6; border: 1px solid #ffe58f; }
-body.dark .notification { background: #3a3a3a; border-color: #999; color: #eee; }
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .sidebar { width: 60px; }
-  .main-content { margin-left: 70px; }
+button:hover {
+  opacity: 0.9;
 }
