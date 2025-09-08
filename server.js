@@ -1,24 +1,27 @@
 import express from 'express';
-import sequelize from './config/db.js';
-import User from './models/User.js';
+import { sequelize } from './config/db.js';
+import { User } from './models/User.js';
 
 const app = express();
 app.use(express.json());
 
-// Route example
+// Route test
 app.get('/', (req, res) => {
-  res.send('Youkyouk Backend is running!');
+  res.send('Backend is running!');
 });
 
-// Sync database and start server
+// Create a user
+app.post('/users', async (req, res) => {
+  try {
+    const user = await User.create(req.body);
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Sync database & start server
 const PORT = 4000;
-sequelize.sync({ force: false }) // force: false to avoid dropping tables
-  .then(() => {
-    console.log('Database synced');
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('Database sync error:', err);
-  });
+sequelize.sync().then(() => {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
