@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import sequelize from './config/db.js';
 
-// Import Routes
+// Routes
 import authRoutes from './routes/authRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
@@ -27,12 +27,12 @@ app.use('/api/teams', teamRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/notifications', notificationRoutes);
 
-// Test endpoint
+// Health check
 app.get('/', (req, res) => {
   res.send('Youkyouk Backend is running...');
 });
 
-// Start the server
+// Start server
 const PORT = process.env.PORT || 4000;
 sequelize.authenticate()
   .then(() => {
