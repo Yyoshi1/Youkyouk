@@ -1,28 +1,16 @@
 <template>
-  <div :class="{ dark: isDark }">
-    <Header @toggleTheme="toggleTheme"/>
-    <div class="flex">
-      <Sidebar/>
-      <main class="flex-1">
-        <router-view/>
-      </main>
-    </div>
-  </div>
+  <Dashboard/>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Sidebar from './components/Sidebar.vue'
+import Dashboard from './components/Dashboard.vue'
 
 export default {
-  components: { Header, Sidebar },
-  data() {
-    return { isDark: false }
-  },
-  methods: {
-    toggleTheme() {
-      this.isDark = !this.isDark
-    }
-  }
+  name: 'App',
+  components: { Dashboard }
 }
 </script>
+
+<style>
+/* Add any CSS here  */
+</style>
