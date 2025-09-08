@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Youkyouk Installer - Admin Setup</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    input { display: block; margin-bottom: 1rem; padding: 0.5rem; width: 300px; }
+    button { padding: 0.5rem 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Step 3: Admin Setup</h1>
+  <form id="adminForm">
+    <input type="email" name="email" placeholder="Admin Email" required>
+    <input type="password" name="password" placeholder="Admin Password" required>
+    <input type="text" name="workspace" placeholder="Workspace Name" required>
+    <button type="submit">Finish & Launch</button>
+  </form>
+
+  <script>
+    document.getElementById('adminForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const adminData = {
+        email: form.email.value,
+        password: form.password.value,
+        workspace: form.workspace.value
+      };
+
+      // Simulate creating admin and filling demo data
+      console.log('Creating admin:', adminData);
+      console.log('Seeding demo data...');
+
+      // Redirect to dashboard
+      window.location.href = '../frontend/index.html';
+    });
+  </script>
+</body>
+</html>
