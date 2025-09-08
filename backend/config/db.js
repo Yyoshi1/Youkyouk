@@ -1,7 +1,9 @@
 import { Sequelize } from "sequelize";
 
-export const sequelize = new Sequelize({
+const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "../data/youkyouk.db", // تأكد أن هاد المسار موجود
+  storage: "./youkyouk.db",
   logging: false
 });
+
+export default sequelize;
