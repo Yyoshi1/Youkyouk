@@ -21,14 +21,11 @@ import tr from './tr.json'
 import id from './id.json'
 import ms from './ms.json'
 
-// 
-const messages = {
-  en, fr, ar, es, de, it, pt, ru, zh, ja, ko, nl, sv, no, da, fi, pl, tr, id, ms
-}
+const messages = { en, fr, ar, es, de, it, pt, ru, zh, ja, ko, nl, sv, no, da, fi, pl, tr, id, ms }
 
 const i18n = createI18n({
-  locale: 'en', 
-  fallbackLocale: 'en', 
+  locale: 'en',
+  fallbackLocale: 'en',
   messages
 })
 
