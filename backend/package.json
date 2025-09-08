@@ -1,15 +1,15 @@
 {
   "name": "youkyouk-backend",
   "version": "1.0.0",
-  "type": "module",
+  "description": "Backend project for Youkyouk",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "sequelize": "^6.33.0",
-    "sqlite": "^4.2.1",
-    "sqlite3-promise": "^1.0.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "sequelize": "^6.32.1",
+    "sqlite3": "^5.1.6"
   }
 }
