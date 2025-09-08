@@ -1,17 +1,17 @@
-/* Light mode */
+/* Light Mode */
 body {
   background-color: #f9fafb;
   color: #111827;
   font-family: 'Inter', sans-serif;
 }
 
-/* Dark mode */
+/* Dark Mode */
 body.dark {
   background-color: #1f2937;
   color: #f3f4f6;
 }
 
-/* Project card */
+/* Project Card */
 .project-card {
   background-color: #ffffff;
   border: 1px solid #ddd;
@@ -26,7 +26,7 @@ body.dark .project-card {
   color: #f3f4f6;
 }
 
-/* Task card */
+/* Task Card */
 .task-card {
   background-color: #ffffff;
   border: 1px solid #ddd;
@@ -40,7 +40,7 @@ body.dark .task-card {
   color: #f3f4f6;
 }
 
-/* General buttons */
+/* Buttons */
 button {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
