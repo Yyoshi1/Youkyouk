@@ -1,17 +1,46 @@
-/*  */
+/* Light mode */
 body {
   background-color: #f9fafb;
   color: #111827;
   font-family: 'Inter', sans-serif;
 }
 
-/*  */
+/* Dark mode */
 body.dark {
   background-color: #1f2937;
   color: #f3f4f6;
 }
 
-/*  */
+/* Project card */
+.project-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+body.dark .project-card {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+/* Task card */
+.task-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border-radius: 6px;
+}
+
+body.dark .task-card {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+/* General buttons */
 button {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
