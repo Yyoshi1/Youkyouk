@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
+import Project from './Project.js';
+import User from './User.js';
 
 const Task = sequelize.define('Task', {
   id: {
@@ -12,15 +14,21 @@ const Task = sequelize.define('Task', {
     allowNull: false
   },
   description: {
-    type: DataTypes.TEXT,
-    allowNull: true
+    type: DataTypes.TEXT
   },
   status: {
-    type: DataTypes.ENUM('todo', 'in_progress', 'done'),
-    defaultValue: 'todo'
+    type: DataTypes.ENUM('Todo', 'InProgress', 'Done'),
+    defaultValue: 'Todo'
+  },
+  dueDate: {
+    type: DataTypes.DATE
   }
 }, {
   timestamps: true
 });
+
+// Associations
+Task.belongsTo(Project, { foreignKey: 'projectId' });
+Task.belongsTo(User, { as: 'assignee', foreignKey: 'assigneeId' });
 
 export default Task;
