@@ -5,10 +5,23 @@
       <input type="text" placeholder="Search..." class="search-input" />
     </div>
     <div class="header-right">
+      <!-- Language selector -->
+      <div class="language-selector">
+        <button @click="toggleLanguageMenu">{{ currentLanguage.toUpperCase() }} ⬇️</button>
+        <div v-if="showLanguageMenu" class="dropdown">
+          <ul>
+            <li v-for="lang in languages" :key="lang" @click="setLanguage(lang)">
+              {{ lang.toUpperCase() }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <button class="theme-toggle" @click="toggleTheme">
         <span v-if="isDark">🌙</span>
         <span v-else>☀️</span>
       </button>
+
       <div class="notifications">
         <button @click="toggleNotifications">
           🔔
@@ -20,6 +33,7 @@
           </ul>
         </div>
       </div>
+
       <div class="user-menu">
         <button @click="toggleUserMenu">
           <img :src="user.avatar" alt="User Avatar" class="avatar" />
@@ -38,6 +52,8 @@
 </template>
 
 <script>
+import i18n from '../languages/i18n.js'
+
 export default {
   name: 'YoukyoukHeader',
   data() {
@@ -53,7 +69,10 @@ export default {
       unreadCount: 2,
       showNotifications: false,
       showUserMenu: false,
-      isDark: false
+      isDark: false,
+      languages: Object.keys(i18n.global.messages),
+      currentLanguage: 'en',
+      showLanguageMenu: false
     }
   },
   methods: {
@@ -69,6 +88,14 @@ export default {
     },
     logout() {
       alert('Logging out...');
+    },
+    toggleLanguageMenu() {
+      this.showLanguageMenu = !this.showLanguageMenu;
+    },
+    setLanguage(lang) {
+      this.currentLanguage = lang;
+      i18n.global.locale = lang;
+      this.showLanguageMenu = false;
     }
   }
 }
@@ -110,6 +137,7 @@ body.dark .header {
   display: flex;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 
 button {
@@ -134,6 +162,7 @@ button {
   margin-top: 0.5rem;
   padding: 0.5rem 0;
   min-width: 160px;
+  z-index: 100;
 }
 
 body.dark .dropdown {
@@ -159,5 +188,10 @@ body.dark .dropdown {
 
 body.dark .dropdown li:hover {
   background-color: #4b5563;
+}
+
+/* Language selector */
+.language-selector {
+  position: relative;
 }
 </style>
