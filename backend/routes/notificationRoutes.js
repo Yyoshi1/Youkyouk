@@ -1,8 +1,12 @@
 import express from 'express';
-import { getNotifications } from '../controllers/notificationController.js';
+import Notification from '../models/Notification.js';
 
 const router = express.Router();
 
-router.get('/', getNotifications);
+// 
+router.get('/', async (req, res) => {
+  const notifications = await Notification.findAll();
+  res.json(notifications);
+});
 
 export default router;
