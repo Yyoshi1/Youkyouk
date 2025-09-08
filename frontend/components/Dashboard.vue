@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard" :class="{ dark: isDark }">
-    <Header :isDark="isDark"/>
+  <div class="dashboard">
+    <Header :isDark="isDark" @toggle-dark="toggleDark"/>
     <div class="main-content">
       <Sidebar :isDark="isDark"/>
       <div class="content">
@@ -20,7 +20,6 @@ import ProjectCard from './ProjectCard.vue'
 import TaskCard from './TaskCard.vue'
 
 export default {
-  name: 'Dashboard',
   components: { Sidebar, Header, ProjectCard, TaskCard },
   data() {
     return {
@@ -33,6 +32,11 @@ export default {
         { id: 1, title: 'Task 1', description: 'Task 1 description' },
         { id: 2, title: 'Task 2', description: 'Task 2 description' }
       ]
+    }
+  },
+  methods: {
+    toggleDark() {
+      this.isDark = !this.isDark
     }
   }
 }
