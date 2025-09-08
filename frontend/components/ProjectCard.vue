@@ -1,16 +1,17 @@
 <template>
   <div class="project-card">
-    <h3>{{ project.name }}</h3>
-    <p>{{ project.description }}</p>
-    <span>Team: {{ project.teamName }}</span>
+    <h3 class="font-semibold text-lg">{{ project.name }}</h3>
+    <p class="text-gray-600 dark:text-gray-300">{{ project.description }}</p>
+    <span class="text-sm text-gray-500 dark:text-gray-400">Team: {{ project.teamName }}</span>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProjectCard',
-  props: { project: Object }
-}
+<script setup>
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  project: Object
+})
 </script>
 
 <style scoped>
@@ -19,10 +20,8 @@ export default {
   border: 1px solid #ddd;
   padding: 1rem;
   border-radius: 6px;
-  width: 250px;
   transition: all 0.2s ease-in-out;
 }
-
 body.dark .project-card {
   background-color: #374151;
   border-color: #4b5563;
