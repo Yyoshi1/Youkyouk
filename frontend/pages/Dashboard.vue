@@ -1,24 +1,37 @@
 <template>
-  <div class="dashboard p-6">
-    <h2 class="text-2xl font-bold mb-4">Dashboard</h2>
-    <div class="grid grid-cols-3 gap-4">
-      <ProjectCard v-for="project in projects" :key="project.id" :project="project"/>
+  <div class="dashboard-page">
+    <h1>Dashboard</h1>
+    <div class="stats-cards">
+      <div class="card">Total Projects: 2</div>
+      <div class="card">Total Tasks: 2</div>
+      <div class="card">Team Members: 2</div>
     </div>
   </div>
 </template>
 
 <script>
-import ProjectCard from '../components/ProjectCard.vue'
-
 export default {
-  components: { ProjectCard },
-  data() {
-    return {
-      projects: [
-        { id: 1, name: 'Project Alpha', description: 'Description Alpha', teamName: 'Team A' },
-        { id: 2, name: 'Project Beta', description: 'Description Beta', teamName: 'Team B' }
-      ]
-    }
-  }
+  name: 'DashboardPage'
 }
 </script>
+
+<style scoped>
+.dashboard-page {
+  padding: 2rem;
+}
+.stats-cards {
+  display: flex;
+  gap: 1rem;
+}
+.card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+body.dark .card {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+</style>
