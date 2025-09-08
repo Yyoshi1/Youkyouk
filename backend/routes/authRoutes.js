@@ -1,14 +1,9 @@
 import express from 'express';
-import User from '../models/User.js';
+import { registerUser, loginUser } from '../controllers/authController.js';
 
 const router = express.Router();
 
-// 
-router.post('/login', async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ where: { email } });
-  if (!user) return res.status(404).json({ message: 'User not found' });
-  res.json({ message: 'Login successful', user });
-});
+router.post('/register', registerUser);
+router.post('/login', loginUser);
 
 export default router;
