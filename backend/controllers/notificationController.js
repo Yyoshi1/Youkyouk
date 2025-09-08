@@ -1,10 +1,27 @@
-import Notification from '../models/Notification.js';
+// إنشاء إشعار جديد
+export const createNotification = (req, res) => {
+  res.json({ message: "Notification created successfully" });
+};
 
-export const getNotifications = async (req, res) => {
-  try {
-    const notifications = await Notification.findAll();
-    res.json(notifications);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// جلب جميع الإشعارات
+export const getNotifications = (req, res) => {
+  res.json([{ id: 1, message: "Welcome notification" }]);
+};
+
+// جلب إشعار واحد بالـ ID
+export const getNotificationById = (req, res) => {
+  const { id } = req.params;
+  res.json({ id, message: `Notification with ID ${id}` });
+};
+
+// تحديث إشعار
+export const updateNotification = (req, res) => {
+  const { id } = req.params;
+  res.json({ id, message: `Notification ${id} updated` });
+};
+
+// حذف إشعار
+export const deleteNotification = (req, res) => {
+  const { id } = req.params;
+  res.json({ id, message: `Notification ${id} deleted` });
 };
