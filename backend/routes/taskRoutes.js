@@ -1,9 +1,12 @@
 import express from 'express';
-import { getTasks, createTask } from '../controllers/taskController.js';
+import Task from '../models/Task.js';
 
 const router = express.Router();
 
-router.get('/', getTasks);
-router.post('/', createTask);
+// 
+router.get('/', async (req, res) => {
+  const tasks = await Task.findAll();
+  res.json(tasks);
+});
 
 export default router;
