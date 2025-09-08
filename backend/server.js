@@ -1,23 +1,15 @@
-import sequelize from './config/db.js';
-import User from './models/User.js';
-import Product from './models/Product.js';
+import { sequelize } from './config/db.js';
+import Task from './models/Task.js';
 
 const startServer = async () => {
   try {
-    await sequelize.sync({ force: false }); // إنشاء الجداول إذا ماكانوش موجودين
-    console.log("Database synced successfully ✅");
+    await sequelize.sync(); // هذا غادي ينشئ الجدول إلا ما كانش موجود
+    console.log('Database synced.');
 
-    // مثال: إضافة مستخدم
-    const user = await User.create({
-      name: "Karim",
-      email: "karim@example.com",
-      password: "123456"
-    });
-
-    console.log("User created:", user.toJSON());
-
+    // هنا كود بدء السيرفر
+    console.log('Server running...');
   } catch (error) {
-    console.error("Error starting server:", error);
+    console.error('Error syncing database:', error);
   }
 };
 
