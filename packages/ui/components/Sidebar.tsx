@@ -1,64 +1,86 @@
+// packages/ui/components/Sidebar.tsx
 import React from "react";
 import {
-  InboxIcon, IssuesIcon, PulseIcon, WorkspaceIcon,
-  InitiativesIcon, ProjectsIcon, ViewsIcon, MembersIcon,
-  TeamsIcon, FavoritesIcon, YourTeamIcon
-} from "../icons/Icons";
+  InboxIcon,
+  IssuesIcon,
+  PulseIcon,
+  WorkspaceIcon,
+  InitiativesIcon,
+  ProjectsIcon,
+  ViewsIcon,
+  MembersIcon,
+  TeamsIcon,
+  FavoritesIcon,
+  YourTeamIcon,
+} from "../icons/sidebar";
 
-interface SidebarItem {
-  title: string;
-  icon: React.FC<{ className?: string }>;
-  subItems?: SidebarItem[];
-}
+export const Sidebar: React.FC = () => {
+  return (
+    <aside className="w-64 bg-white dark:bg-gray-900 h-screen shadow flex flex-col p-4 space-y-4">
+      {/* Top Sections */}
+      <div className="space-y-2">
+        <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+          <InboxIcon className="w-5 h-5" />
+          <span>Inbox</span>
+        </div>
+        <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+          <IssuesIcon className="w-5 h-5" />
+          <span>My Issues</span>
+        </div>
+        <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+          <PulseIcon className="w-5 h-5" />
+          <span>Pulse</span>
+        </div>
+      </div>
 
-const sidebarItems: SidebarItem[] = [
-  { title: "Inbox", icon: InboxIcon },
-  { title: "My Issues", icon: IssuesIcon },
-  { title: "Pulse", icon: PulseIcon },
-  {
-    title: "Workspace",
-    icon: WorkspaceIcon,
-    subItems: [
-      { title: "Initiatives", icon: InitiativesIcon },
-      { title: "Projects", icon: ProjectsIcon },
-      { title: "Views", icon: ViewsIcon },
-      { title: "Members", icon: MembersIcon },
-      { title: "Teams", icon: TeamsIcon },
-    ],
-  },
-  { title: "Favorites", icon: FavoritesIcon },
-  {
-    title: "Your Teams",
-    icon: YourTeamIcon,
-    subItems: [
-      { title: "Issues", icon: IssuesIcon },
-      { title: "Projects", icon: ProjectsIcon },
-      { title: "Views", icon: ViewsIcon },
-    ],
-  },
-];
-
-export const Sidebar: React.FC = () => (
-  <aside className="w-64 bg-white dark:bg-gray-800 shadow flex-shrink-0 h-screen overflow-auto">
-    <ul className="p-4 space-y-2">
-      {sidebarItems.map((item, idx) => (
-        <li key={idx}>
-          <div className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-            <item.icon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-            <span className="text-gray-900 dark:text-white font-medium">{item.title}</span>
+      {/* Workspace Section */}
+      <div className="mt-4">
+        <div className="text-xs uppercase text-gray-400 dark:text-gray-500 px-2 mb-1">Workspace</div>
+        <div className="space-y-1">
+          <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+            <WorkspaceIcon className="w-5 h-5" />
+            <span>Workspace</span>
           </div>
-          {item.subItems && (
-            <ul className="pl-6 mt-1 space-y-1">
-              {item.subItems.map((sub, subIdx) => (
-                <li key={subIdx} className="flex items-center space-x-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                  <sub.icon className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                  <span className="text-gray-800 dark:text-gray-200">{sub.title}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </li>
-      ))}
-    </ul>
-  </aside>
-);
+          <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+            <InitiativesIcon className="w-5 h-5" />
+            <span>Initiatives</span>
+          </div>
+          <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+            <ProjectsIcon className="w-5 h-5" />
+            <span>Projects</span>
+          </div>
+          <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+            <ViewsIcon className="w-5 h-5" />
+            <span>Views</span>
+          </div>
+          <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+            <MembersIcon className="w-5 h-5" />
+            <span>Members</span>
+          </div>
+          <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+            <TeamsIcon className="w-5 h-5" />
+            <span>Teams</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Favorites Section */}
+      <div className="mt-4">
+        <div className="text-xs uppercase text-gray-400 dark:text-gray-500 px-2 mb-1">Favorites</div>
+        <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+          <FavoritesIcon className="w-5 h-5" />
+          <span>Favorites</span>
+        </div>
+      </div>
+
+      {/* Your Teams Section */}
+      <div className="mt-4">
+        <div className="text-xs uppercase text-gray-400 dark:text-gray-500 px-2 mb-1">Your Team</div>
+        <div className="flex items-center space-x-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded cursor-pointer">
+          <YourTeamIcon className="w-5 h-5" />
+          <span>Team Name</span>
+        </div>
+      </div>
+    </aside>
+  );
+};
