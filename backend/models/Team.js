@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
+import User from './User.js';
 
 const Team = sequelize.define('Team', {
   id: {
@@ -12,11 +13,13 @@ const Team = sequelize.define('Team', {
     allowNull: false
   },
   description: {
-    type: DataTypes.TEXT,
-    allowNull: true
+    type: DataTypes.TEXT
   }
 }, {
   timestamps: true
 });
+
+// Associations
+Team.hasMany(User, { as: 'members', foreignKey: 'teamId' });
 
 export default Team;
