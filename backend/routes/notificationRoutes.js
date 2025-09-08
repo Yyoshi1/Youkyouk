@@ -1,18 +1,16 @@
-import express from 'express';
+// backend/routes/notificationRoutes.js
+import express from "express";
 import {
-  getAllNotifications,
+  getNotifications,
   getNotificationById,
-  createNotification,
-  updateNotification,
-  deleteNotification
-} from '../controllers/notificationController.js';
+} from "../controllers/notificationController.js";
 
 const router = express.Router();
 
-router.get('/', getAllNotifications);
-router.get('/:id', getNotificationById);
-router.post('/', createNotification);
-router.put('/:id', updateNotification);
-router.delete('/:id', deleteNotification);
+// جلب جميع الإشعارات
+router.get("/", getNotifications);
+
+// جلب إشعار واحد بالـ ID
+router.get("/:id", getNotificationById);
 
 export default router;
