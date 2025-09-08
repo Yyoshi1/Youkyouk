@@ -1,22 +1,13 @@
 <template>
-  <header :class="['header', { dark: isDark }]">
-    <div class="left">
-      <h1>{{ $t('welcome') }}</h1>
-    </div>
-    <div class="right">
-      <span>{{ $t('notifications') }}</span>
-      <button>{{ $t('profile') }}</button>
-      <button>{{ $t('logout') }}</button>
-    </div>
+  <header class="header">
+    <h1>Youkyouk Dashboard</h1>
+    <button @click="$emit('toggle-dark')">{{ isDark ? 'Light' : 'Dark' }}</button>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'Header',
-  props: {
-    isDark: Boolean
-  }
+  props: { isDark: Boolean }
 }
 </script>
 
@@ -24,16 +15,15 @@ export default {
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
-  background-color: #f9fafb;
+  align-items: center;
+  padding: 1rem;
   border-bottom: 1px solid #ddd;
+  background-color: #fff;
 }
-.header.dark {
-  background-color: #111827;
+
+body.dark .header {
+  background-color: #374151;
+  border-color: #4b5563;
   color: #f3f4f6;
-}
-.header button {
-  margin-left: 1rem;
-  cursor: pointer;
 }
 </style>
