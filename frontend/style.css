@@ -1,60 +1,72 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f6f8;
-}
+/* ===== Body & Theme ===== */
+body.light { background: #f5f5f5; color: #333; }
+body.dark { background: #121212; color: #eee; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; }
 
-#app {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "aside main";
-  grid-template-columns: 250px 1fr;
-  grid-template-rows: 60px 1fr;
-  height: 100vh;
-}
-
-header {
-  grid-area: header;
-  background-color: #007BFF;
-  color: #fff;
+/* ===== Header ===== */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 1rem;
+  background: #007bff;
+  color: white;
 }
+.header .logo { font-size: 1.5rem; font-weight: bold; }
+.header .search input { padding: 0.4rem; border-radius: 4px; border: none; }
+.header .actions select, .header .actions button { margin-left: 0.5rem; padding: 0.3rem 0.5rem; }
 
-aside {
-  grid-area: aside;
-  background-color: #fff;
-  border-right: 1px solid #ddd;
-}
-
+/* ===== Sidebar ===== */
 .sidebar {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  width: 220px;
+  background: #f0f0f0;
+  height: 100vh;
+  position: fixed;
+  padding: 1rem;
 }
+.sidebar ul { list-style: none; padding: 0; }
+.sidebar ul li { margin-bottom: 1rem; }
+.sidebar ul li a { text-decoration: none; color: inherit; }
 
-.sidebar li a {
-  display: block;
-  padding: 12px 20px;
-  text-decoration: none;
-  color: #333;
+/* ===== Main Content ===== */
+.main-content { margin-left: 240px; padding: 1rem; }
+
+/* ===== Cards ===== */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: white;
 }
+body.dark .card { background: #1e1e1e; border-color: #333; color: #eee; }
 
-.sidebar li a:hover {
-  background-color: #007BFF;
-  color: #fff;
-}
+/* ===== Tables ===== */
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+body.dark table, body.dark th, body.dark td { border-color: #333; }
 
-main {
-  grid-area: main;
-  padding: 20px;
-  overflow-y: auto;
-}
+/* ===== Forms ===== */
+input, select, textarea { padding: 0.4rem; border-radius: 4px; border: 1px solid #ccc; }
+body.dark input, body.dark select, body.dark textarea { background: #2a2a2a; border-color: #555; color: #eee; }
 
-.user-menu {
+/* ===== Buttons ===== */
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: white;
   cursor: pointer;
+}
+button:hover { background: #0056b3; }
+
+/* ===== Notifications ===== */
+.notification { padding: 0.5rem 1rem; margin-bottom: 0.5rem; border-radius: 4px; background: #fffae6; border: 1px solid #ffe58f; }
+body.dark .notification { background: #3a3a3a; border-color: #999; color: #eee; }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .sidebar { width: 60px; }
+  .main-content { margin-left: 70px; }
 }
