@@ -1,66 +1,62 @@
 // packages/ui/components/Header.tsx
 import React, { useState } from "react";
 import { QuickSearchIcon, NotificationIcon, SettingsIcon, UserIcon } from "../icons/header";
+import Link from "next/link";
 
 export const Header: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [workspaceOpen, setWorkspaceOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   return (
-    <header className="flex items-center justify-between bg-white dark:bg-gray-900 p-4 shadow">
-      {/* Left: Logo */}
-      <div className="flex items-center space-x-2 cursor-pointer">
-        <img src="/logo.png" alt="Youkyouk Logo" className="w-8 h-8" />
-        <span className="font-semibold text-lg text-gray-900 dark:text-white">Youkyouk</span>
-      </div>
-
-      {/* Center: Quick Search */}
-      <div className="flex-1 mx-4">
-        <div className="relative w-full max-w-md">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full px-10 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-          />
-          <QuickSearchIcon className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
+    <header className="flex items-center justify-between bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-4">
+      {/* Left: Workspace Logo */}
+      <div className="flex items-center">
+        <div
+          className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded cursor-pointer flex items-center justify-center mr-4"
+          onClick={() => setWorkspaceOpen(!workspaceOpen)}
+        >
+          <span className="font-bold text-gray-700 dark:text-gray-200">Y</span>
         </div>
+
+        {workspaceOpen && (
+          <div className="absolute top-16 left-4 bg-white dark:bg-gray-800 shadow rounded p-4 z-50 w-64">
+            <ul className="space-y-2 text-gray-900 dark:text-white">
+              <li>
+                <Link href="/admin/settings">Settings</Link>
+              </li>
+              <li>
+                <Link href="/invite">Invite Members</Link>
+              </li>
+              <li>
+                <Link href="/workspace/switch">Switch Workspace</Link>
+              </li>
+              <li>
+                <Link href="/logout">Logout</Link>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
 
-      {/* Right: Icons */}
+      {/* Right: Actions */}
       <div className="flex items-center space-x-4">
-        <button>
-          <NotificationIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-        </button>
-
-        <button>
-          <SettingsIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-        </button>
-
-        {/* Workspace/User Dropdown */}
         <div className="relative">
-          <img
-            src="/workspace.png"
-            alt="Workspace"
-            className="w-8 h-8 rounded cursor-pointer"
-            onClick={() => setMenuOpen(!menuOpen)}
-          />
-          {menuOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border rounded shadow-lg z-10">
-              <ul>
-                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                  Settings
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                  Invite / Manage Members
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                  Switch Workspace
-                </li>
-                <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer text-red-500">
-                  Logout
-                </li>
-              </ul>
-            </div>
-          )}
+          <QuickSearchIcon className="w-6 h-6 text-gray-600 dark:text-gray-300 cursor-pointer" />
+        </div>
+
+        <div className="relative">
+          <NotificationIcon className="w-6 h-6 text-gray-600 dark:text-gray-300 cursor-pointer" />
+        </div>
+
+        <button
+          className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+          onClick={() => setDarkMode(!darkMode)}
+        >
+          {darkMode ? "☀️" : "🌙"}
+        </button>
+
+        <div className="relative">
+          <UserIcon className="w-6 h-6 text-gray-600 dark:text-gray-300 cursor-pointer" />
         </div>
       </div>
     </header>
