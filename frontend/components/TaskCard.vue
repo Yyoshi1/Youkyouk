@@ -1,15 +1,31 @@
 <template>
-  <div class="task-card border p-3 rounded shadow hover:shadow-md transition">
-    <h4 class="font-medium">{{ task.title }}</h4>
-    <p class="text-gray-600 dark:text-gray-300">{{ task.description }}</p>
-    <span class="text-sm text-gray-500 dark:text-gray-400">Status: {{ task.status }}</span>
+  <div class="task-card" :class="{ dark: isDark }">
+    <h4>{{ task.title }}</h4>
+    <p>{{ task.description }}</p>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'TaskCard',
   props: {
-    task: Object
+    task: Object,
+    isDark: Boolean
   }
 }
 </script>
+
+<style scoped>
+.task-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+.task-card.dark {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+</style>
