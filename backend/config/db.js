@@ -1,8 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize({
+export default new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite' // أو أي مسار بغيت للـ SQLite
+  storage: './database.sqlite'
 });
-
-export default sequelize;
