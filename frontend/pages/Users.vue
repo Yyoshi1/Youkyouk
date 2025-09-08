@@ -3,7 +3,7 @@
     <h1>Users</h1>
     <ul>
       <li v-for="user in users" :key="user.id">
-        {{ user.name }} - Role: {{ user.role }}
+        {{ user.name }} ({{ user.role }}) - {{ user.email }}
       </li>
     </ul>
   </div>
@@ -11,13 +11,12 @@
 
 <script>
 export default {
-  name: 'Users',
+  name: 'UsersPage',
   data() {
     return {
       users: [
-        { id: 1, name: 'Alice', role: 'Admin' },
-        { id: 2, name: 'Bob', role: 'Member' },
-        { id: 3, name: 'Charlie', role: 'Guest' }
+        { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+        { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Member' }
       ]
     }
   }
@@ -26,11 +25,6 @@ export default {
 
 <style scoped>
 .users-page {
-  padding: 1rem;
-}
-
-body.dark .users-page {
-  background-color: #1f2937;
-  color: #f3f4f6;
+  padding: 2rem;
 }
 </style>
