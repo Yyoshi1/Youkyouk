@@ -2,19 +2,11 @@ import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';
 
 const Team = sequelize.define('Team', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  }
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false }
+}, {
+  tableName: 'teams',
+  timestamps: true
 });
 
 export default Team;
