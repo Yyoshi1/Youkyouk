@@ -1,31 +1,31 @@
 // backend/controllers/notificationController.js
 
-// إرجاع جميع الإشعارات
+// جلب جميع الإشعارات
 export const getNotifications = (req, res) => {
-  const notifications = [
-    { id: 1, title: "Bienvenue!", message: "Votre compte est activé." },
-    { id: 2, title: "Promo", message: "Réduction spéciale aujourd’hui." },
-    { id: 3, title: "Info", message: "Nouvelle fonctionnalité disponible." },
-  ];
-
-  res.json(notifications);
+  res.json([{ id: 1, message: "Welcome to Youkyouk Notifications" }]);
 };
 
-// إرجاع إشعار واحد بالـ ID
+// جلب إشعار واحد بالـ ID
 export const getNotificationById = (req, res) => {
   const { id } = req.params;
+  res.json({ id, message: `Notification ${id}` });
+};
 
-  const notifications = [
-    { id: 1, title: "Bienvenue!", message: "Votre compte est activé." },
-    { id: 2, title: "Promo", message: "Réduction spéciale aujourd’hui." },
-    { id: 3, title: "Info", message: "Nouvelle fonctionnalité disponible." },
-  ];
+// إنشاء إشعار جديد
+export const createNotification = (req, res) => {
+  const { message } = req.body;
+  res.status(201).json({ id: Date.now(), message });
+};
 
-  const notif = notifications.find((n) => n.id === parseInt(id));
+// تحديث إشعار
+export const updateNotification = (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+  res.json({ id, message });
+};
 
-  if (!notif) {
-    return res.status(404).json({ error: "Notification introuvable" });
-  }
-
-  res.json(notif);
+// حذف إشعار
+export const deleteNotification = (req, res) => {
+  const { id } = req.params;
+  res.json({ message: `Notification ${id} deleted` });
 };
