@@ -1,22 +1,20 @@
 <template>
-  <div class="users-page">
+  <div class="users">
     <h1>Users</h1>
     <ul>
-      <li v-for="user in users" :key="user.id">
-        {{ user.name }} ({{ user.role }}) - {{ user.email }}
-      </li>
+      <li v-for="user in users" :key="user.id">{{ user.name }} ({{ user.role }})</li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'UsersPage',
+  name: 'Users',
   data() {
     return {
       users: [
-        { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
-        { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Member' }
+        { id: 1, name: 'John Doe', role: 'Admin' },
+        { id: 2, name: 'Jane Smith', role: 'Member' }
       ]
     }
   }
@@ -24,7 +22,7 @@ export default {
 </script>
 
 <style scoped>
-.users-page {
-  padding: 2rem;
+.users {
+  padding: 1rem;
 }
 </style>
