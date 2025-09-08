@@ -1,49 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Youkyouk Installer</title>
+<meta charset="UTF-8">
+<title>Youkyouk Installation - Admin Setup</title>
 </head>
 <body>
-  <h1>Youkyouk Installation</h1>
-
-  <h2>Step 1: Check Requirements</h2>
-  <p>Node.js, PostgreSQL required.</p>
-
-  <h2>Step 2: Database Configuration</h2>
-  <form id="dbForm">
-    <label>DB Host:</label>
-    <input type="text" name="host" value="localhost" required /><br/>
-    <label>DB User:</label>
-    <input type="text" name="user" required /><br/>
-    <label>DB Password:</label>
-    <input type="password" name="password" required /><br/>
-    <label>DB Name:</label>
-    <input type="text" name="database" value="youkyouk_db" required /><br/>
-    <button type="submit">Next</button>
-  </form>
-
-  <h2>Step 3: Admin Account</h2>
-  <form id="adminForm">
-    <label>Email:</label>
-    <input type="email" name="email" required /><br/>
-    <label>Password:</label>
-    <input type="password" name="password" required /><br/>
-    <label>Workspace Name:</label>
-    <input type="text" name="workspace" required /><br/>
-    <button type="submit">Finish Installation</button>
-  </form>
-
-  <script>
-    document.getElementById('dbForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert('Database info saved (mock)');
-    });
-
-    document.getElementById('adminForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert('Admin account created (mock)');
-      window.location.href = '/frontend/pages/dashboard.html';
-    });
-  </script>
+<h1>Create Admin Account</h1>
+<form id="adminForm">
+  <label>Email: <input type="email" name="email" value="admin@example.com"></label><br>
+  <label>Password: <input type="password" name="password" value="123456"></label><br>
+  <label>Workspace Name: <input type="text" name="workspace" value="Youkyouk Workspace"></label><br>
+  <button type="submit">Finish Installation</button>
+</form>
+<script>
+document.getElementById('adminForm').onsubmit = function(e){
+  e.preventDefault();
+  alert('Installation Complete! You can now login.');
+  window.location.href = '../frontend/index.html';
+};
+</script>
 </body>
 </html>
