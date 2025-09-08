@@ -1,40 +1,42 @@
 <template>
   <aside class="sidebar">
     <ul>
-      <li>{{ $t('dashboard') }}</li>
-      <li>{{ $t('projects') }}</li>
-      <li>{{ $t('tasks') }}</li>
-      <li>{{ $t('teams') }}</li>
-      <li>{{ $t('users') }}</li>
-      <li>{{ $t('reports') }}</li>
-      <li>{{ $t('settings') }}</li>
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/tasks">Tasks</a></li>
+      <li><a href="/teams">Teams</a></li>
+      <li><a href="/reports">Reports</a></li>
+      <li><a href="/settings">Settings</a></li>
     </ul>
   </aside>
 </template>
 
 <script>
 export default {
-  props: { isDark: Boolean }
+  name: 'Sidebar'
 }
 </script>
 
 <style scoped>
 .sidebar {
   width: 250px;
-  padding: 1rem;
+  height: 100vh;
   background-color: #f3f4f6;
+  padding: 1rem;
 }
-
 body.dark .sidebar {
-  background-color: #1f2937;
+  background-color: #111827;
   color: #f3f4f6;
 }
 .sidebar ul {
   list-style: none;
   padding: 0;
 }
-.sidebar li {
-  margin: 1rem 0;
-  cursor: pointer;
+.sidebar ul li {
+  margin-bottom: 1rem;
+}
+.sidebar ul li a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>
