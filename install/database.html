@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Youkyouk Installation - Database</title>
+  <meta charset="UTF-8">
+  <title>Youkyouk Installer - Database Setup</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    input { display: block; margin-bottom: 1rem; padding: 0.5rem; width: 300px; }
+    button { padding: 0.5rem 1rem; }
+  </style>
 </head>
 <body>
-<h1>Database Setup</h1>
-<form id="dbForm">
-  <label>Database Host: <input type="text" name="host" value="localhost"></label><br>
-  <label>Database Port: <input type="number" name="port" value="5432"></label><br>
-  <label>Database Name: <input type="text" name="dbname" value="youkyouk_db"></label><br>
-  <label>User: <input type="text" name="user" value="postgres"></label><br>
-  <label>Password: <input type="password" name="password"></label><br>
-  <button type="submit">Next</button>
-</form>
-<script>
-document.getElementById('dbForm').onsubmit = function(e){
-  e.preventDefault();
-  window.location.href = 'setup.html';
-};
-</script>
+  <h1>Step 2: Database Setup</h1>
+  <form id="dbForm">
+    <input type="text" name="host" placeholder="Database Host (localhost)" required>
+    <input type="number" name="port" placeholder="Database Port (5432)" required>
+    <input type="text" name="name" placeholder="Database Name" required>
+    <input type="text" name="user" placeholder="Database User" required>
+    <input type="password" name="password" placeholder="Database Password" required>
+    <button type="submit">Save & Continue</button>
+  </form>
+
+  <script>
+    document.getElementById('dbForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        host: form.host.value,
+        port: form.port.value,
+        name: form.name.value,
+        user: form.user.value,
+        password: form.password.value
+      };
+
+      // Simulate writing .env file
+      console.log('Saving .env:', data);
+
+      // Redirect to admin setup
+      window.location.href = 'admin.html';
+    });
+  </script>
 </body>
 </html>
