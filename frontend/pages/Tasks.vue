@@ -1,24 +1,37 @@
 <template>
-  <div class="tasks p-6">
-    <h2 class="text-2xl font-bold mb-4">Tasks</h2>
-    <div class="grid grid-cols-2 gap-4">
-      <TaskCard v-for="task in tasks" :key="task.id" :task="task"/>
+  <div class="tasks-page">
+    <h1>Tasks</h1>
+    <div class="tasks-list">
+      <div class="task-card" v-for="task in tasks" :key="task.id">
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.description }}</p>
+        <span>Status: {{ task.status }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import TaskCard from '../components/TaskCard.vue'
-
 export default {
-  components: { TaskCard },
+  name: 'TasksPage',
   data() {
     return {
       tasks: [
-        { id: 1, title: 'Task One', description: 'Description One', status: 'Pending' },
-        { id: 2, title: 'Task Two', description: 'Description Two', status: 'Completed' }
+        { id: 1, title: 'Setup Backend', description: 'Initialize server and database', status: 'Pending' },
+        { id: 2, title: 'Design UI', description: 'Create frontend layout', status: 'In Progress' }
       ]
     }
   }
 }
 </script>
+
+<style scoped>
+.tasks-page {
+  padding: 2rem;
+}
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+</style>
