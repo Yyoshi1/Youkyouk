@@ -1,16 +1,28 @@
 {
-  "dashboard": "Dashboard",
-  "projects": "Projects",
-  "tasks": "Tasks",
-  "teams": "Teams",
-  "users": "Users",
-  "roles": "Roles",
-  "reports": "Reports",
-  "settings": "Settings",
-  "notifications": "Notifications",
-  "welcome": "Welcome to Youkyouk",
-  "newProject": "New Project",
-  "newTask": "New Task",
-  "profile": "Profile",
-  "logout": "Logout"
+  "header": {
+    "searchPlaceholder": "Search...",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "welcome": "Welcome to Youkyouk!",
+    "projects": "Projects",
+    "tasks": "Tasks",
+    "teams": "Teams",
+    "users": "Users",
+    "reports": "Reports",
+    "roles": "Roles",
+    "settings": "Settings"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read"
+  },
+  "install": {
+    "requirements": "Requirements",
+    "database": "Database",
+    "user": "User Info",
+    "finish": "Finish"
+  }
 }
