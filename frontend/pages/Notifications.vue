@@ -2,9 +2,7 @@
   <div class="notifications-page">
     <h1>Notifications</h1>
     <ul>
-      <li v-for="note in notifications" :key="note.id">
-        {{ note.message }}
-      </li>
+      <li v-for="note in notifications" :key="note.id">{{ note.message }}</li>
     </ul>
   </div>
 </template>
@@ -25,6 +23,6 @@ export default {
 
 <style scoped>
 .notifications-page {
-  padding: 2rem;
+  padding: 1rem;
 }
 </style>
