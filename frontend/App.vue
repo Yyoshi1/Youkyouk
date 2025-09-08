@@ -1,16 +1,26 @@
 <template>
-  <Dashboard/>
+  <div :class="{ dark: isDarkMode }">
+    <Header @toggle-dark="toggleDarkMode"/>
+    <Sidebar />
+    <router-view />
+  </div>
 </template>
 
 <script>
-import Dashboard from './components/Dashboard.vue'
+import Header from './components/Header.vue'
+import Sidebar from './components/Sidebar.vue'
 
 export default {
-  name: 'App',
-  components: { Dashboard }
+  components: { Header, Sidebar },
+  data() {
+    return { isDarkMode: false }
+  },
+  methods: {
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode
+    }
+  }
 }
 </script>
 
-<style>
-/* Add any CSS here  */
-</style>
+<style src="./style.css"></style>
