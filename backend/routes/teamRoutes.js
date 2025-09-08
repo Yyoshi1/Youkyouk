@@ -1,12 +1,18 @@
 import express from 'express';
-import Team from '../models/Team.js';
+import {
+  getAllTeams,
+  getTeamById,
+  createTeam,
+  updateTeam,
+  deleteTeam
+} from '../controllers/teamController.js';
 
 const router = express.Router();
 
-// 
-router.get('/', async (req, res) => {
-  const teams = await Team.findAll();
-  res.json(teams);
-});
+router.get('/', getAllTeams);
+router.get('/:id', getTeamById);
+router.post('/', createTeam);
+router.put('/:id', updateTeam);
+router.delete('/:id', deleteTeam);
 
 export default router;
