@@ -1,17 +1,18 @@
 <template>
   <div class="task-card">
-    <h4 class="font-medium">{{ task.title }}</h4>
-    <p class="text-gray-600 dark:text-gray-300">{{ task.description }}</p>
-    <span class="text-sm text-gray-500 dark:text-gray-400">Project: {{ task.projectName }}</span>
+    <h4>{{ task.title }}</h4>
+    <p>{{ task.description }}</p>
+    <small>Status: {{ task.status }}</small>
   </div>
 </template>
 
-<script setup>
-import { defineProps } from 'vue'
-
-const props = defineProps({
-  task: Object
-})
+<script>
+export default {
+  name: 'TaskCard',
+  props: {
+    task: Object
+  }
+}
 </script>
 
 <style scoped>
@@ -20,8 +21,8 @@ const props = defineProps({
   border: 1px solid #ddd;
   padding: 0.75rem;
   border-radius: 6px;
-  transition: all 0.2s ease-in-out;
 }
+
 body.dark .task-card {
   background-color: #374151;
   border-color: #4b5563;
