@@ -1,50 +1,30 @@
 <template>
-  <aside class="sidebar">
-    <nav>
-      <ul>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/tasks">Tasks</a></li>
-        <li><a href="/teams">Teams</a></li>
-        <li><a href="/reports">Reports</a></li>
-        <li><a href="/settings">Settings</a></li>
+  <aside class="bg-white dark:bg-gray-900 w-64 min-h-screen shadow p-4 flex flex-col">
+    <div class="mb-6">
+      <img src="/logo.png" alt="Youkyouk Logo" class="h-10 w-10 mx-auto mb-2">
+      <h2 class="text-center font-bold text-gray-900 dark:text-white">Youkyouk</h2>
+    </div>
+    <nav class="flex-1">
+      <ul class="space-y-2">
+        <li><a href="/dashboard" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Dashboard</a></li>
+        <li><a href="/projects" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Projects</a></li>
+        <li><a href="/tasks" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Tasks</a></li>
+        <li><a href="/teams" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Teams</a></li>
+        <li><a href="/users" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Users</a></li>
+        <li><a href="/roles" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Roles</a></li>
+        <li><a href="/notifications" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Notifications</a></li>
+        <li><a href="/reports" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Reports</a></li>
+        <li><a href="/settings" class="block px-3 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-800">Settings</a></li>
       </ul>
     </nav>
   </aside>
 </template>
 
-<script>
-export default {
-  name: 'Sidebar'
-}
+<script setup>
 </script>
 
 <style scoped>
-.sidebar {
-  width: 220px;
-  background-color: #f9fafb;
-  border-right: 1px solid #ddd;
-  height: 100vh;
-  padding: 1rem;
-}
-
-body.dark .sidebar {
-  background-color: #1f2937;
-  border-color: #4b5563;
-  color: #f3f4f6;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin: 1rem 0;
-}
-
-.sidebar a {
-  text-decoration: none;
-  color: inherit;
+aside {
+  transition: all 0.2s ease-in-out;
 }
 </style>
