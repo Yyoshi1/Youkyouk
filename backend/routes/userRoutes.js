@@ -1,12 +1,16 @@
 import express from 'express';
-import User from '../models/User.js';
+import {
+  getAllUsers,
+  getUserById,
+  updateUser,
+  deleteUser
+} from '../controllers/userController.js';
 
 const router = express.Router();
 
-// 
-router.get('/', async (req, res) => {
-  const users = await User.findAll();
-  res.json(users);
-});
+router.get('/', getAllUsers);
+router.get('/:id', getUserById);
+router.put('/:id', updateUser);
+router.delete('/:id', deleteUser);
 
 export default router;
