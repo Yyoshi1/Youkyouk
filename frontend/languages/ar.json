@@ -1,0 +1,16 @@
+{
+  "dashboard": "لوحة التحكم",
+  "projects": "المشاريع",
+  "tasks": "المهام",
+  "teams": "الفرق",
+  "users": "المستخدمون",
+  "roles": "الأدوار",
+  "reports": "التقارير",
+  "settings": "الإعدادات",
+  "notifications": "الإشعارات",
+  "welcome": "مرحبًا بك في Youkyouk",
+  "newProject": "مشروع جديد",
+  "newTask": "مهمة جديدة",
+  "profile": "الملف الشخصي",
+  "logout": "تسجيل الخروج"
+}
