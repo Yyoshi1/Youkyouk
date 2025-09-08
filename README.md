@@ -1,33 +1,15 @@
-# Youkyouk
+# Youkyouk Project
 
-Youkyouk is a modern task & project management system designed for teams and projects.  
-It focuses on **task management, workspaces, and team collaboration**.
+## Description
+Youkyouk is a project management system similar to Plane, supporting multi-language, dark/light mode, notifications, and user roles.
 
----
+## Installation
 
-## 🚀 Features
-- Admin dashboard with roles & permissions
-- Team dashboard with task management
-- Projects & initiatives management
-- Workspaces with custom views
-- Favorites (tasks, projects, views)
-- Dark/Light mode support
-- Multi-language support (English, French, Arabic)
-- Real-time notifications
-- License verification system (`useLicenseGuard`)
-
----
-
-## 📦 Installation
-
-### Requirements
-- **Node.js** >= 18
-- **npm** >= 9
-- **PostgreSQL** >= 14
-- Linux / macOS / Windows with terminal access
-
-### Steps
-1. Download and extract the package `youkyouk-package.zip`.
-2. Open a terminal and navigate to the project folder:
+1. Copy the project files to your server.
+2. Create a PostgreSQL database.
+3. Fill in the database info in `.env` file or through the installer.
+4. Run the backend:
    ```bash
-   cd youkyouk
+   cd backend
+   npm install
+   npm start
